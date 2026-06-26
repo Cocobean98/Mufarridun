@@ -1,0 +1,2252 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DHIKR — Tasbeeh Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a2e28;
+    --ink-soft: #2d4a40;
+    --forest: #1f4d3a;
+    --forest-deep: #143a2a;
+    --emerald: #2d6a4f;
+    --sage: #7a9e8e;
+    --gold: #c9a227;
+    --gold-soft: #d4b84a;
+    --gold-pale: #f4e8c4;
+    --cream: #faf7f0;
+    --paper: #ffffff;
+    --bone: #f5f1e8;
+    --line: #e8e2d4;
+    --line-soft: #f0ebe0;
+    --muted: #8a8578;
+    --text: #2a2a2a;
+    --text-soft: #5a5a5a;
+    --shadow-xs: 0 1px 2px rgba(26,46,40,0.04);
+    --shadow-sm: 0 2px 8px rgba(26,46,40,0.06);
+    --shadow-md: 0 8px 24px rgba(26,46,40,0.08);
+    --shadow-lg: 0 20px 50px rgba(26,46,40,0.12);
+    --shadow-gold: 0 8px 24px rgba(201,162,39,0.18);
+    --radius-sm: 10px;
+    --radius: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  [data-theme="dark"] {
+    --ink: #0a1410;
+    --ink-soft: #1a2e28;
+    --forest: #2d6a4f;
+    --forest-deep: #1a4030;
+    --emerald: #3d8a6f;
+    --sage: #5a7a6a;
+    --gold: #d4b84a;
+    --gold-soft: #e0c460;
+    --gold-pale: #3a3420;
+    --cream: #141e1a;
+    --paper: #1a2620;
+    --bone: #1f2d26;
+    --line: #2a3a32;
+    --line-soft: #223028;
+    --muted: #6a7a70;
+    --text: #e8e2d4;
+    --text-soft: #b0a898;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.3s var(--ease), color 0.3s var(--ease);
+  }
+
+  html[lang="ar"] body { font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif; }
+
+  .bg-pattern {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23c9a227' stroke-width='0.5' opacity='0.12'%3E%3Cpath d='M40 0L80 40L40 80L0 40Z'/%3E%3Cpath d='M40 20L60 40L40 60L20 40Z'/%3E%3Ccircle cx='40' cy='40' r='10'/%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* Header */
+  .header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+  }
+  [data-theme="dark"] .header { background: rgba(26,38,32,0.85); }
+
+  .header-inner {
+    max-width: 1280px; margin: 0 auto;
+    padding: 14px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .brand { display: flex; align-items: center; gap: 14px; }
+
+  .brand-mark {
+    width: 42px; height: 42px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--forest) 0%, var(--forest-deep) 100%);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,0.1);
+    position: relative; overflow: hidden;
+  }
+  .brand-mark::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='42' height='42' viewBox='0 0 42 42'%3E%3Cpath d='M21 4L38 21L21 38L4 21Z' fill='none' stroke='%23c9a227' stroke-width='0.8' opacity='0.4'/%3E%3Ccircle cx='21' cy='21' r='6' fill='none' stroke='%23c9a227' stroke-width='0.8' opacity='0.4'/%3E%3C/svg%3E");
+  }
+  .brand-mark svg { position: relative; z-index: 1; }
+
+  .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
+  .brand-name {
+    font-family: 'Reem Kufi', serif; font-size: 22px; font-weight: 700;
+    color: var(--forest-deep); letter-spacing: -0.5px;
+  }
+  [data-theme="dark"] .brand-name { color: var(--gold); }
+  .brand-tagline {
+    font-size: 10px; color: var(--muted);
+    letter-spacing: 2px; text-transform: uppercase; margin-top: 2px;
+  }
+
+  .header-actions { display: flex; align-items: center; gap: 8px; }
+
+  .icon-btn {
+    width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--paper);
+    color: var(--text-soft); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s var(--ease);
+  }
+  .icon-btn:hover { background: var(--bone); color: var(--forest); border-color: var(--forest); }
+
+  .lang-btn {
+    padding: 0 14px; height: 40px; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--paper);
+    color: var(--text-soft); cursor: pointer; font-weight: 600;
+    font-size: 12px; letter-spacing: 0.5px;
+    transition: all 0.2s var(--ease);
+    font-family: inherit;
+  }
+  .lang-btn:hover { background: var(--bone); color: var(--forest); border-color: var(--forest); }
+
+  .user-chip {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 14px 6px 6px; border-radius: 50px;
+    background: var(--bone); border: 1px solid var(--line);
+    cursor: pointer; transition: all 0.2s var(--ease);
+  }
+  .user-chip:hover { background: var(--line-soft); }
+  .user-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 100%);
+    color: var(--forest-deep); display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 13px;
+  }
+  .user-name { font-size: 13px; font-weight: 600; color: var(--text); }
+
+  .auth-btn {
+    padding: 0 18px; height: 40px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--forest) 0%, var(--forest-deep) 100%);
+    color: var(--gold-pale); border: none; cursor: pointer;
+    font-weight: 600; font-size: 13px; font-family: inherit;
+    transition: all 0.2s var(--ease);
+    box-shadow: var(--shadow-sm);
+  }
+  .auth-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+  /* Nav */
+  .nav { background: var(--paper); border-bottom: 1px solid var(--line); position: sticky; top: 69px; z-index: 90; }
+  .nav-inner { max-width: 1280px; margin: 0 auto; padding: 0 32px; display: flex; gap: 2px; }
+  .nav-tab {
+    padding: 14px 20px; font-size: 14px; font-weight: 500;
+    color: var(--text-soft); cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s var(--ease);
+    display: flex; align-items: center; gap: 8px;
+    user-select: none;
+  }
+  .nav-tab:hover { color: var(--forest); }
+  .nav-tab.active { color: var(--forest); border-bottom-color: var(--gold); font-weight: 600; }
+  .nav-tab svg { width: 18px; height: 18px; }
+
+  /* Main */
+  .main { max-width: 1280px; margin: 0 auto; padding: 40px 32px 80px; position: relative; z-index: 1; }
+  .page { display: none; animation: pageIn 0.4s var(--ease); }
+  .page.active { display: block; }
+  @keyframes pageIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--forest) 50%, var(--emerald) 100%);
+    border-radius: var(--radius-xl); padding: 48px; color: #fff;
+    position: relative; overflow: hidden; margin-bottom: 32px; box-shadow: var(--shadow-lg);
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23c9a227' stroke-width='0.6' opacity='0.18'%3E%3Cpath d='M60 10L110 60L60 110L10 60Z'/%3E%3Cpath d='M60 30L90 60L60 90L30 60Z'/%3E%3Cpath d='M60 50L70 60L60 70L50 60Z'/%3E%3Ccircle cx='60' cy='60' r='18'/%3E%3Ccircle cx='60' cy='60' r='8'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 120px 120px;
+  }
+  .hero::after {
+    content: ''; position: absolute; top: -50%; left: -20%;
+    width: 60%; height: 200%;
+    background: radial-gradient(circle, rgba(201,162,39,0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 640px; }
+  .hero-greeting {
+    font-size: 13px; color: var(--gold-pale);
+    letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 12px; font-weight: 500;
+  }
+  .hero-title {
+    font-family: 'Amiri', serif; font-size: 34px;
+    font-weight: 700; line-height: 1.4; margin-bottom: 16px; color: #fff;
+  }
+  html[lang="ar"] .hero-title { font-size: 36px; }
+  .hero-verse {
+    font-family: 'Amiri Quran', serif; font-size: 22px;
+    color: var(--gold-pale); line-height: 1.8;
+    margin-bottom: 20px; padding: 16px 20px;
+    background: rgba(201,162,39,0.1);
+    border-right: 3px solid var(--gold);
+    border-radius: 8px; display: inline-block;
+  }
+  .hero-desc { font-size: 15px; color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 28px; }
+  .hero-stats { display: flex; gap: 24px; flex-wrap: wrap; }
+  .hero-stat { display: flex; flex-direction: column; gap: 4px; }
+  .hero-stat-value {
+    font-size: 28px; font-weight: 700; color: var(--gold-pale);
+    font-family: 'Reem Kufi', serif;
+  }
+  .hero-stat-label {
+    font-size: 12px; color: rgba(255,255,255,0.7);
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  /* Section Headers */
+  .section-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin: 40px 0 20px; gap: 16px; flex-wrap: wrap;
+  }
+  .section-title {
+    font-family: 'Reem Kufi', serif; font-size: 22px; font-weight: 600;
+    color: var(--forest-deep); display: flex; align-items: center; gap: 12px;
+  }
+  [data-theme="dark"] .section-title { color: var(--gold); }
+  .section-title::before {
+    content: ''; width: 4px; height: 24px;
+    background: linear-gradient(180deg, var(--gold) 0%, var(--gold-soft) 100%);
+    border-radius: 2px;
+  }
+  .section-subtitle { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* Thikr Grid */
+  .thikr-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px;
+  }
+  .thikr-card {
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); padding: 28px; cursor: pointer;
+    transition: all 0.3s var(--ease); position: relative; overflow: hidden;
+  }
+  .thikr-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-soft) 50%, var(--gold) 100%);
+    opacity: 0; transition: opacity 0.3s var(--ease);
+  }
+  .thikr-card:hover {
+    border-color: var(--gold); transform: translateY(-4px); box-shadow: var(--shadow-lg);
+  }
+  .thikr-card:hover::before { opacity: 1; }
+
+  .thikr-card-head {
+    display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px;
+  }
+  .thikr-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--bone) 0%, var(--line-soft) 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--forest); font-size: 22px;
+  }
+  .thikr-count-pill {
+    font-size: 11px; font-weight: 600; padding: 4px 10px;
+    border-radius: 50px; background: var(--bone); color: var(--forest);
+  }
+  .thikr-arabic {
+    font-family: 'Amiri Quran', serif; font-size: 30px;
+    color: var(--forest-deep); line-height: 1.6; margin-bottom: 8px;
+  }
+  [data-theme="dark"] .thikr-arabic { color: var(--gold-pale); }
+  .thikr-latin { font-size: 13px; color: var(--muted); font-style: italic; margin-bottom: 4px; }
+  .thikr-meaning { font-size: 13px; color: var(--text-soft); margin-bottom: 20px; }
+  .thikr-card-foot {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 16px; border-top: 1px solid var(--line-soft);
+  }
+  .thikr-reward {
+    font-size: 12px; color: var(--forest); font-weight: 500;
+    display: flex; align-items: center; gap: 6px;
+    flex: 1; margin-right: 12px;
+  }
+  html[lang="ar"] .thikr-reward { margin-right: 0; margin-left: 12px; }
+  .thikr-arrow {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--bone); color: var(--forest);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s var(--ease); flex-shrink: 0;
+  }
+  html[dir="rtl"] .thikr-arrow svg { transform: rotate(180deg); }
+  .thikr-card:hover .thikr-arrow {
+    background: var(--forest); color: var(--gold-pale);
+    transform: translateX(-4px);
+  }
+  html[dir="rtl"] .thikr-card:hover .thikr-arrow { transform: translateX(-4px) rotate(180deg); }
+
+  /* Counter */
+  .counter-layout { display: grid; grid-template-columns: 1fr 400px; gap: 32px; align-items: start; }
+  @media (max-width: 1024px) { .counter-layout { grid-template-columns: 1fr; } }
+
+  .counter-main {
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: var(--radius-xl); padding: 40px; text-align: center;
+    box-shadow: var(--shadow-sm);
+  }
+  .counter-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--text-soft); cursor: pointer;
+    padding: 8px 14px; border-radius: 50px;
+    background: var(--bone); border: 1px solid var(--line);
+    transition: all 0.2s var(--ease); margin-bottom: 24px;
+    font-family: inherit;
+  }
+  .counter-back:hover { background: var(--line-soft); color: var(--forest); }
+  html[dir="rtl"] .counter-back svg { transform: rotate(180deg); }
+
+  .counter-thikr {
+    font-family: 'Amiri Quran', serif; font-size: 44px;
+    color: var(--forest-deep); margin-bottom: 8px; line-height: 1.5;
+  }
+  [data-theme="dark"] .counter-thikr { color: var(--gold-pale); }
+  .counter-meta { font-size: 14px; color: var(--muted); margin-bottom: 40px; }
+
+  .counter-ring-wrap { position: relative; width: 320px; height: 320px; margin: 0 auto 32px; }
+  .counter-ring-svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ring-track { fill: none; stroke: var(--line); stroke-width: 8; }
+  .ring-fill {
+    fill: none; stroke: url(#goldGradient); stroke-width: 8;
+    stroke-linecap: round; transition: stroke-dashoffset 0.3s var(--ease);
+    filter: drop-shadow(0 0 8px rgba(201,162,39,0.3));
+  }
+  .counter-btn {
+    position: absolute; inset: 20px; border-radius: 50%;
+    background: linear-gradient(145deg, var(--paper) 0%, var(--bone) 100%);
+    border: 1px solid var(--line); cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 4px; transition: all 0.15s var(--ease);
+    box-shadow: var(--shadow-md), inset 0 2px 4px rgba(255,255,255,0.5);
+    user-select: none; -webkit-tap-highlight-color: transparent;
+    font-family: inherit;
+  }
+  .counter-btn:active { transform: scale(0.96); box-shadow: var(--shadow-sm), inset 0 2px 8px rgba(0,0,0,0.08); }
+  .counter-btn.tapped { animation: tapPulse 0.25s var(--ease); }
+  @keyframes tapPulse { 0%, 100% { transform: scale(1); } 40% { transform: scale(0.93); } 70% { transform: scale(1.02); } }
+
+  .counter-num {
+    font-family: 'Reem Kufi', serif; font-size: 88px; font-weight: 700;
+    color: var(--forest-deep); line-height: 1; letter-spacing: -2px;
+  }
+  [data-theme="dark"] .counter-num { color: var(--gold); }
+  .counter-label {
+    font-size: 12px; color: var(--muted);
+    letter-spacing: 2px; text-transform: uppercase; margin-top: 8px;
+  }
+  .counter-target { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+  .counter-target strong { color: var(--forest); font-weight: 600; }
+  [data-theme="dark"] .counter-target strong { color: var(--gold); }
+
+  .target-selector { display: flex; gap: 8px; justify-content: center; margin-bottom: 28px; flex-wrap: wrap; }
+  .target-chip {
+    padding: 8px 18px; border-radius: 50px; border: 1px solid var(--line);
+    background: var(--paper); font-size: 13px; font-weight: 500;
+    color: var(--text-soft); cursor: pointer; transition: all 0.2s var(--ease);
+    font-family: inherit;
+  }
+  .target-chip:hover { border-color: var(--gold); color: var(--forest); }
+  .target-chip.active { background: var(--forest); color: var(--gold-pale); border-color: var(--forest); }
+
+  .counter-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 600;
+    cursor: pointer; border: none; font-family: inherit;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.2s var(--ease);
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--forest) 0%, var(--forest-deep) 100%);
+    color: var(--gold-pale); box-shadow: var(--shadow-md);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+  .btn-secondary { background: var(--paper); color: var(--text-soft); border: 1px solid var(--line); }
+  .btn-secondary:hover { background: var(--bone); color: var(--forest); }
+  .btn-danger { background: var(--paper); color: #b91c1c; border: 1px solid var(--line); }
+  .btn-danger:hover { background: #fef2f2; border-color: #b91c1c; }
+
+  /* Hadith Panel */
+  .hadith-panel {
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: var(--radius-xl); padding: 32px;
+    box-shadow: var(--shadow-sm); position: sticky; top: 140px;
+  }
+  .hadith-panel-head {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px; padding-bottom: 20px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .hadith-panel-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--gold-pale) 0%, var(--gold) 100%);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--forest-deep);
+  }
+  .hadith-panel-title {
+    font-family: 'Reem Kufi', serif; font-size: 18px;
+    font-weight: 600; color: var(--forest-deep);
+  }
+  [data-theme="dark"] .hadith-panel-title { color: var(--gold); }
+  .hadith-panel-sub { font-size: 12px; color: var(--muted); }
+
+  .hadith-item {
+    padding: 20px; background: var(--bone);
+    border-radius: var(--radius); margin-bottom: 14px;
+    border-inline-start: 3px solid var(--gold);
+  }
+  .hadith-arabic {
+    font-family: 'Amiri', serif; font-size: 17px;
+    color: var(--text); line-height: 2; margin-bottom: 12px;
+  }
+  .hadith-translation {
+    font-size: 14px; color: var(--text-soft);
+    line-height: 1.7; margin-bottom: 12px;
+    padding: 12px; background: var(--paper);
+    border-radius: 8px; border-inline-start: 2px solid var(--line);
+    font-style: italic;
+  }
+  .hadith-source {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 600; color: var(--forest);
+    background: var(--paper); padding: 5px 12px;
+    border-radius: 50px; border: 1px solid var(--line);
+  }
+  .hadith-source::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%; background: #16a34a;
+  }
+
+  /* Leaderboard */
+  .lb-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 28px; flex-wrap: wrap; gap: 16px;
+  }
+  .lb-title {
+    font-family: 'Reem Kufi', serif; font-size: 28px;
+    font-weight: 600; color: var(--forest-deep);
+  }
+  [data-theme="dark"] .lb-title { color: var(--gold); }
+  .lb-controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+  .segmented {
+    display: flex; background: var(--paper);
+    border: 1px solid var(--line); border-radius: 12px;
+    padding: 4px; gap: 2px;
+  }
+  .seg-btn {
+    padding: 8px 16px; border-radius: 8px;
+    font-size: 13px; font-weight: 500; color: var(--text-soft);
+    cursor: pointer; border: none; background: transparent;
+    font-family: inherit; transition: all 0.2s var(--ease);
+  }
+  .seg-btn:hover { color: var(--forest); }
+  .seg-btn.active { background: var(--forest); color: var(--gold-pale); box-shadow: var(--shadow-sm); }
+
+  .select-wrap { position: relative; }
+  .select {
+    appearance: none; padding: 10px 36px 10px 14px;
+    border-radius: 12px; border: 1px solid var(--line);
+    background: var(--paper); font-family: inherit;
+    font-size: 13px; font-weight: 500; color: var(--text);
+    cursor: pointer; outline: none; min-width: 180px;
+    transition: all 0.2s var(--ease);
+  }
+  .select:hover, .select:focus { border-color: var(--forest); }
+  .select-wrap::after {
+    content: ''; position: absolute;
+    right: 14px; top: 50%;
+    width: 8px; height: 8px;
+    border-right: 1.5px solid var(--text-soft);
+    border-bottom: 1.5px solid var(--text-soft);
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
+  }
+  html[dir="rtl"] .select-wrap::after { right: auto; left: 14px; }
+
+  /* Podium */
+  .podium { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 16px; margin-bottom: 40px; align-items: end; }
+  .podium-card {
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); padding: 24px 20px;
+    text-align: center; position: relative;
+    transition: all 0.3s var(--ease);
+  }
+  .podium-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .podium-card.first {
+    padding-top: 40px; padding-bottom: 40px;
+    background: linear-gradient(180deg, var(--paper) 0%, var(--gold-pale) 100%);
+    border-color: var(--gold); box-shadow: var(--shadow-gold);
+  }
+  .podium-rank-badge {
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700; color: #fff; box-shadow: var(--shadow-md);
+  }
+  .rank-gold { background: linear-gradient(135deg, #f4c430 0%, #d4a017 100%); }
+  .rank-silver { background: linear-gradient(135deg, #c0c0c0 0%, #8a8a8a 100%); }
+  .rank-bronze { background: linear-gradient(135deg, #cd7f32 0%, #a0522d 100%); }
+
+  .podium-avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    margin: 0 auto 12px; display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 700; color: #fff; position: relative;
+  }
+  .podium-card.first .podium-avatar {
+    width: 80px; height: 80px; font-size: 30px;
+    background: linear-gradient(135deg, var(--forest) 0%, var(--forest-deep) 100%);
+    border: 3px solid var(--gold);
+  }
+  .podium-card:not(.first) .podium-avatar {
+    background: linear-gradient(135deg, var(--emerald) 0%, var(--forest) 100%);
+  }
+  .podium-crown { position: absolute; top: -16px; font-size: 22px; }
+  .podium-name { font-weight: 600; font-size: 15px; color: var(--text); margin-bottom: 6px; }
+  .podium-count {
+    font-family: 'Reem Kufi', serif; font-size: 24px; font-weight: 700;
+    color: var(--forest); margin-bottom: 4px;
+  }
+  [data-theme="dark"] .podium-count { color: var(--gold); }
+  .podium-card.first .podium-count { font-size: 28px; }
+  .podium-thikr { font-family: 'Amiri Quran', serif; font-size: 16px; color: var(--text-soft); margin-bottom: 8px; }
+  .podium-streak {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; color: var(--muted);
+    padding: 3px 10px; background: var(--bone); border-radius: 50px;
+  }
+  .streak-fire { color: #ea580c; }
+
+  /* Leaderboard Table */
+  .lb-table { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+  .lb-row {
+    display: grid; grid-template-columns: 60px 1fr 120px 140px 100px;
+    align-items: center; padding: 16px 24px;
+    border-bottom: 1px solid var(--line-soft);
+    transition: background 0.2s var(--ease);
+  }
+  .lb-row:last-child { border-bottom: none; }
+  .lb-row:hover { background: var(--bone); }
+  .lb-row.head {
+    background: var(--bone); font-size: 11px; font-weight: 600;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 1px;
+    padding: 12px 24px;
+  }
+  .lb-rank { font-family: 'Reem Kufi', serif; font-size: 18px; font-weight: 700; color: var(--muted); }
+  .lb-rank.top { color: var(--gold); }
+  .lb-user { display: flex; align-items: center; gap: 12px; }
+  .lb-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--emerald) 0%, var(--forest) 100%);
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 600; flex-shrink: 0;
+  }
+  .lb-name { font-weight: 600; font-size: 14px; color: var(--text); }
+  .lb-count {
+    font-family: 'Reem Kufi', serif; font-weight: 700;
+    font-size: 18px; color: var(--forest); text-align: center;
+  }
+  [data-theme="dark"] .lb-count { color: var(--gold); }
+  .lb-thikr { font-family: 'Amiri Quran', serif; font-size: 16px; color: var(--text-soft); text-align: center; }
+  .lb-streak {
+    text-align: center; font-size: 13px; color: var(--muted);
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+  }
+
+  /* Profile */
+  .profile-hero {
+    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--forest) 100%);
+    border-radius: var(--radius-xl); padding: 48px; color: #fff;
+    text-align: center; margin-bottom: 32px; position: relative;
+    overflow: hidden; box-shadow: var(--shadow-lg);
+  }
+  .profile-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23c9a227' stroke-width='0.5' opacity='0.15'%3E%3Cpath d='M50 10L90 50L50 90L10 50Z'/%3E%3Ccircle cx='50' cy='50' r='15'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 100px 100px;
+  }
+  .profile-avatar-lg {
+    width: 96px; height: 96px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 100%);
+    color: var(--forest-deep); display: flex; align-items: center; justify-content: center;
+    font-size: 36px; font-weight: 700; margin: 0 auto 16px;
+    position: relative; z-index: 1;
+    box-shadow: 0 8px 24px rgba(201,162,39,0.4);
+    border: 3px solid rgba(255,255,255,0.2);
+  }
+  .profile-name {
+    font-family: 'Reem Kufi', serif; font-size: 28px;
+    font-weight: 700; margin-bottom: 6px; position: relative; z-index: 1;
+  }
+  .profile-joined {
+    font-size: 13px; color: rgba(255,255,255,0.7);
+    position: relative; z-index: 1; margin-bottom: 24px;
+  }
+  .profile-stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 12px; position: relative; z-index: 1;
+  }
+  .profile-stat {
+    background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: var(--radius); padding: 16px;
+  }
+  .profile-stat-value {
+    font-family: 'Reem Kufi', serif; font-size: 28px;
+    font-weight: 700; color: var(--gold-pale); line-height: 1;
+  }
+  .profile-stat-label {
+    font-size: 11px; color: rgba(255,255,255,0.7);
+    margin-top: 6px; letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  .save-cta {
+    background: linear-gradient(135deg, var(--gold-pale) 0%, var(--gold) 100%);
+    border: 1px solid var(--gold);
+    border-radius: var(--radius-lg); padding: 24px;
+    margin-bottom: 32px; display: flex;
+    align-items: center; justify-content: space-between;
+    gap: 20px; flex-wrap: wrap;
+  }
+  .save-cta-text h4 {
+    font-family: 'Reem Kufi', serif; font-size: 18px;
+    color: var(--forest-deep); margin-bottom: 4px;
+  }
+  .save-cta-text p { font-size: 13px; color: var(--ink-soft); }
+
+  .achievements {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px; margin-bottom: 32px;
+  }
+  .achievement {
+    background: var(--paper); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 20px;
+    display: flex; align-items: center; gap: 14px;
+    transition: all 0.2s var(--ease);
+  }
+  .achievement:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .achievement.locked { opacity: 0.4; filter: grayscale(1); }
+  .achievement-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--gold-pale) 0%, var(--gold) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .achievement.locked .achievement-icon { background: var(--bone); }
+  .achievement-info { flex: 1; }
+  .achievement-title { font-weight: 600; font-size: 14px; color: var(--text); margin-bottom: 2px; }
+  .achievement-desc { font-size: 12px; color: var(--muted); }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(20,46,40,0.6); backdrop-filter: blur(12px);
+    z-index: 1000; display: none;
+    align-items: center; justify-content: center; padding: 20px;
+    animation: fadeIn 0.3s var(--ease);
+  }
+  .modal-overlay.active { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .modal {
+    background: var(--paper); border-radius: var(--radius-xl);
+    padding: 40px; max-width: 460px; width: 100%;
+    box-shadow: var(--shadow-xl); text-align: center;
+    animation: modalIn 0.4s var(--ease); border: 1px solid var(--line);
+    position: relative;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.95) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--bone); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-soft); transition: all 0.2s var(--ease);
+  }
+  html[dir="rtl"] .modal-close { right: auto; left: 16px; }
+  .modal-close:hover { background: var(--line); color: var(--text); }
+
+  .modal-mark {
+    width: 72px; height: 72px; border-radius: 20px;
+    background: linear-gradient(135deg, var(--forest) 0%, var(--forest-deep) 100%);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px; box-shadow: var(--shadow-lg);
+    position: relative; overflow: hidden;
+  }
+  .modal-mark::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cpath d='M36 8L64 36L36 64L8 36Z' fill='none' stroke='%23c9a227' stroke-width='1' opacity='0.4'/%3E%3Ccircle cx='36' cy='36' r='10' fill='none' stroke='%23c9a227' stroke-width='1' opacity='0.4'/%3E%3C/svg%3E");
+  }
+  .modal-mark svg { position: relative; z-index: 1; }
+
+  .modal h3 {
+    font-family: 'Reem Kufi', serif; font-size: 24px;
+    font-weight: 600; color: var(--forest-deep); margin-bottom: 10px;
+  }
+  [data-theme="dark"] .modal h3 { color: var(--gold); }
+  .modal p { color: var(--text-soft); font-size: 14px; margin-bottom: 24px; line-height: 1.7; }
+
+  .modal-tabs {
+    display: flex; gap: 4px; background: var(--bone);
+    border-radius: 12px; padding: 4px; margin-bottom: 20px;
+  }
+  .modal-tab {
+    flex: 1; padding: 10px; border-radius: 8px; border: none;
+    background: transparent; cursor: pointer; font-weight: 600;
+    font-size: 13px; color: var(--text-soft); font-family: inherit;
+    transition: all 0.2s var(--ease);
+  }
+  .modal-tab.active { background: var(--paper); color: var(--forest); box-shadow: var(--shadow-xs); }
+
+  .modal-input {
+    width: 100%; padding: 14px 18px; border: 2px solid var(--line);
+    border-radius: 12px; font-size: 15px; font-family: inherit;
+    outline: none; transition: border-color 0.2s var(--ease);
+    background: var(--paper); color: var(--text); margin-bottom: 12px;
+  }
+  .modal-input:focus { border-color: var(--forest); }
+
+  .modal-btn {
+    width: 100%; padding: 14px;
+    background: linear-gradient(135deg, var(--forest) 0%, var(--forest-deep) 100%);
+    color: var(--gold-pale); border: none; border-radius: 12px;
+    font-size: 15px; font-weight: 600; cursor: pointer;
+    font-family: inherit; transition: all 0.2s var(--ease);
+    box-shadow: var(--shadow-md);
+  }
+  .modal-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+  .modal-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .modal-divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 20px 0; color: var(--muted); font-size: 12px;
+  }
+  .modal-divider::before, .modal-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--line);
+  }
+
+  .modal-guest {
+    width: 100%; padding: 12px; background: transparent;
+    color: var(--text-soft); border: 1px solid var(--line);
+    border-radius: 12px; cursor: pointer; font-family: inherit;
+    font-size: 14px; font-weight: 500; transition: all 0.2s var(--ease);
+  }
+  .modal-guest:hover { background: var(--bone); color: var(--forest); }
+
+  .modal-error {
+    background: #fef2f2; color: #b91c1c; padding: 10px 14px;
+    border-radius: 10px; font-size: 13px; margin-bottom: 12px;
+    border: 1px solid #fecaca; display: none;
+  }
+  .modal-error.show { display: block; }
+
+  /* Prayer Reminder - Soft Popup */
+  .prayer-reminder {
+    position: fixed; bottom: 24px; right: 24px;
+    max-width: 360px; background: var(--paper);
+    border: 1px solid var(--gold);
+    border-radius: var(--radius-lg);
+    padding: 24px; box-shadow: var(--shadow-xl);
+    z-index: 900; transform: translateY(150%);
+    transition: transform 0.5s var(--ease);
+    border-inline-start: 4px solid var(--gold);
+  }
+  html[dir="rtl"] .prayer-reminder { right: auto; left: 24px; }
+  .prayer-reminder.show { transform: translateY(0); }
+
+  .prayer-reminder-head {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+  }
+  .prayer-reminder-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--gold-pale) 0%, var(--gold) 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .prayer-reminder-title {
+    font-family: 'Reem Kufi', serif; font-size: 15px;
+    font-weight: 600; color: var(--forest-deep);
+  }
+  [data-theme="dark"] .prayer-reminder-title { color: var(--gold); }
+  .prayer-reminder-text {
+    font-size: 14px; color: var(--text-soft);
+    line-height: 1.6; margin-bottom: 16px;
+  }
+  .prayer-reminder-verse {
+    font-family: 'Amiri', serif; font-size: 15px;
+    color: var(--forest); line-height: 1.8;
+    padding: 10px 12px; background: var(--bone);
+    border-radius: 8px; margin-bottom: 16px;
+    border-inline-start: 2px solid var(--gold);
+  }
+  .prayer-reminder-actions {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .prayer-reminder-btn {
+    flex: 1; padding: 10px 14px; border-radius: 10px;
+    border: none; cursor: pointer; font-family: inherit;
+    font-size: 13px; font-weight: 600; transition: all 0.2s var(--ease);
+    min-width: 100px;
+  }
+  .prayer-reminder-btn.primary {
+    background: var(--forest); color: var(--gold-pale);
+  }
+  .prayer-reminder-btn.primary:hover { background: var(--forest-deep); }
+  .prayer-reminder-btn.secondary {
+    background: var(--bone); color: var(--text-soft);
+  }
+  .prayer-reminder-btn.secondary:hover { background: var(--line-soft); }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(120px);
+    background: var(--forest-deep); color: var(--gold-pale);
+    padding: 14px 24px; border-radius: 14px;
+    font-size: 14px; font-weight: 500; z-index: 2000;
+    transition: transform 0.4s var(--ease);
+    box-shadow: var(--shadow-xl);
+    display: flex; align-items: center; gap: 10px;
+    border: 1px solid var(--gold);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* Empty State */
+  .empty { text-align: center; padding: 60px 20px; color: var(--muted); }
+  .empty-icon { font-size: 48px; margin-bottom: 12px; opacity: 0.5; }
+  .empty-title {
+    font-family: 'Reem Kufi', serif; font-size: 18px;
+    color: var(--text); margin-bottom: 6px;
+  }
+  .empty-desc { font-size: 13px; margin-bottom: 20px; }
+
+  .lb-update-info {
+    text-align: center; font-size: 12px; color: var(--muted);
+    margin-top: 16px; display: flex; align-items: center;
+    justify-content: center; gap: 6px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .header-inner, .nav-inner, .main { padding-left: 20px; padding-right: 20px; }
+    .hero { padding: 32px 24px; }
+    .hero-title { font-size: 24px; }
+    .hero-verse { font-size: 18px; }
+    .brand-tagline { display: none; }
+    .user-name { display: none; }
+    .user-chip { padding: 4px; }
+    .thikr-grid { grid-template-columns: 1fr; }
+    .counter-main { padding: 28px 20px; }
+    .counter-ring-wrap { width: 260px; height: 260px; }
+    .counter-num { font-size: 64px; }
+    .counter-thikr { font-size: 32px; }
+    .podium { grid-template-columns: 1fr; }
+    .podium-card.first { order: -1; }
+    .lb-row {
+      grid-template-columns: 40px 1fr 70px 70px;
+      padding: 12px 16px; font-size: 13px;
+    }
+    .lb-row .lb-streak, .lb-row.head .lb-streak { display: none; }
+    .lb-row.head { grid-template-columns: 40px 1fr 70px 70px; }
+    .profile-hero { padding: 32px 20px; }
+    .profile-stats { grid-template-columns: repeat(2, 1fr); }
+    .section-head { flex-direction: column; align-items: flex-start; }
+    .nav-tab { padding: 12px 14px; font-size: 13px; }
+    .prayer-reminder { right: 16px; left: 16px; max-width: none; bottom: 16px; }
+    html[dir="rtl"] .prayer-reminder { right: 16px; left: 16px; }
+  }
+
+  @media (max-width: 480px) {
+    .lb-row { grid-template-columns: 36px 1fr 60px; }
+    .lb-row .lb-thikr, .lb-row.head .lb-thikr { display: none; }
+    .lb-row.head { grid-template-columns: 36px 1fr 60px; }
+    .counter-actions { flex-direction: column; }
+    .counter-actions .btn { width: 100%; justify-content: center; }
+    .save-cta { flex-direction: column; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-pattern"></div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z" stroke="#c9a227" stroke-width="1.5" stroke-linejoin="round"/>
+          <circle cx="12" cy="12" r="3" fill="#c9a227"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <div class="brand-name" data-i18n="brand.name">DHIKR</div>
+        <div class="brand-tagline" data-i18n="brand.tagline">Tasbeeh Companion</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="lang-btn" id="langToggle" onclick="toggleLanguage()">AR</button>
+      <button class="icon-btn" id="themeToggle" title="Toggle theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+      </button>
+      <div id="authArea"></div>
+    </div>
+  </div>
+</header>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-tab active" data-page="home">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span data-i18n="nav.home">Home</span>
+    </div>
+    <div class="nav-tab" data-page="counter">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span data-i18n="nav.counter">Tasbeeh</span>
+    </div>
+    <div class="nav-tab" data-page="leaderboard">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+      <span data-i18n="nav.leaderboard">Leaders</span>
+    </div>
+    <div class="nav-tab" data-page="profile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span data-i18n="nav.profile">Profile</span>
+    </div>
+  </div>
+</nav>
+
+<!-- Main -->
+<main class="main">
+
+  <!-- Home -->
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <div class="hero-content">
+        <div class="hero-greeting" data-i18n="hero.greeting">Peace be upon you</div>
+        <h1 class="hero-title" data-i18n="hero.title">Verily, in the remembrance of Allah do hearts find rest</h1>
+        <div class="hero-verse" data-i18n="hero.verse">﴿ ... ﴾</div>
+        <p class="hero-desc" data-i18n="hero.desc">Begin your journey of remembrance. Count your tasbeeh, earn hasanat, and compete with fellow Muslims in goodness.</p>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-value" id="heroToday">0</div>
+            <div class="hero-stat-label" data-i18n="hero.today">Today's Tasbeeh</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value" id="heroTotal">0</div>
+            <div class="hero-stat-label" data-i18n="hero.total">Total</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-value" id="heroStreak">0</div>
+            <div class="hero-stat-label" data-i18n="hero.streak">Day Streak</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div>
+        <div class="section-title" data-i18n="home.choose">Choose your dhikr</div>
+        <div class="section-subtitle" data-i18n="home.chooseSub">Tap any dhikr to begin counting</div>
+      </div>
+    </div>
+
+    <div class="thikr-grid" id="thikrGrid"></div>
+  </div>
+
+  <!-- Counter -->
+  <div class="page" id="page-counter">
+    <div class="counter-layout">
+      <div class="counter-main">
+        <button class="counter-back" onclick="navigateTo('home')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          <span data-i18n="counter.back">Back</span>
+        </button>
+        <div class="counter-thikr" id="counterThikr">سُبْحَانَ اللَّهِ</div>
+        <div class="counter-meta" id="counterMeta">SubhanAllah · Glory be to Allah</div>
+
+        <div class="counter-ring-wrap">
+          <svg class="counter-ring-svg" viewBox="0 0 320 320">
+            <defs>
+              <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#d4b84a"/>
+                <stop offset="50%" stop-color="#c9a227"/>
+                <stop offset="100%" stop-color="#a08020"/>
+              </linearGradient>
+            </defs>
+            <circle class="ring-track" cx="160" cy="160" r="148"/>
+            <circle class="ring-fill" id="ringFill" cx="160" cy="160" r="148"
+              stroke-dasharray="929.9" stroke-dashoffset="929.9"/>
+          </svg>
+          <button class="counter-btn" id="counterBtn" onclick="incrementCounter()">
+            <div class="counter-num" id="counterNum">0</div>
+            <div class="counter-label" data-i18n="counter.tap">Tap to count</div>
+          </button>
+        </div>
+
+        <div class="counter-target">
+          <span data-i18n="counter.target">Target:</span> <strong id="targetDisplay">33</strong> ·
+          <span data-i18n="counter.remaining">Remaining:</span> <strong id="remainingDisplay">33</strong>
+        </div>
+
+        <div class="target-selector">
+          <button class="target-chip active" data-target="33">33</button>
+          <button class="target-chip" data-target="100">100</button>
+          <button class="target-chip" data-target="500">500</button>
+          <button class="target-chip" data-target="1000">1000</button>
+        </div>
+
+        <div class="counter-actions">
+          <button class="btn btn-primary" onclick="saveSession()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            <span data-i18n="counter.save">Save</span>
+          </button>
+          <button class="btn btn-secondary" onclick="undoCounter()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+            <span data-i18n="counter.undo">Undo</span>
+          </button>
+          <button class="btn btn-danger" onclick="resetCounter()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            <span data-i18n="counter.reset">Reset</span>
+          </button>
+        </div>
+      </div>
+
+      <aside class="hadith-panel">
+        <div class="hadith-panel-head">
+          <div class="hadith-panel-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <div>
+            <div class="hadith-panel-title" data-i18n="counter.virtues">Virtues of this dhikr</div>
+            <div class="hadith-panel-sub" data-i18n="counter.virtuesSub">Authentic narrations from the Sunnah</div>
+          </div>
+        </div>
+        <div id="hadithList"></div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Leaderboard -->
+  <div class="page" id="page-leaderboard">
+    <div class="lb-head">
+      <div>
+        <div class="lb-title" data-i18n="lb.title">🏆 Leaderboard</div>
+        <div class="section-subtitle" data-i18n="lb.sub">Compete in goodness and race in remembrance</div>
+      </div>
+      <div class="lb-controls">
+        <div class="segmented" id="timeFilter">
+          <button class="seg-btn active" data-filter="daily" data-i18n="lb.daily">Daily</button>
+          <button class="seg-btn" data-filter="weekly" data-i18n="lb.weekly">Weekly</button>
+          <button class="seg-btn" data-filter="monthly" data-i18n="lb.monthly">Monthly</button>
+          <button class="seg-btn" data-filter="all" data-i18n="lb.all">All Time</button>
+        </div>
+        <div class="select-wrap">
+          <select class="select" id="thikrFilter">
+            <option value="all" data-i18n="lb.allDhikr">All dhikr</option>
+            <option value="subhanallah">SubhanAllah</option>
+            <option value="alhamdulillah">Alhamdulillah</option>
+            <option value="allahuakbar">Allahu Akbar</option>
+            <option value="la_ilaha">La ilaha illallah</option>
+            <option value="astaghfirullah">Astaghfirullah</option>
+            <option value="la_hawla">La hawla wa la quwwata...</option>
+            <option value="salawat">Salawat upon the Prophet ﷺ</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="podium" id="podium"></div>
+
+    <div class="lb-table">
+      <div class="lb-row head">
+        <div>#</div>
+        <div data-i18n="lb.user">User</div>
+        <div style="text-align:center" data-i18n="lb.count">Count</div>
+        <div style="text-align:center" data-i18n="lb.dhikr">Dhikr</div>
+        <div class="lb-streak" style="text-align:center" data-i18n="lb.streak">Streak</div>
+      </div>
+      <div id="lbBody"></div>
+    </div>
+
+    <div class="lb-update-info">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span data-i18n="lb.updates">Leaderboard refreshes hourly</span>
+    </div>
+  </div>
+
+  <!-- Profile -->
+  <div class="page" id="page-profile">
+    <div class="profile-hero">
+      <div class="profile-avatar-lg" id="profileAvatar">?</div>
+      <div class="profile-name" id="profileName" data-i18n="profile.guest">Guest</div>
+      <div class="profile-joined" id="profileJoined" data-i18n="profile.guestMsg">Your progress is saved locally on this device</div>
+      <div class="profile-stats">
+        <div class="profile-stat">
+          <div class="profile-stat-value" id="pTotal">0</div>
+          <div class="profile-stat-label" data-i18n="profile.total">Total</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value" id="pToday">0</div>
+          <div class="profile-stat-label" data-i18n="profile.today">Today</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value" id="pStreak">0</div>
+          <div class="profile-stat-label" data-i18n="profile.days">Days</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value" id="pBest">—</div>
+          <div class="profile-stat-label" data-i18n="profile.favorite">Favorite</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="saveCtaArea"></div>
+
+    <div class="section-head">
+      <div>
+        <div class="section-title" data-i18n="profile.achievements">Achievements</div>
+        <div class="section-subtitle" data-i18n="profile.achievementsSub">Badges unlocked through remembrance</div>
+      </div>
+    </div>
+
+    <div class="achievements" id="achievements"></div>
+
+    <div class="section-head">
+      <div>
+        <div class="section-title" data-i18n="profile.history">Dhikr History</div>
+        <div class="section-subtitle" data-i18n="profile.historySub">Your detailed statistics</div>
+      </div>
+    </div>
+
+    <div class="lb-table">
+      <div class="lb-row head">
+        <div>#</div>
+        <div data-i18n="profile.dhikr">Dhikr</div>
+        <div style="text-align:center" data-i18n="profile.totalCount">Total</div>
+        <div style="text-align:center" data-i18n="profile.lastUsed">Last used</div>
+      </div>
+      <div id="profileHistory"></div>
+    </div>
+
+    <div style="margin-top:32px; text-align:center; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+      <button class="btn btn-secondary" onclick="openAuthModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span data-i18n="profile.account">Account</span>
+      </button>
+      <button class="btn btn-danger" onclick="logout()" id="logoutBtn" style="display:none;">
+        <span data-i18n="profile.logout">Sign out</span>
+      </button>
+    </div>
+  </div>
+
+</main>
+
+<!-- Auth Modal -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuthModal()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="modal-mark">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z" stroke="#c9a227" stroke-width="1.5" stroke-linejoin="round"/>
+        <circle cx="12" cy="12" r="3" fill="#c9a227"/>
+      </svg>
+    </div>
+    <h3 id="authTitle" data-i18n="auth.welcome">Welcome to DHIKR</h3>
+    <p id="authDesc" data-i18n="auth.desc">Create an account to save your progress across devices and appear on the leaderboard.</p>
+
+    <div class="modal-tabs">
+      <button class="modal-tab active" data-auth="signup" data-i18n="auth.signup">Sign up</button>
+      <button class="modal-tab" data-auth="login" data-i18n="auth.login">Log in</button>
+    </div>
+
+    <div class="modal-error" id="authError"></div>
+
+    <input type="text" class="modal-input" id="authDisplayName" placeholder="Display name" data-i18n-placeholder="auth.displayName">
+    <input type="email" class="modal-input" id="authEmail" placeholder="Email" data-i18n-placeholder="auth.email">
+    <input type="password" class="modal-input" id="authPassword" placeholder="Password (min 6 chars)" data-i18n-placeholder="auth.password">
+
+    <button class="modal-btn" id="authSubmit" onclick="submitAuth()">
+      <span data-i18n="auth.createAccount">Create account</span>
+    </button>
+
+    <div class="modal-divider" data-i18n="auth.or">or</div>
+
+    <button class="modal-guest" onclick="continueAsGuest()">
+      <span data-i18n="auth.continueGuest">Continue as guest (local only)</span>
+    </button>
+  </div>
+</div>
+
+<!-- Prayer Reminder -->
+<div class="prayer-reminder" id="prayerReminder">
+  <div class="prayer-reminder-head">
+    <div class="prayer-reminder-icon">🕌</div>
+    <div class="prayer-reminder-title" data-i18n="prayer.title">A gentle reminder</div>
+  </div>
+  <div class="prayer-reminder-text" data-i18n="prayer.text">Have you performed your obligatory ṣalāh today? The prayer is the first deed a person will be accounted for on the Day of Judgment.</div>
+  <div class="prayer-reminder-verse" data-i18n="prayer.verse">﴿ إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا ﴾</div>
+  <div class="prayer-reminder-actions">
+    <button class="prayer-reminder-btn primary" onclick="acknowledgePrayer()" data-i18n="prayer.done">Yes, alḥamdulillāh</button>
+    <button class="prayer-reminder-btn secondary" onclick="dismissPrayer()" data-i18n="prayer.later">Remind me later</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toastText">Saved</span>
+</div>
+
+<script>
+// ==================== I18N ====================
+const I18N = {
+  en: {
+    brand: { name: 'DHIKR', tagline: 'Tasbeeh Companion' },
+    nav: { home: 'Home', counter: 'Tasbeeh', leaderboard: 'Leaders', profile: 'Profile' },
+    hero: {
+      greeting: 'Peace be upon you',
+      title: 'Verily, in the remembrance of Allah do hearts find rest',
+      verse: '﴿ "And remember your Lord within yourself, humbly and in fear, without being loud in words, in the mornings and the evenings." — Al-Aʿrāf 7:205 ﴾',
+      desc: 'Begin your journey of remembrance. Count your tasbeeh, earn hasanat, and compete with fellow Muslims in goodness.',
+      today: "Today's Tasbeeh", total: 'Total', streak: 'Day Streak'
+    },
+    home: { choose: 'Choose your dhikr', chooseSub: 'Tap any dhikr to begin counting' },
+    counter: {
+      back: 'Back', tap: 'Tap to count', target: 'Target:', remaining: 'Remaining:',
+      save: 'Save', undo: 'Undo', reset: 'Reset',
+      virtues: 'Virtues of this dhikr', virtuesSub: 'Authentic narrations from the Sunnah'
+    },
+    lb: {
+      title: '🏆 Leaderboard', sub: 'Compete in goodness and race in remembrance',
+      daily: 'Daily', weekly: 'Weekly', monthly: 'Monthly', all: 'All Time',
+      allDhikr: 'All dhikr', user: 'User', count: 'Count', dhikr: 'Dhikr',
+      streak: 'Streak', updates: 'Leaderboard refreshes hourly',
+      empty: 'No entries yet', emptySub: 'Be the first to earn a spot on the leaderboard!',
+      noMore: 'No more entries'
+    },
+    profile: {
+      guest: 'Guest', guestMsg: 'Your progress is saved locally on this device',
+      total: 'Total', today: 'Today', days: 'Days', favorite: 'Favorite',
+      achievements: 'Achievements', achievementsSub: 'Badges unlocked through remembrance',
+      history: 'Dhikr History', historySub: 'Your detailed statistics',
+      dhikr: 'Dhikr', totalCount: 'Total', lastUsed: 'Last used',
+      account: 'Account', logout: 'Sign out',
+      saveCtaTitle: 'Save your progress to the cloud',
+      saveCtaDesc: 'Create a free account to keep your progress safe across devices and appear on the leaderboard.',
+      saveCtaBtn: 'Create account',
+      emptyHistory: "You haven't started yet. Begin now!"
+    },
+    auth: {
+      welcome: 'Welcome to DHIKR',
+      desc: 'Create an account to save your progress across devices and appear on the leaderboard.',
+      signup: 'Sign up', login: 'Log in',
+      displayName: 'Display name', email: 'Email', password: 'Password (min 6 chars)',
+      createAccount: 'Create account', loginBtn: 'Log in',
+      or: 'or', continueGuest: 'Continue as guest (local only)',
+      errors: {
+        shortName: 'Name must be at least 2 characters',
+        invalidEmail: 'Please enter a valid email',
+        shortPassword: 'Password must be at least 6 characters',
+        wrongCredentials: 'Invalid email or password',
+        emailTaken: 'An account with this email already exists',
+        generic: 'Something went wrong. Please try again.'
+      }
+    },
+    prayer: {
+      title: 'A gentle reminder',
+      text: 'Have you performed your obligatory ṣalāh today? The prayer is the first deed a person will be accounted for on the Day of Judgment.',
+      verse: '﴿ "Indeed, prayer has been decreed upon the believers at specified times." — An-Nisāʾ 4:103 ﴾',
+      done: 'Yes, alḥamdulillāh', later: 'Remind me later'
+    },
+    toast: {
+      saved: (n, d) => `Saved ${n} × ${d}`,
+      milestone: (n) => `Mā shāʾ Allāh! You reached ${n} 🌟`,
+      tapFirst: 'Tap the counter first',
+      resetConfirm: 'Reset the counter to zero?',
+      welcome: (n) => `Welcome, ${n}! 🌙`,
+      loggedOut: 'Signed out',
+      prayerAck: 'May Allāh accept it from you 🤲'
+    },
+    thikr: {
+      subhanallah: { latin: 'SubhanAllah', meaning: 'Glory be to Allah', reward: 'Two words light on the tongue, heavy on the Scale' },
+      alhamdulillah: { latin: 'Alhamdulillah', meaning: 'All praise is due to Allah', reward: 'Alhamdulillah fills the Scale' },
+      allahuakbar: { latin: 'Allahu Akbar', meaning: 'Allah is the Greatest', reward: 'Among the most beloved words to Allah' },
+      la_ilaha: { latin: 'La ilaha illallah', meaning: 'There is no god but Allah', reward: 'The best remembrance' },
+      astaghfirullah: { latin: 'Astaghfirullah', meaning: 'I seek forgiveness from Allah', reward: 'A way out from every distress' },
+      la_hawla: { latin: 'La hawla wa la quwwata illa billah', meaning: 'There is no power nor strength except with Allah', reward: 'A treasure from the treasures of Paradise' },
+      salawat: { latin: 'Allahumma salli ʿala Muhammad', meaning: 'O Allah, send blessings upon Muhammad ﷺ', reward: 'One salawat brings ten blessings from Allah' }
+    },
+    achievements: [
+      { id: 'first', icon: '🌱', title: 'First Seed', desc: 'Your first tasbeeh' },
+      { id: 'hundred', icon: '💯', title: 'One Hundred', desc: 'Reached 100 tasbeeh' },
+      { id: 'thousand', icon: '🌟', title: 'One Thousand', desc: 'Reached 1,000 tasbeeh' },
+      { id: 'fivek', icon: '⭐', title: 'Five Thousand', desc: 'Reached 5,000 tasbeeh' },
+      { id: 'streak3', icon: '🔥', title: 'Steadfast', desc: '3 days in a row' },
+      { id: 'streak7', icon: '🔥', title: 'Consistent', desc: '7 days in a row' },
+      { id: 'streak30', icon: '👑', title: 'One Who Remembers', desc: '30 days in a row' },
+      { id: 'variety', icon: '🎯', title: 'Comprehensive', desc: 'Recited all 7 dhikr' }
+    ]
+  },
+  ar: {
+    brand: { name: 'ذِكْر', tagline: 'رفيق التسبيح' },
+    nav: { home: 'الرئيسية', counter: 'المسبحة', leaderboard: 'المتصدرون', profile: 'ملفي' },
+    hero: {
+      greeting: 'السلام عليكم ورحمة الله',
+      title: 'ألا بذكر الله تطمئن القلوب',
+      verse: '﴿ وَاذْكُر رَّبَّكَ فِي نَفْسِكَ تَضَرُّعًا وَخِيفَةً وَدُونَ الْجَهْرِ مِنَ الْقَوْلِ ﴾ — الأعراف ٢٠٥',
+      desc: 'ابدأ رحلتك في ذكر الله، واحسب تسبيحاتك، وتنافس مع إخوانك المسلمين في كسب الحسنات.',
+      today: 'تسبيحة اليوم', total: 'الإجمالي', streak: 'أيام متتالية'
+    },
+    home: { choose: 'اختر ذكرك', chooseSub: 'اضغط على أي ذكر لبدء التسبيح' },
+    counter: {
+      back: 'العودة', tap: 'اضغط للتسبيح', target: 'الهدف:', remaining: 'المتبقي:',
+      save: 'حفظ', undo: 'تراجع', reset: 'إعادة',
+      virtues: 'فضل هذا الذكر', virtuesSub: 'أحاديث صحيحة من السنة النبوية'
+    },
+    lb: {
+      title: '🏆 المتصدرون', sub: 'تنافسوا في الخير وتسابَقوا في الذكر',
+      daily: 'يومي', weekly: 'أسبوعي', monthly: 'شهري', all: 'الكل',
+      allDhikr: 'جميع الأذكار', user: 'المستخدم', count: 'العدد', dhikr: 'الذكر',
+      streak: 'السلسلة', updates: 'تُحدَّث اللوحة كل ساعة',
+      empty: 'لا توجد مشاركات بعد', emptySub: 'كن أول من يتصدر اللوحة!',
+      noMore: 'لا توجد بيانات إضافية'
+    },
+    profile: {
+      guest: 'ضيف', guestMsg: 'تُسجَّل تقدمك محلياً على هذا الجهاز',
+      total: 'الإجمالي', today: 'اليوم', days: 'أيام', favorite: 'المفضل',
+      achievements: 'الإنجازات', achievementsSub: 'شارات تفتحها بذكر الله',
+      history: 'سجل الأذكار', historySub: 'إحصائياتك التفصيلية',
+      dhikr: 'الذكر', totalCount: 'المجموع', lastUsed: 'آخر مرة',
+      account: 'الحساب', logout: 'تسجيل الخروج',
+      saveCtaTitle: 'احفظ تقدمك في السحابة',
+      saveCtaDesc: 'أنشئ حساباً مجانياً للحفاظ على تقدمك عبر الأجهزة وظهورك في لوحة المتصدرين.',
+      saveCtaBtn: 'إنشاء حساب',
+      emptyHistory: 'لم تبدأ التسبيح بعد. ابدأ الآن!'
+    },
+    auth: {
+      welcome: 'مرحباً بك في ذِكْر',
+      desc: 'أنشئ حساباً لحفظ تقدمك عبر الأجهزة وظهورك في لوحة المتصدرين.',
+      signup: 'إنشاء حساب', login: 'تسجيل الدخول',
+      displayName: 'اسم العرض', email: 'البريد الإلكتروني', password: 'كلمة المرور (٦ أحرف على الأقل)',
+      createAccount: 'إنشاء الحساب', loginBtn: 'دخول',
+      or: 'أو', continueGuest: 'المتابعة كضيف (محلي فقط)',
+      errors: {
+        shortName: 'يجب أن يكون الاسم حرفين على الأقل',
+        invalidEmail: 'الرجاء إدخال بريد صحيح',
+        shortPassword: 'كلمة المرور يجب أن تكون ٦ أحرف على الأقل',
+        wrongCredentials: 'البريد أو كلمة المرور غير صحيحة',
+        emailTaken: 'يوجد حساب بهذا البريد مسبقاً',
+        generic: 'حدث خطأ. حاول مرة أخرى.'
+      }
+    },
+    prayer: {
+      title: 'تذكير لطيف',
+      text: 'هل أديتَ صَلاتَك المفروضة اليوم؟ الصلاة أول ما يُحاسب عليه العبد يوم القيامة.',
+      verse: '﴿ إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا ﴾ — النساء ١٠٣',
+      done: 'نعم، الحمد لله', later: 'ذكرني لاحقاً'
+    },
+    toast: {
+      saved: (n, d) => `حُفظت ${n} من ${d}`,
+      milestone: (n) => `ما شاء الله! أتممت ${n} 🌟`,
+      tapFirst: 'اضغط على العداد أولاً',
+      resetConfirm: 'هل تريد إعادة العداد إلى الصفر؟',
+      welcome: (n) => `مرحباً بك يا ${n}! 🌙`,
+      loggedOut: 'تم تسجيل الخروج',
+      prayerAck: 'تقبّل الله منك 🤲'
+    },
+    thikr: {
+      subhanallah: { latin: 'SubhanAllah', meaning: 'سبحان الله', reward: 'كلمتان خفيفتان على اللسان، ثقيلتان في الميزان' },
+      alhamdulillah: { latin: 'Alhamdulillah', meaning: 'الحمد لله', reward: 'الحمد لله تملأ الميزان' },
+      allahuakbar: { latin: 'Allahu Akbar', meaning: 'الله أكبر', reward: 'من أحب الكلام إلى الله' },
+      la_ilaha: { latin: 'La ilaha illallah', meaning: 'لا إله إلا الله', reward: 'أفضل الذكر' },
+      astaghfirullah: { latin: 'Astaghfirullah', meaning: 'أستغفر الله', reward: 'مخرج من كل ضيق' },
+      la_hawla: { latin: 'La hawla wa la quwwata illa billah', meaning: 'لا حول ولا قوة إلا بالله', reward: 'كنز من كنوز الجنة' },
+      salawat: { latin: 'Allahumma salli ʿala Muhammad', meaning: 'اللهم صلِّ على محمد', reward: 'من صلى عليّ صلاة صلى الله عليه بها عشراً' }
+    },
+    achievements: [
+      { id: 'first', icon: '🌱', title: 'البذرة الأولى', desc: 'أول تسبيحة' },
+      { id: 'hundred', icon: '💯', title: 'مئة تسبيحة', desc: 'أتممت 100 تسبيحة' },
+      { id: 'thousand', icon: '🌟', title: 'الألف', desc: '1000 تسبيحة' },
+      { id: 'fivek', icon: '⭐', title: 'الخامسة', desc: '5000 تسبيحة' },
+      { id: 'streak3', icon: '🔥', title: 'ثابت', desc: '3 أيام متتالية' },
+      { id: 'streak7', icon: '🔥', title: 'مواظب', desc: '7 أيام متتالية' },
+      { id: 'streak30', icon: '👑', title: 'الذاكر', desc: '30 يوماً متتالياً' },
+      { id: 'variety', icon: '🎯', title: 'جامع', desc: 'سبّحت بكل الأذكار' }
+    ]
+  }
+};
+
+// Hadith data (always bilingual for authenticity)
+const THIKR = {
+  subhanallah: {
+    arabic: 'سُبْحَانَ اللَّهِ',
+    icon: '🌿',
+    hadiths: [
+      {
+        ar: 'قال رسول الله ﷺ: «كَلِمَتَانِ خَفِيفَتَانِ عَلَى اللِّسَانِ، ثَقِيلَتَانِ فِي الْمِيزَانِ، حَبِيبَتَانِ إِلَى الرَّحْمَنِ: سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَ اللَّهِ الْعَظِيمِ»',
+        en: 'The Prophet ﷺ said: "Two words are light on the tongue, heavy on the Scale, and beloved to the Most Merciful: SubhanAllah wa bihamdihi, SubhanAllah al-ʿAẓīm."',
+        source: { en: 'Agreed upon (Bukhārī 6406, Muslim 2694)', ar: 'متفق عليه' }
+      },
+      {
+        ar: 'قال رسول الله ﷺ: «مَنْ قَالَ: سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، فِي يَوْمٍ مِائَةَ مَرَّةٍ، حُطَّتْ خَطَايَاهُ وَإِنْ كَانَتْ مِثْلَ زَبَدِ الْبَحْرِ»',
+        en: 'The Prophet ﷺ said: "Whoever says SubhanAllah wa bihamdihi one hundred times in a day, his sins will be removed even if they were like the foam of the sea."',
+        source: { en: 'Agreed upon (Bukhārī 6405, Muslim 2691)', ar: 'متفق عليه' }
+      },
+      {
+        ar: 'قال رسول الله ﷺ: «لَأَنْ أَقُولَ سُبْحَانَ اللَّهِ وَالْحَمْدُ لِلَّهِ وَلَا إِلَهَ إِلَّا اللَّهُ وَاللَّهُ أَكْبَرُ أَحَبُّ إِلَيَّ مِمَّا طَلَعَتْ عَلَيْهِ الشَّمْسُ»',
+        en: 'The Prophet ﷺ said: "For me to say SubhanAllah, Alhamdulillah, La ilaha illallah, and Allahu Akbar is more beloved to me than everything the sun rises upon."',
+        source: { en: 'Muslim (2695)', ar: 'رواه مسلم' }
+      }
+    ]
+  },
+  alhamdulillah: {
+    arabic: 'الْحَمْدُ لِلَّهِ',
+    icon: '🌸',
+    hadiths: [
+      {
+        ar: 'قال رسول الله ﷺ: «الطُّهُورُ شَطْرُ الْإِيمَانِ، وَالْحَمْدُ لِلَّهِ تَمْلَأُ الْمِيزَانَ»',
+        en: 'The Prophet ﷺ said: "Purification is half of faith, and Alhamdulillah fills the Scale."',
+        source: { en: 'Muslim (223)', ar: 'رواه مسلم' }
+      },
+      {
+        ar: 'قال رسول الله ﷺ: «إِنَّ اللَّهَ لَيَرْضَى عَنِ الْعَبْدِ أَنْ يَأْكُلَ الْأَكْلَةَ فَيَحْمَدَهُ عَلَيْهَا»',
+        en: 'The Prophet ﷺ said: "Allah is pleased with a servant who eats a meal and praises Him for it."',
+        source: { en: 'Muslim (2734)', ar: 'رواه مسلم' }
+      }
+    ]
+  },
+  allahuakbar: {
+    arabic: 'اللَّهُ أَكْبَرُ',
+    icon: '⛰️',
+    hadiths: [
+      {
+        ar: 'قال رسول الله ﷺ: «أَحَبُّ الْكَلَامِ إِلَى اللَّهِ أَرْبَعٌ: سُبْحَانَ اللَّهِ، وَالْحَمْدُ لِلَّهِ، وَلَا إِلَهَ إِلَّا اللَّهُ، وَاللَّهُ أَكْبَرُ»',
+        en: 'The Prophet ﷺ said: "The most beloved words to Allah are four: SubhanAllah, Alhamdulillah, La ilaha illallah, and Allahu Akbar."',
+        source: { en: 'Muslim (2137)', ar: 'رواه مسلم' }
+      }
+    ]
+  },
+  la_ilaha: {
+    arabic: 'لَا إِلَهَ إِلَّا اللَّهُ',
+    icon: '✨',
+    hadiths: [
+      {
+        ar: 'قال رسول الله ﷺ: «أَفْضَلُ الذِّكْرِ: لَا إِلَهَ إِلَّا اللَّهُ»',
+        en: 'The Prophet ﷺ said: "The best remembrance is Lā ilāha illallāh."',
+        source: { en: 'Al-Ḥākim (authenticated)', ar: 'رواه الحاكم وصححه' }
+      },
+      {
+        ar: 'قال رسول الله ﷺ: «مَنْ قَالَ: لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ... فِي يَوْمٍ مِائَةَ مَرَّةٍ، كَانَتْ لَهُ عَدْلَ عَشْرِ رِقَابٍ، وَكُتِبَ لَهُ مِائَةُ حَسَنَةٍ، وَمُحِيَتْ عَنْهُ مِائَةُ سَيِّئَةٍ، وَكَانَتْ لَهُ حِرْزًا مِنَ الشَّيْطَانِ يَوْمَهُ ذَلِكَ»',
+        en: 'The Prophet ﷺ said: "Whoever says Lā ilāha illallāh... one hundred times in a day, it will be for him the equivalent of freeing ten slaves, one hundred good deeds will be written for him, one hundred bad deeds will be erased, and it will be a protection from Satan for that day."',
+        source: { en: 'Agreed upon (Bukhārī 3293, Muslim 2691)', ar: 'متفق عليه' }
+      }
+    ]
+  },
+  astaghfirullah: {
+    arabic: 'أَسْتَغْفِرُ اللَّهَ',
+    icon: '🕊️',
+    hadiths: [
+      {
+        ar: 'قال رسول الله ﷺ: «وَاللَّهِ إِنِّي لَأَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ فِي الْيَوْمِ أَكْثَرَ مِنْ سَبْعِينَ مَرَّةً»',
+        en: 'The Prophet ﷺ said: "By Allah, I seek forgiveness from Allah and repent to Him more than seventy times a day."',
+        source: { en: 'Bukhārī (6307)', ar: 'رواه البخاري' }
+      },
+      {
+        ar: 'قال رسول الله ﷺ: «مَنْ لَزِمَ الِاسْتِغْفَارَ، جَعَلَ اللَّهُ لَهُ مِنْ كُلِّ ضِيقٍ مَخْرَجًا، وَمِنْ كُلِّ هَمٍّ فَرَجًا، وَرَزَقَهُ مِنْ حَيْثُ لَا يَحْتَسِبُ»',
+        en: 'The Prophet ﷺ said: "Whoever persists in seeking forgiveness, Allah will make for him a way out of every distress, relief from every worry, and provision from where he does not expect."',
+        source: { en: 'Abū Dāwūd (1518) — ḥasan', ar: 'رواه أبو داود' }
+      }
+    ]
+  },
+  la_hawla: {
+    arabic: 'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ',
+    icon: '🗝️',
+    hadiths: [
+      {
+        ar: 'قال رسول الله ﷺ لأبي موسى: «أَلَا أَدُلُّكَ عَلَى كَنْزٍ مِنْ كُنُوزِ الْجَنَّةِ؟» فَقُلْتُ: بَلَى يَا رَسُولَ اللَّهِ. قَالَ: «لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ»',
+        en: 'The Prophet ﷺ said to Abū Mūsā: "Shall I not guide you to a treasure from the treasures of Paradise?" I said: "Yes, O Messenger of Allah." He said: "Lā ḥawla wa lā quwwata illā billāh."',
+        source: { en: 'Agreed upon (Bukhārī 4205, Muslim 2704)', ar: 'متفق عليه' }
+      }
+    ]
+  },
+  salawat: {
+    arabic: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ',
+    icon: '🌹',
+    hadiths: [
+      {
+        ar: 'قال رسول الله ﷺ: «مَنْ صَلَّى عَلَيَّ صَلَاةً وَاحِدَةً، صَلَّى اللَّهُ عَلَيْهِ بِهَا عَشْرًا»',
+        en: 'The Prophet ﷺ said: "Whoever sends one ṣalāh upon me, Allah will send ten upon him."',
+        source: { en: 'Muslim (384)', ar: 'رواه مسلم' }
+      },
+      {
+        ar: 'قال رسول الله ﷺ: «أَوْلَى النَّاسِ بِي يَوْمَ الْقِيَامَةِ أَكْثَرُهُمْ عَلَيَّ صَلَاةً»',
+        en: 'The Prophet ﷺ said: "The people most deserving of me on the Day of Resurrection are those who sent the most ṣalāh upon me."',
+        source: { en: 'Al-Tirmidhī (484) — ḥasan ṣaḥīḥ', ar: 'رواه الترمذي' }
+      }
+    ]
+  }
+};
+
+// ==================== STATE ====================
+let state = {
+  lang: 'en',
+  theme: 'light',
+  user: null,           // { id, email, displayName } or null
+  isGuest: false,
+  stats: { today: 0, total: 0, streak: 0, thikrs: {}, lastActive: null, joinDate: null },
+  currentThikr: null,
+  count: 0,
+  target: 33,
+  leaderboard: [],
+  lastLBRefresh: 0,
+  lastPrayerShown: 0
+};
+
+// ==================== INIT ====================
+function init() {
+  loadState();
+  applyTheme();
+  applyLanguage();
+
+  if (!state.user && !state.isGuest) {
+    setTimeout(() => openAuthModal(), 400);
+  } else {
+    checkStreak();
+  }
+
+  renderAll();
+  setupEvents();
+  startPrayerReminderLoop();
+  scheduleLBRefresh();
+}
+
+function loadState() {
+  const saved = localStorage.getItem('dhikr_state_v3');
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    Object.assign(state, parsed);
+  }
+  if (!state.stats.thikrs) state.stats.thikrs = {};
+}
+
+function saveState() {
+  localStorage.setItem('dhikr_state_v3', JSON.stringify(state));
+}
+
+function checkStreak() {
+  const today = new Date().toISOString().split('T')[0];
+  if (state.stats.lastActive && state.stats.lastActive !== today) {
+    const last = new Date(state.stats.lastActive);
+    const now = new Date(today);
+    const diff = Math.floor((now - last) / 86400000);
+    if (diff > 1) {
+      state.stats.streak = 0;
+      state.stats.today = 0;
+    }
+  }
+  if (state.stats.lastActive !== today) state.stats.today = 0;
+}
+
+// ==================== THEME ====================
+function applyTheme() {
+  document.documentElement.setAttribute('data-theme', state.theme);
+  const btn = document.getElementById('themeToggle');
+  btn.innerHTML = state.theme === 'dark'
+    ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+    : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>';
+}
+
+function toggleTheme() {
+  state.theme = state.theme === 'light' ? 'dark' : 'light';
+  applyTheme();
+  saveState();
+}
+
+// ==================== LANGUAGE ====================
+function applyLanguage() {
+  const lang = state.lang;
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+  document.getElementById('langToggle').textContent = lang === 'en' ? 'AR' : 'EN';
+
+  // Update all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const path = el.getAttribute('data-i18n');
+    const val = getI18n(path);
+    if (typeof val === 'string') el.textContent = val;
+  });
+
+  // Update placeholders
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+    const path = el.getAttribute('data-i18n-placeholder');
+    const val = getI18n(path);
+    if (typeof val === 'string') el.placeholder = val;
+  });
+
+  // Re-render dynamic content
+  renderAll();
+  if (state.currentThikr) {
+    renderHadiths(state.currentThikr);
+  }
+}
+
+function getI18n(path) {
+  const parts = path.split('.');
+  let val = I18N[state.lang];
+  for (const p of parts) {
+    if (val && typeof val === 'object') val = val[p];
+    else return path;
+  }
+  return val;
+}
+
+function toggleLanguage() {
+  state.lang = state.lang === 'en' ? 'ar' : 'en';
+  applyLanguage();
+  saveState();
+}
+
+// ==================== NAVIGATION ====================
+function navigateTo(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelector(`.nav-tab[data-page="${page}"]`).classList.add('active');
+  if (page === 'leaderboard') renderLeaderboard();
+  if (page === 'profile') renderProfile();
+  if (page === 'home') renderHome();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setupEvents() {
+  document.querySelectorAll('.nav-tab').forEach(t => {
+    t.addEventListener('click', () => navigateTo(t.dataset.page));
+  });
+  document.querySelectorAll('#timeFilter .seg-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('#timeFilter .seg-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      renderLeaderboard();
+    });
+  });
+  document.getElementById('thikrFilter').addEventListener('change', renderLeaderboard);
+  document.querySelectorAll('.target-chip').forEach(c => {
+    c.addEventListener('click', () => {
+      document.querySelectorAll('.target-chip').forEach(x => x.classList.remove('active'));
+      c.classList.add('active');
+      state.target = parseInt(c.dataset.target);
+      updateTargetDisplay();
+      updateRing();
+    });
+  });
+  document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+  document.querySelectorAll('.modal-tab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.modal-tab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      const mode = t.dataset.auth;
+      document.getElementById('authDisplayName').style.display = mode === 'signup' ? 'block' : 'none';
+      document.querySelector('#authSubmit [data-i18n]').setAttribute('data-i18n', mode === 'signup' ? 'auth.createAccount' : 'auth.loginBtn');
+      document.querySelector('#authSubmit [data-i18n]').textContent = getI18n(mode === 'signup' ? 'auth.createAccount' : 'auth.loginBtn');
+    });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.code === 'Space' && document.getElementById('page-counter').classList.contains('active')) {
+      e.preventDefault();
+      incrementCounter();
+    }
+  });
+}
+
+// ==================== AUTH (Supabase integration points) ====================
+function openAuthModal() {
+  document.getElementById('authModal').classList.add('active');
+  document.getElementById('authError').classList.remove('show');
+  document.getElementById('authDisplayName').value = state.user?.displayName || '';
+  document.getElementById('authEmail').value = '';
+  document.getElementById('authPassword').value = '';
+  document.getElementById('authDisplayName').style.display = 'block';
+  document.querySelectorAll('.modal-tab').forEach(x => x.classList.remove('active'));
+  document.querySelector('.modal-tab[data-auth="signup"]').classList.add('active');
+  document.querySelector('#authSubmit [data-i18n]').setAttribute('data-i18n', 'auth.createAccount');
+  document.querySelector('#authSubmit [data-i18n]').textContent = getI18n('auth.createAccount');
+  setTimeout(() => document.getElementById('authEmail').focus(), 100);
+}
+
+function closeAuthModal() {
+  document.getElementById('authModal').classList.remove('active');
+}
+
+function showAuthError(key) {
+  const el = document.getElementById('authError');
+  el.textContent = getI18n('auth.errors.' + key);
+  el.classList.add('show');
+}
+
+async function submitAuth() {
+  const mode = document.querySelector('.modal-tab.active').dataset.auth;
+  const name = document.getElementById('authDisplayName').value.trim();
+  const email = document.getElementById('authEmail').value.trim().toLowerCase();
+  const password = document.getElementById('authPassword').value;
+
+  // Validation
+  if (mode === 'signup' && name.length < 2) return showAuthError('shortName');
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showAuthError('invalidEmail');
+  if (password.length < 6) return showAuthError('shortPassword');
+
+  // ============================================
+  // SUPABASE INTEGRATION POINT
+  // Replace this block with actual Supabase calls:
+  //
+  // if (mode === 'signup') {
+  //   const { data, error } = await supabase.auth.signUp({
+  //     email, password, options: { data: { display_name: name } }
+  //   });
+  //   if (error) return showAuthError('emailTaken');
+  //   state.user = { id: data.user.id, email, displayName: name };
+  // } else {
+  //   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  //   if (error) return showAuthError('wrongCredentials');
+  //   state.user = { id: data.user.id, email, displayName: data.user.user_metadata.display_name };
+  // }
+  //
+  // Then sync local stats to Supabase:
+  // await supabase.from('user_stats').upsert({ user_id: state.user.id, ...state.stats });
+  // ============================================
+
+  // Mock implementation for now (replace with real Supabase)
+  if (mode === 'signup') {
+    state.user = { id: 'user_' + Date.now(), email, displayName: name };
+  } else {
+    // Mock login - in real app, verify against Supabase
+    const existing = localStorage.getItem('dhikr_mock_user_' + email);
+    if (!existing) return showAuthError('wrongCredentials');
+    state.user = JSON.parse(existing);
+  }
+  state.isGuest = false;
+
+  if (mode === 'signup') {
+    localStorage.setItem('dhikr_mock_user_' + email, JSON.stringify(state.user));
+  }
+
+  state.stats.joinDate = state.stats.joinDate || new Date().toISOString().split('T')[0];
+  saveState();
+  closeAuthModal();
+  renderAll();
+  showToast(getI18n('toast.welcome')(state.user.displayName));
+}
+
+function continueAsGuest() {
+  state.isGuest = true;
+  state.stats.joinDate = state.stats.joinDate || new Date().toISOString().split('T')[0];
+  saveState();
+  closeAuthModal();
+  renderAll();
+}
+
+function logout() {
+  state.user = null;
+  state.isGuest = false;
+  saveState();
+  renderAll();
+  showToast(getI18n('toast.loggedOut'));
+  setTimeout(() => openAuthModal(), 500);
+}
+
+// ==================== RENDER ====================
+function renderAll() {
+  renderAuthArea();
+  renderHome();
+  renderThikrGrid();
+  renderProfile();
+  renderSaveCta();
+}
+
+function renderAuthArea() {
+  const area = document.getElementById('authArea');
+  if (state.user) {
+    area.innerHTML = `
+      <div class="user-chip" onclick="navigateTo('profile')">
+        <div class="user-avatar">${state.user.displayName.charAt(0).toUpperCase()}</div>
+        <span class="user-name">${state.user.displayName}</span>
+      </div>`;
+  } else if (state.isGuest) {
+    area.innerHTML = `
+      <div class="user-chip" onclick="navigateTo('profile')">
+        <div class="user-avatar" style="background:var(--bone); color:var(--muted);">?</div>
+        <span class="user-name">${getI18n('profile.guest')}</span>
+      </div>`;
+  } else {
+    area.innerHTML = `<button class="auth-btn" onclick="openAuthModal()">${getI18n('auth.signup')}</button>`;
+  }
+}
+
+function renderHome() {
+  document.getElementById('heroToday').textContent = state.stats.today.toLocaleString();
+  document.getElementById('heroTotal').textContent = state.stats.total.toLocaleString();
+  document.getElementById('heroStreak').textContent = state.stats.streak.toLocaleString();
+}
+
+function renderThikrGrid() {
+  const grid = document.getElementById('thikrGrid');
+  grid.innerHTML = '';
+  for (const [key, data] of Object.entries(THIKR)) {
+    const count = state.stats.thikrs[key] || 0;
+    const t = I18N[state.lang].thikr[key];
+    const card = document.createElement('div');
+    card.className = 'thikr-card';
+    card.innerHTML = `
+      <div class="thikr-card-head">
+        <div class="thikr-icon">${data.icon}</div>
+        ${count > 0 ? `<div class="thikr-count-pill">${count.toLocaleString()} ${state.lang === 'ar' ? 'اليوم' : 'today'}</div>` : ''}
+      </div>
+      <div class="thikr-arabic">${data.arabic}</div>
+      <div class="thikr-latin">${t.latin}</div>
+      <div class="thikr-meaning">${t.meaning}</div>
+      <div class="thikr-card-foot">
+        <div class="thikr-reward">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          ${t.reward}
+        </div>
+        <div class="thikr-arrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+    `;
+    card.addEventListener('click', () => openCounter(key));
+    grid.appendChild(card);
+  }
+}
+
+// ==================== COUNTER ====================
+function openCounter(key) {
+  state.currentThikr = key;
+  state.count = 0;
+  const t = I18N[state.lang].thikr[key];
+  document.getElementById('counterThikr').textContent = THIKR[key].arabic;
+  document.getElementById('counterMeta').textContent = `${t.latin} · ${t.meaning}`;
+  updateCounterDisplay();
+  renderHadiths(key);
+  navigateTo('counter');
+}
+
+function incrementCounter() {
+  state.count++;
+  const btn = document.getElementById('counterBtn');
+  btn.classList.remove('tapped');
+  void btn.offsetWidth;
+  btn.classList.add('tapped');
+  if (navigator.vibrate) navigator.vibrate(10);
+  updateCounterDisplay();
+  if (state.count === state.target) {
+    setTimeout(() => showToast(getI18n('toast.milestone')(state.target)), 300);
+  }
+}
+
+function undoCounter() {
+  if (state.count > 0) { state.count--; updateCounterDisplay(); }
+}
+
+function resetCounter() {
+  if (state.count === 0) return;
+  if (confirm(getI18n('toast.resetConfirm'))) {
+    state.count = 0;
+    updateCounterDisplay();
+  }
+}
+
+function updateCounterDisplay() {
+  document.getElementById('counterNum').textContent = state.count.toLocaleString();
+  updateRing();
+  updateTargetDisplay();
+}
+
+function updateRing() {
+  const circumference = 2 * Math.PI * 148;
+  const progress = Math.min(state.count / state.target, 1);
+  const offset = circumference * (1 - progress);
+  document.getElementById('ringFill').style.strokeDashoffset = offset;
+}
+
+function updateTargetDisplay() {
+  document.getElementById('targetDisplay').textContent = state.target.toLocaleString();
+  const remaining = Math.max(0, state.target - state.count);
+  document.getElementById('remainingDisplay').textContent = remaining.toLocaleString();
+}
+
+function saveSession() {
+  if (state.count === 0) { showToast(getI18n('toast.tapFirst')); return; }
+  if (!state.stats.thikrs[state.currentThikr]) state.stats.thikrs[state.currentThikr] = 0;
+  state.stats.thikrs[state.currentThikr] += state.count;
+  state.stats.today += state.count;
+  state.stats.total += state.count;
+  state.stats.lastActive = new Date().toISOString().split('T')[0];
+  if (state.stats.streak === 0) state.stats.streak = 1;
+
+  // Add to leaderboard
+  const today = new Date().toISOString().split('T')[0];
+  const displayName = state.user?.displayName || (state.isGuest ? 'Guest_' + Math.floor(Math.random() * 1000) : 'Guest');
+  const userId = state.user?.id || 'guest_' + localStorage.getItem('dhikr_guest_id') || (() => {
+    const id = 'guest_' + Date.now();
+    localStorage.setItem('dhikr_guest_id', id);
+    return id;
+  })();
+
+  const existing = state.leaderboard.findIndex(e =>
+    e.userId === userId && e.thikr === state.currentThikr && e.date === today
+  );
+  if (existing >= 0) {
+    state.leaderboard[existing].count += state.count;
+  } else {
+    state.leaderboard.push({
+      userId, displayName,
+      thikr: state.currentThikr,
+      count: state.count,
+      date: today,
+      streak: state.stats.streak
+    });
+  }
+
+  saveState();
+  const t = I18N[state.lang].thikr[state.currentThikr];
+  showToast(getI18n('toast.saved')(state.count.toLocaleString(), THIKR[state.currentThikr].arabic));
+  state.count = 0;
+  updateCounterDisplay();
+  renderThikrGrid();
+  renderHome();
+}
+
+function renderHadiths(key) {
+  const list = document.getElementById('hadithList');
+  list.innerHTML = '';
+  THIKR[key].hadiths.forEach(h => {
+    const item = document.createElement('div');
+    item.className = 'hadith-item';
+    item.innerHTML = `
+      <div class="hadith-arabic">${h.ar}</div>
+      <div class="hadith-translation">${h.en}</div>
+      <div class="hadith-source">${h.source[state.lang]}</div>
+    `;
+    list.appendChild(item);
+  });
+}
+
+// ==================== LEADERBOARD ====================
+function renderLeaderboard() {
+  const filter = document.querySelector('#timeFilter .seg-btn.active').dataset.filter;
+  const thikrFilter = document.getElementById('thikrFilter').value;
+  const today = new Date();
+  const todayStr = today.toISOString().split('T')[0];
+
+  let data = [...state.leaderboard];
+
+  if (filter === 'daily') data = data.filter(e => e.date === todayStr);
+  else if (filter === 'weekly') {
+    const weekAgo = new Date(today); weekAgo.setDate(weekAgo.getDate() - 7);
+    data = data.filter(e => new Date(e.date) >= weekAgo);
+  } else if (filter === 'monthly') {
+    const monthAgo = new Date(today); monthAgo.setMonth(monthAgo.getMonth() - 1);
+    data = data.filter(e => new Date(e.date) >= monthAgo);
+  }
+
+  if (thikrFilter !== 'all') data = data.filter(e => e.thikr === thikrFilter);
+
+  // Group by user+thikr
+  const grouped = {};
+  data.forEach(e => {
+    const key = e.userId + '|' + e.thikr;
+    if (!grouped[key]) grouped[key] = { userId: e.userId, displayName: e.displayName, thikr: e.thikr, count: 0, streak: 0 };
+    grouped[key].count += e.count;
+    if (e.streak > grouped[key].streak) grouped[key].streak = e.streak;
+  });
+
+  const sorted = Object.values(grouped).sort((a, b) => b.count - a.count);
+
+  renderPodium(sorted.slice(0, 3));
+  renderLBTable(sorted.slice(3));
+}
+
+function renderPodium(top3) {
+  const podium = document.getElementById('podium');
+  podium.innerHTML = '';
+  if (top3.length === 0) {
+    podium.innerHTML = `
+      <div class="empty" style="grid-column:1/-1">
+        <div class="empty-icon">🏆</div>
+        <div class="empty-title">${getI18n('lb.empty')}</div>
+        <div class="empty-desc">${getI18n('lb.emptySub')}</div>
+      </div>`;
+    return;
+  }
+
+  const order = [1, 0, 2];
+  const ranks = [
+    { cls: '', badge: 'rank-silver', num: 2 },
+    { cls: 'first', badge: 'rank-gold', num: 1 },
+    { cls: '', badge: 'rank-bronze', num: 3 }
+  ];
+
+  order.forEach((idx, i) => {
+    const item = top3[idx];
+    if (!item) return;
+    const rank = ranks[i];
+    const card = document.createElement('div');
+    card.className = `podium-card ${rank.cls}`;
+    card.innerHTML = `
+      <div class="podium-rank-badge ${rank.badge}">${rank.num}</div>
+      <div class="podium-avatar">
+        ${rank.num === 1 ? '<span class="podium-crown">👑</span>' : ''}
+        ${item.displayName.charAt(0).toUpperCase()}
+      </div>
+      <div class="podium-name">${item.displayName}</div>
+      <div class="podium-count">${item.count.toLocaleString()}</div>
+      <div class="podium-thikr">${THIKR[item.thikr].arabic}</div>
+      ${item.streak > 0 ? `<div class="podium-streak"><span class="streak-fire">🔥</span> ${item.streak}</div>` : ''}
+    `;
+    podium.appendChild(card);
+  });
+}
+
+function renderLBTable(sorted) {
+  const body = document.getElementById('lbBody');
+  body.innerHTML = '';
+  if (sorted.length === 0) {
+    body.innerHTML = `<div class="empty"><div class="empty-desc">${getI18n('lb.noMore')}</div></div>`;
+    return;
+  }
+  sorted.forEach((item, i) => {
+    const row = document.createElement('div');
+    row.className = 'lb-row';
+    row.innerHTML = `
+      <div class="lb-rank">${i + 4}</div>
+      <div class="lb-user">
+        <div class="lb-avatar">${item.displayName.charAt(0).toUpperCase()}</div>
+        <span class="lb-name">${item.displayName}</span>
+      </div>
+      <div class="lb-count">${item.count.toLocaleString()}</div>
+      <div class="lb-thikr">${THIKR[item.thikr].arabic}</div>
+      <div class="lb-streak">
+        ${item.streak > 0 ? `<span class="streak-fire">🔥</span>${item.streak}` : '—'}
+      </div>
+    `;
+    body.appendChild(row);
+  });
+}
+
+function scheduleLBRefresh() {
+  // Refresh every hour
+  setInterval(() => {
+    state.lastLBRefresh = Date.now();
+    saveState();
+    if (document.getElementById('page-leaderboard').classList.contains('active')) {
+      renderLeaderboard();
+    }
+  }, 60 * 60 * 1000);
+}
+
+// ==================== PROFILE ====================
+function renderProfile() {
+  const avatar = document.getElementById('profileAvatar');
+  const name = document.getElementById('profileName');
+  const joined = document.getElementById('profileJoined');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  if (state.user) {
+    avatar.textContent = state.user.displayName.charAt(0).toUpperCase();
+    name.textContent = state.user.displayName;
+    const join = state.stats.joinDate || new Date().toISOString().split('T')[0];
+    joined.textContent = (state.lang === 'ar' ? 'عضو منذ ' : 'Member since ') + join;
+    logoutBtn.style.display = 'inline-flex';
+  } else if (state.isGuest) {
+    avatar.textContent = '?';
+    name.textContent = getI18n('profile.guest');
+    joined.textContent = getI18n('profile.guestMsg');
+    logoutBtn.style.display = 'none';
+  } else {
+    avatar.textContent = '?';
+    name.textContent = getI18n('profile.guest');
+    joined.textContent = getI18n('profile.guestMsg');
+    logoutBtn.style.display = 'none';
+  }
+
+  document.getElementById('pTotal').textContent = state.stats.total.toLocaleString();
+  document.getElementById('pToday').textContent = state.stats.today.toLocaleString();
+  document.getElementById('pStreak').textContent = state.stats.streak.toLocaleString();
+
+  let best = '—', max = 0;
+  for (const [k, v] of Object.entries(state.stats.thikrs)) {
+    if (v > max) { max = v; best = THIKR[k].arabic; }
+  }
+  document.getElementById('pBest').textContent = best;
+
+  // Achievements
+  const ach = document.getElementById('achievements');
+  ach.innerHTML = '';
+  const achData = I18N[state.lang].achievements;
+  const checks = [
+    s => s.total >= 1, s => s.total >= 100, s => s.total >= 1000, s => s.total >= 5000,
+    s => s.streak >= 3, s => s.streak >= 7, s => s.streak >= 30,
+    s => Object.keys(s.thikrs).filter(k => s.thikrs[k] > 0).length >= 7
+  ];
+  achData.forEach((a, i) => {
+    const unlocked = checks[i](state.stats);
+    const el = document.createElement('div');
+    el.className = `achievement ${unlocked ? '' : 'locked'}`;
+    el.innerHTML = `
+      <div class="achievement-icon">${a.icon}</div>
+      <div class="achievement-info">
+        <div class="achievement-title">${a.title}</div>
+        <div class="achievement-desc">${a.desc}</div>
+      </div>
+    `;
+    ach.appendChild(el);
+  });
+
+  // History
+  const hist = document.getElementById('profileHistory');
+  hist.innerHTML = '';
+  const sorted = Object.entries(state.stats.thikrs)
+    .filter(([k, v]) => v > 0)
+    .sort((a, b) => b[1] - a[1]);
+  if (sorted.length === 0) {
+    hist.innerHTML = `<div class="empty"><div class="empty-desc">${getI18n('profile.emptyHistory')}</div></div>`;
+    return;
+  }
+  sorted.forEach(([key, count], i) => {
+    const row = document.createElement('div');
+    row.className = 'lb-row';
+    row.innerHTML = `
+      <div class="lb-rank">${i + 1}</div>
+      <div class="lb-user">
+        <div class="lb-avatar">${THIKR[key].icon}</div>
+        <span class="lb-name" style="font-family:'Amiri Quran',serif; font-size:18px">${THIKR[key].arabic}</span>
+      </div>
+      <div class="lb-count">${count.toLocaleString()}</div>
+      <div class="lb-thikr" style="color:var(--muted); font-size:13px">${I18N[state.lang].thikr[key].latin}</div>
+    `;
+    hist.appendChild(row);
+  });
+}
+
+function renderSaveCta() {
+  const area = document.getElementById('saveCtaArea');
+  if (!state.user) {
+    area.innerHTML = `
+      <div class="save-cta">
+        <div class="save-cta-text">
+          <h4>${getI18n('profile.saveCtaTitle')}</h4>
+          <p>${getI18n('profile.saveCtaDesc')}</p>
+        </div>
+        <button class="btn btn-primary" onclick="openAuthModal()">
+          ${getI18n('profile.saveCtaBtn')}
+        </button>
+      </div>`;
+  } else {
+    area.innerHTML = '';
+  }
+}
+
+// ==================== PRAYER REMINDER ====================
+function startPrayerReminderLoop() {
+  // Check every minute if we should show reminder
+  setInterval(checkPrayerReminder, 60 * 1000);
+  // Initial check after 2 minutes (don't spam immediately)
+  setTimeout(checkPrayerReminder, 2 * 60 * 1000);
+}
+
+function checkPrayerReminder() {
+  const now = Date.now();
+  const thirtyMin = 30 * 60 * 1000;
+  const lastShown = state.lastPrayerShown || 0;
+
+  // Only show if:
+  // - 30 minutes have passed since last shown
+  // - User is actively on the page
+  // - Not already visible
+  if (now - lastShown >= thirtyMin && !document.getElementById('prayerReminder').classList.contains('show')) {
+    showPrayerReminder();
+  }
+}
+
+function showPrayerReminder() {
+  state.lastPrayerShown = Date.now();
+  saveState();
+  document.getElementById('prayerReminder').classList.add('show');
+  // Auto-dismiss after 30 seconds if not interacted
+  setTimeout(() => {
+    const el = document.getElementById('prayerReminder');
+    if (el.classList.contains('show')) {
+      el.classList.remove('show');
+    }
+  }, 30 * 1000);
+}
+
+function acknowledgePrayer() {
+  document.getElementById('prayerReminder').classList.remove('show');
+  showToast(getI18n('toast.prayerAck'));
+}
+
+function dismissPrayer() {
+  document.getElementById('prayerReminder').classList.remove('show');
+}
+
+// ==================== TOAST ====================
+function showToast(text) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastText').textContent = text;
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ==================== START ====================
+init();
+</script>
+</body>
+</html>
