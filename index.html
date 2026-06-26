@@ -19,6 +19,15 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- EmailJS SDK -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script type="text/javascript">
+  (function() {
+    emailjs.init("KqC0idYGmnTW5kett");
+  })();
+</script>
+
 <style>
   :root {
     --ink: #1a2e28; --ink-soft: #2d4a40; --forest: #1f4d3a; --forest-deep: #143a2a;
@@ -1301,7 +1310,7 @@ function showAuthError(key) {
   el.classList.add('show');
 }
 
-function submitAuth() {
+async function submitAuth() {
   const activeTab = document.querySelector('.modal-tab.active');
   if (!activeTab) return;
   const mode = activeTab.dataset.auth;
@@ -1322,7 +1331,23 @@ function submitAuth() {
     state.user = { id: 'user_' + Date.now(), email, displayName: name };
     localStorage.setItem('mufarridun_user_' + email, JSON.stringify({ ...state.user, password }));
     
-    showToast(`${state.lang === 'ar' ? 'مرحباً بك يا' : 'Welcome,'} ${name}! 🌙`);
+    // Send welcome email via EmailJS
+    try {
+      await emailjs.send(
+        'service_ux2mk9x',
+        'template_flg5u3d',
+        {
+          username: name,
+          to_email: email
+        }
+      );
+      console.log('Welcome email sent successfully!');
+    } catch (error) {
+      console.error('Failed to send email:', error);
+      // Don't show error to user - registration still succeeded
+    }
+    
+    showToast(`${state.lang === 'ar' ? 'مرحباً بك يا' : 'Welcome,'} ${name}! 🌙 Check your email!`);
   } else {
     const existing = localStorage.getItem('mufarridun_user_' + email);
     if (!existing) return showAuthError('wrongCredentials');
