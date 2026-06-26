@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DHIKR — Tasbeeh Companion</title>
+<title>Mufarridun — The Remembrance Companion</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
     --ink: #1a2e28;
@@ -26,12 +28,11 @@
     --muted: #8a8578;
     --text: #2a2a2a;
     --text-soft: #5a5a5a;
-    --shadow-xs: 0 1px 2px rgba(26,46,40,0.04);
     --shadow-sm: 0 2px 8px rgba(26,46,40,0.06);
     --shadow-md: 0 8px 24px rgba(26,46,40,0.08);
     --shadow-lg: 0 20px 50px rgba(26,46,40,0.12);
+    --shadow-xl: 0 24px 60px rgba(26,46,40,0.16);
     --shadow-gold: 0 8px 24px rgba(201,162,39,0.18);
-    --radius-sm: 10px;
     --radius: 16px;
     --radius-lg: 24px;
     --radius-xl: 32px;
@@ -39,12 +40,9 @@
   }
 
   [data-theme="dark"] {
-    --ink: #0a1410;
-    --ink-soft: #1a2e28;
     --forest: #2d6a4f;
     --forest-deep: #1a4030;
     --emerald: #3d8a6f;
-    --sage: #5a7a6a;
     --gold: #d4b84a;
     --gold-soft: #e0c460;
     --gold-pale: #3a3420;
@@ -219,7 +217,7 @@
     color: var(--gold-pale); line-height: 1.8;
     margin-bottom: 20px; padding: 16px 20px;
     background: rgba(201,162,39,0.1);
-    border-right: 3px solid var(--gold);
+    border-inline-end: 3px solid var(--gold);
     border-radius: 8px; display: inline-block;
   }
   .hero-desc { font-size: 15px; color: rgba(255,255,255,0.85); line-height: 1.7; margin-bottom: 28px; }
@@ -297,21 +295,19 @@
   .thikr-reward {
     font-size: 12px; color: var(--forest); font-weight: 500;
     display: flex; align-items: center; gap: 6px;
-    flex: 1; margin-right: 12px;
+    flex: 1; margin-inline-end: 12px;
   }
-  html[lang="ar"] .thikr-reward { margin-right: 0; margin-left: 12px; }
   .thikr-arrow {
     width: 32px; height: 32px; border-radius: 50%;
     background: var(--bone); color: var(--forest);
     display: flex; align-items: center; justify-content: center;
     transition: all 0.3s var(--ease); flex-shrink: 0;
   }
-  html[dir="rtl"] .thikr-arrow svg { transform: rotate(180deg); }
   .thikr-card:hover .thikr-arrow {
     background: var(--forest); color: var(--gold-pale);
     transform: translateX(-4px);
   }
-  html[dir="rtl"] .thikr-card:hover .thikr-arrow { transform: translateX(-4px) rotate(180deg); }
+  html[dir="rtl"] .thikr-card:hover .thikr-arrow { transform: translateX(4px); }
 
   /* Counter */
   .counter-layout { display: grid; grid-template-columns: 1fr 400px; gap: 32px; align-items: start; }
@@ -331,7 +327,6 @@
     font-family: inherit;
   }
   .counter-back:hover { background: var(--line-soft); color: var(--forest); }
-  html[dir="rtl"] .counter-back svg { transform: rotate(180deg); }
 
   .counter-thikr {
     font-family: 'Amiri Quran', serif; font-size: 44px;
@@ -360,6 +355,7 @@
   }
   .counter-btn:active { transform: scale(0.96); box-shadow: var(--shadow-sm), inset 0 2px 8px rgba(0,0,0,0.08); }
   .counter-btn.tapped { animation: tapPulse 0.25s var(--ease); }
+  .counter-btn.paused { opacity: 0.5; cursor: not-allowed; }
   @keyframes tapPulse { 0%, 100% { transform: scale(1); } 40% { transform: scale(0.93); } 70% { transform: scale(1.02); } }
 
   .counter-num {
@@ -568,7 +564,6 @@
     padding: 12px 24px;
   }
   .lb-rank { font-family: 'Reem Kufi', serif; font-size: 18px; font-weight: 700; color: var(--muted); }
-  .lb-rank.top { color: var(--gold); }
   .lb-user { display: flex; align-items: center; gap: 12px; }
   .lb-avatar {
     width: 36px; height: 36px; border-radius: 50%;
@@ -779,7 +774,65 @@
   }
   .modal-error.show { display: block; }
 
-  /* Prayer Reminder - Soft Popup */
+  /* Verification Modal (Anti-Autoclicker) */
+  .verify-modal {
+    max-width: 400px;
+  }
+  .verify-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .verify-cell {
+    aspect-ratio: 1;
+    border-radius: 14px;
+    background: var(--bone);
+    border: 2px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    cursor: pointer;
+    transition: all 0.2s var(--ease);
+    user-select: none;
+  }
+  .verify-cell:hover {
+    border-color: var(--gold);
+    background: var(--paper);
+    transform: scale(1.05);
+  }
+  .verify-cell.correct {
+    background: rgba(22,163,74,0.15);
+    border-color: #16a34a;
+    animation: correctPulse 0.5s var(--ease);
+  }
+  .verify-cell.wrong {
+    background: rgba(185,28,28,0.1);
+    border-color: #b91c1c;
+    animation: shake 0.4s var(--ease);
+  }
+  @keyframes correctPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+  .verify-timer {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+  .verify-timer strong {
+    color: var(--forest);
+    font-weight: 600;
+  }
+  [data-theme="dark"] .verify-timer strong { color: var(--gold); }
+
+  /* Prayer Reminder */
   .prayer-reminder {
     position: fixed; bottom: 24px; right: 24px;
     max-width: 360px; background: var(--paper);
@@ -865,6 +918,18 @@
     justify-content: center; gap: 6px;
   }
 
+  .config-warning {
+    background: #fef3c7;
+    border: 1px solid #f59e0b;
+    color: #92400e;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    display: none;
+  }
+  .config-warning.show { display: block; }
+
   /* Responsive */
   @media (max-width: 768px) {
     .header-inner, .nav-inner, .main { padding-left: 20px; padding-right: 20px; }
@@ -893,6 +958,8 @@
     .nav-tab { padding: 12px 14px; font-size: 13px; }
     .prayer-reminder { right: 16px; left: 16px; max-width: none; bottom: 16px; }
     html[dir="rtl"] .prayer-reminder { right: 16px; left: 16px; }
+    .verify-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .verify-cell { font-size: 28px; }
   }
 
   @media (max-width: 480px) {
@@ -920,8 +987,8 @@
         </svg>
       </div>
       <div class="brand-text">
-        <div class="brand-name" data-i18n="brand.name">DHIKR</div>
-        <div class="brand-tagline" data-i18n="brand.tagline">Tasbeeh Companion</div>
+        <div class="brand-name" data-i18n="brand.name">Mufarridūn</div>
+        <div class="brand-tagline" data-i18n="brand.tagline">The Remembrance Companion</div>
       </div>
     </div>
     <div class="header-actions">
@@ -962,14 +1029,18 @@
 <!-- Main -->
 <main class="main">
 
+  <div class="config-warning" id="configWarning">
+    ⚠️ <span data-i18n="config.warning">Supabase is not configured. The app will run in local-only mode — your progress won't sync to the leaderboard. See the code comments to set it up.</span>
+  </div>
+
   <!-- Home -->
   <div class="page active" id="page-home">
     <div class="hero">
       <div class="hero-content">
         <div class="hero-greeting" data-i18n="hero.greeting">Peace be upon you</div>
-        <h1 class="hero-title" data-i18n="hero.title">Verily, in the remembrance of Allah do hearts find rest</h1>
-        <div class="hero-verse" data-i18n="hero.verse">﴿ ... ﴾</div>
-        <p class="hero-desc" data-i18n="hero.desc">Begin your journey of remembrance. Count your tasbeeh, earn hasanat, and compete with fellow Muslims in goodness.</p>
+        <h1 class="hero-title" data-i18n="hero.title">The Mufarridūn have gone ahead</h1>
+        <div class="hero-verse" data-i18n="hero.verse">﴿ "And remember your Lord within yourself, humbly and in fear, without being loud in words, in the mornings and the evenings." — Al-Aʿrāf 7:205 ﴾</div>
+        <p class="hero-desc" data-i18n="hero.desc">They are the men and women who remember Allah abundantly. Join them — count your tasbeeh, earn ḥasanāt, and compete with fellow believers in goodness.</p>
         <div class="hero-stats">
           <div class="hero-stat">
             <div class="hero-stat-value" id="heroToday">0</div>
@@ -1197,7 +1268,7 @@
         <circle cx="12" cy="12" r="3" fill="#c9a227"/>
       </svg>
     </div>
-    <h3 id="authTitle" data-i18n="auth.welcome">Welcome to DHIKR</h3>
+    <h3 id="authTitle" data-i18n="auth.welcome">Welcome to Mufarridūn</h3>
     <p id="authDesc" data-i18n="auth.desc">Create an account to save your progress across devices and appear on the leaderboard.</p>
 
     <div class="modal-tabs">
@@ -1223,6 +1294,24 @@
   </div>
 </div>
 
+<!-- Verification Modal (Anti-Autoclicker) -->
+<div class="modal-overlay" id="verifyModal">
+  <div class="modal verify-modal">
+    <div class="modal-mark">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+        <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z" stroke="#c9a227" stroke-width="1.5" stroke-linejoin="round"/>
+        <circle cx="12" cy="12" r="3" fill="#c9a227"/>
+      </svg>
+    </div>
+    <h3 data-i18n="verify.title">Quick verification</h3>
+    <p data-i18n="verify.desc">Tap the crescent moon 🌙 to continue counting</p>
+    <div class="verify-grid" id="verifyGrid"></div>
+    <div class="verify-timer">
+      <span data-i18n="verify.timeLeft">Time left:</span> <strong id="verifyTimer">20</strong>s
+    </div>
+  </div>
+</div>
+
 <!-- Prayer Reminder -->
 <div class="prayer-reminder" id="prayerReminder">
   <div class="prayer-reminder-head">
@@ -1230,7 +1319,7 @@
     <div class="prayer-reminder-title" data-i18n="prayer.title">A gentle reminder</div>
   </div>
   <div class="prayer-reminder-text" data-i18n="prayer.text">Have you performed your obligatory ṣalāh today? The prayer is the first deed a person will be accounted for on the Day of Judgment.</div>
-  <div class="prayer-reminder-verse" data-i18n="prayer.verse">﴿ إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا ﴾</div>
+  <div class="prayer-reminder-verse" data-i18n="prayer.verse">﴿ "Indeed, prayer has been decreed upon the believers at specified times." — An-Nisāʾ 4:103 ﴾</div>
   <div class="prayer-reminder-actions">
     <button class="prayer-reminder-btn primary" onclick="acknowledgePrayer()" data-i18n="prayer.done">Yes, alḥamdulillāh</button>
     <button class="prayer-reminder-btn secondary" onclick="dismissPrayer()" data-i18n="prayer.later">Remind me later</button>
@@ -1244,16 +1333,35 @@
 </div>
 
 <script>
+// =====================================================================
+// ⚠️ FILL THESE IN — Get them from Supabase: Settings → API
+// =====================================================================
+const SUPABASE_URL = 'https://rfrhlaojphipctqkuwmb.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_GyI_vmyKPuiEqC5-bYlHhw_FMH3rdX-';
+// =====================================================================
+
+// Detect if Supabase is configured
+const SUPABASE_CONFIGURED = !SUPABASE_URL.includes('YOUR-PROJECT') &&
+                            !SUPABASE_ANON_KEY.includes('YOUR-ANON-KEY') &&
+                            typeof window.supabase !== 'undefined';
+
+let supabase = null;
+if (SUPABASE_CONFIGURED) {
+  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+} else {
+  console.warn('Mufarridūn: Supabase not configured. Running in local-only mode.');
+}
+
 // ==================== I18N ====================
 const I18N = {
   en: {
-    brand: { name: 'DHIKR', tagline: 'Tasbeeh Companion' },
+    brand: { name: 'Mufarridūn', tagline: 'The Remembrance Companion' },
     nav: { home: 'Home', counter: 'Tasbeeh', leaderboard: 'Leaders', profile: 'Profile' },
     hero: {
       greeting: 'Peace be upon you',
-      title: 'Verily, in the remembrance of Allah do hearts find rest',
+      title: 'The Mufarridūn have gone ahead',
       verse: '﴿ "And remember your Lord within yourself, humbly and in fear, without being loud in words, in the mornings and the evenings." — Al-Aʿrāf 7:205 ﴾',
-      desc: 'Begin your journey of remembrance. Count your tasbeeh, earn hasanat, and compete with fellow Muslims in goodness.',
+      desc: 'They are the men and women who remember Allah abundantly. Join them — count your tasbeeh, earn ḥasanāt, and compete with fellow believers in goodness.',
       today: "Today's Tasbeeh", total: 'Total', streak: 'Day Streak'
     },
     home: { choose: 'Choose your dhikr', chooseSub: 'Tap any dhikr to begin counting' },
@@ -1283,7 +1391,7 @@ const I18N = {
       emptyHistory: "You haven't started yet. Begin now!"
     },
     auth: {
-      welcome: 'Welcome to DHIKR',
+      welcome: 'Welcome to Mufarridūn',
       desc: 'Create an account to save your progress across devices and appear on the leaderboard.',
       signup: 'Sign up', login: 'Log in',
       displayName: 'Display name', email: 'Email', password: 'Password (min 6 chars)',
@@ -1298,6 +1406,14 @@ const I18N = {
         generic: 'Something went wrong. Please try again.'
       }
     },
+    verify: {
+      title: 'Quick verification',
+      desc: 'Tap the crescent moon 🌙 to continue counting',
+      timeLeft: 'Time left:',
+      success: 'Verified — keep going!',
+      failed: 'Please try again',
+      paused: 'Counter paused — verify to continue'
+    },
     prayer: {
       title: 'A gentle reminder',
       text: 'Have you performed your obligatory ṣalāh today? The prayer is the first deed a person will be accounted for on the Day of Judgment.',
@@ -1311,7 +1427,11 @@ const I18N = {
       resetConfirm: 'Reset the counter to zero?',
       welcome: (n) => `Welcome, ${n}! 🌙`,
       loggedOut: 'Signed out',
-      prayerAck: 'May Allāh accept it from you 🤲'
+      prayerAck: 'May Allāh accept it from you 🤲',
+      suspicious: 'Session flagged — not synced to leaderboard'
+    },
+    config: {
+      warning: 'Supabase is not configured. The app will run in local-only mode — your progress won\'t sync to the leaderboard. See the code comments to set it up.'
     },
     thikr: {
       subhanallah: { latin: 'SubhanAllah', meaning: 'Glory be to Allah', reward: 'Two words light on the tongue, heavy on the Scale' },
@@ -1334,13 +1454,13 @@ const I18N = {
     ]
   },
   ar: {
-    brand: { name: 'ذِكْر', tagline: 'رفيق التسبيح' },
+    brand: { name: 'المفردون', tagline: 'رفيق الذكر' },
     nav: { home: 'الرئيسية', counter: 'المسبحة', leaderboard: 'المتصدرون', profile: 'ملفي' },
     hero: {
       greeting: 'السلام عليكم ورحمة الله',
-      title: 'ألا بذكر الله تطمئن القلوب',
+      title: 'سَبَقَ الْمُفَرِّدُونَ',
       verse: '﴿ وَاذْكُر رَّبَّكَ فِي نَفْسِكَ تَضَرُّعًا وَخِيفَةً وَدُونَ الْجَهْرِ مِنَ الْقَوْلِ ﴾ — الأعراف ٢٠٥',
-      desc: 'ابدأ رحلتك في ذكر الله، واحسب تسبيحاتك، وتنافس مع إخوانك المسلمين في كسب الحسنات.',
+      desc: 'هم الذاكرون الله كثيراً والذاكرات. انضم إليهم — احسب تسبيحاتك، واكتسب الحسنات، وتنافس مع إخوانك المؤمنين في الخير.',
       today: 'تسبيحة اليوم', total: 'الإجمالي', streak: 'أيام متتالية'
     },
     home: { choose: 'اختر ذكرك', chooseSub: 'اضغط على أي ذكر لبدء التسبيح' },
@@ -1370,7 +1490,7 @@ const I18N = {
       emptyHistory: 'لم تبدأ التسبيح بعد. ابدأ الآن!'
     },
     auth: {
-      welcome: 'مرحباً بك في ذِكْر',
+      welcome: 'مرحباً بك في المفردون',
       desc: 'أنشئ حساباً لحفظ تقدمك عبر الأجهزة وظهورك في لوحة المتصدرين.',
       signup: 'إنشاء حساب', login: 'تسجيل الدخول',
       displayName: 'اسم العرض', email: 'البريد الإلكتروني', password: 'كلمة المرور (٦ أحرف على الأقل)',
@@ -1385,6 +1505,14 @@ const I18N = {
         generic: 'حدث خطأ. حاول مرة أخرى.'
       }
     },
+    verify: {
+      title: 'تحقق سريع',
+      desc: 'اضغط على الهلال 🌙 لمتابعة التسبيح',
+      timeLeft: 'الوقت المتبقي:',
+      success: 'تم التحقق — واصل!',
+      failed: 'حاول مرة أخرى',
+      paused: 'توقف العداد — تحقق للمتابعة'
+    },
     prayer: {
       title: 'تذكير لطيف',
       text: 'هل أديتَ صَلاتَك المفروضة اليوم؟ الصلاة أول ما يُحاسب عليه العبد يوم القيامة.',
@@ -1398,7 +1526,11 @@ const I18N = {
       resetConfirm: 'هل تريد إعادة العداد إلى الصفر؟',
       welcome: (n) => `مرحباً بك يا ${n}! 🌙`,
       loggedOut: 'تم تسجيل الخروج',
-      prayerAck: 'تقبّل الله منك 🤲'
+      prayerAck: 'تقبّل الله منك 🤲',
+      suspicious: 'تم تمييز الجلسة — لم تُرفع إلى لوحة المتصدرين'
+    },
+    config: {
+      warning: 'لم يتم إعداد Supabase. سيعمل التطبيق في الوضع المحلي فقط — لن يُزامن تقدمك مع لوحة المتصدرين. راجع التعليقات في الكود للإعداد.'
     },
     thikr: {
       subhanallah: { latin: 'SubhanAllah', meaning: 'سبحان الله', reward: 'كلمتان خفيفتان على اللسان، ثقيلتان في الميزان' },
@@ -1422,7 +1554,7 @@ const I18N = {
   }
 };
 
-// Hadith data (always bilingual for authenticity)
+// Hadith data
 const THIKR = {
   subhanallah: {
     arabic: 'سُبْحَانَ اللَّهِ',
@@ -1537,7 +1669,7 @@ const THIKR = {
 let state = {
   lang: 'en',
   theme: 'light',
-  user: null,           // { id, email, displayName } or null
+  user: null,
   isGuest: false,
   stats: { today: 0, total: 0, streak: 0, thikrs: {}, lastActive: null, joinDate: null },
   currentThikr: null,
@@ -1548,11 +1680,39 @@ let state = {
   lastPrayerShown: 0
 };
 
+// Anti-autoclicker state
+let verify = {
+  lastShown: 0,
+  tapTimestamps: [],
+  suspicious: false,
+  currentSession: null,
+  timerInterval: null,
+  timeLeft: 20
+};
+
 // ==================== INIT ====================
-function init() {
+async function init() {
   loadState();
   applyTheme();
   applyLanguage();
+
+  // Show config warning if not set up
+  if (!SUPABASE_CONFIGURED) {
+    document.getElementById('configWarning').classList.add('show');
+  }
+
+  // Try to restore Supabase session
+  if (SUPABASE_CONFIGURED) {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
+      state.user = {
+        id: session.user.id,
+        email: session.user.email,
+        displayName: session.user.user_metadata?.display_name || 'User'
+      };
+      await loadUserData();
+    }
+  }
 
   if (!state.user && !state.isGuest) {
     setTimeout(() => openAuthModal(), 400);
@@ -1564,10 +1724,11 @@ function init() {
   setupEvents();
   startPrayerReminderLoop();
   scheduleLBRefresh();
+  startVerifyLoop();
 }
 
 function loadState() {
-  const saved = localStorage.getItem('dhikr_state_v3');
+  const saved = localStorage.getItem('mufarridun_state_v1');
   if (saved) {
     const parsed = JSON.parse(saved);
     Object.assign(state, parsed);
@@ -1576,7 +1737,7 @@ function loadState() {
 }
 
 function saveState() {
-  localStorage.setItem('dhikr_state_v3', JSON.stringify(state));
+  localStorage.setItem('mufarridun_state_v1', JSON.stringify(state));
 }
 
 function checkStreak() {
@@ -1591,6 +1752,120 @@ function checkStreak() {
     }
   }
   if (state.stats.lastActive !== today) state.stats.today = 0;
+}
+
+// ==================== SUPABASE DATA SYNC ====================
+async function loadUserData() {
+  if (!SUPABASE_CONFIGURED || !state.user) return;
+  try {
+    const { data: stats } = await supabase
+      .from('user_stats')
+      .select('*')
+      .eq('user_id', state.user.id)
+      .maybeSingle();
+
+    if (stats) {
+      state.stats.total = stats.total || 0;
+      state.stats.today = stats.today_count || 0;
+      state.stats.streak = stats.streak || 0;
+      state.stats.lastActive = stats.last_active;
+    }
+
+    const { data: dhikrCounts } = await supabase
+      .from('dhikr_counts')
+      .select('*')
+      .eq('user_id', state.user.id);
+
+    if (dhikrCounts) {
+      state.stats.thikrs = {};
+      dhikrCounts.forEach(d => { state.stats.thikrs[d.thikr_key] = d.count; });
+    }
+  } catch (e) {
+    console.error('Failed to load user data:', e);
+  }
+}
+
+async function syncStatsToSupabase() {
+  if (!SUPABASE_CONFIGURED || !state.user) return;
+  try {
+    await supabase.from('user_stats').upsert({
+      user_id: state.user.id,
+      total: state.stats.total,
+      today_count: state.stats.today,
+      streak: state.stats.streak,
+      last_active: state.stats.lastActive,
+      updated_at: new Date().toISOString()
+    });
+
+    if (state.currentThikr && state.stats.thikrs[state.currentThikr]) {
+      await supabase.from('dhikr_counts').upsert({
+        user_id: state.user.id,
+        thikr_key: state.currentThikr,
+        count: state.stats.thikrs[state.currentThikr]
+      });
+    }
+  } catch (e) {
+    console.error('Failed to sync stats:', e);
+  }
+}
+
+async function syncLeaderboardEntry(thikrKey, count) {
+  if (!SUPABASE_CONFIGURED || !state.user) return;
+  if (verify.suspicious) {
+    console.warn('Suspicious session — not syncing to leaderboard');
+    return;
+  }
+
+  const today = new Date().toISOString().split('T')[0];
+  try {
+    await supabase.from('leaderboard_entries').upsert({
+      user_id: state.user.id,
+      display_name: state.user.displayName,
+      thikr_key: thikrKey,
+      count: state.stats.thikrs[thikrKey],
+      entry_date: today,
+      streak: state.stats.streak
+    }, { onConflict: 'user_id,thikr_key,entry_date' });
+  } catch (e) {
+    console.error('Failed to sync leaderboard entry:', e);
+  }
+}
+
+async function fetchLeaderboard() {
+  if (!SUPABASE_CONFIGURED) {
+    // Fall back to local leaderboard
+    return state.leaderboard;
+  }
+
+  const filter = document.querySelector('#timeFilter .seg-btn.active')?.dataset.filter || 'daily';
+  const thikrFilter = document.getElementById('thikrFilter')?.value || 'all';
+  const today = new Date();
+
+  try {
+    let query = supabase.from('leaderboard_entries').select('*');
+
+    if (filter === 'daily') {
+      query = query.eq('entry_date', today.toISOString().split('T')[0]);
+    } else if (filter === 'weekly') {
+      const weekAgo = new Date(today); weekAgo.setDate(weekAgo.getDate() - 7);
+      query = query.gte('entry_date', weekAgo.toISOString().split('T')[0]);
+    } else if (filter === 'monthly') {
+      const monthAgo = new Date(today); monthAgo.setMonth(monthAgo.getMonth() - 1);
+      query = query.gte('entry_date', monthAgo.toISOString().split('T')[0]);
+    }
+
+    if (thikrFilter !== 'all') {
+      query = query.eq('thikr_key', thikrFilter);
+    }
+
+    const { data, error } = await query;
+    if (error) throw error;
+
+    return data || [];
+  } catch (e) {
+    console.error('Failed to fetch leaderboard:', e);
+    return state.leaderboard;
+  }
 }
 
 // ==================== THEME ====================
@@ -1615,25 +1890,20 @@ function applyLanguage() {
   document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
   document.getElementById('langToggle').textContent = lang === 'en' ? 'AR' : 'EN';
 
-  // Update all data-i18n elements
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const path = el.getAttribute('data-i18n');
     const val = getI18n(path);
     if (typeof val === 'string') el.textContent = val;
   });
 
-  // Update placeholders
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const path = el.getAttribute('data-i18n-placeholder');
     const val = getI18n(path);
     if (typeof val === 'string') el.placeholder = val;
   });
 
-  // Re-render dynamic content
   renderAll();
-  if (state.currentThikr) {
-    renderHadiths(state.currentThikr);
-  }
+  if (state.currentThikr) renderHadiths(state.currentThikr);
 }
 
 function getI18n(path) {
@@ -1692,8 +1962,9 @@ function setupEvents() {
       t.classList.add('active');
       const mode = t.dataset.auth;
       document.getElementById('authDisplayName').style.display = mode === 'signup' ? 'block' : 'none';
-      document.querySelector('#authSubmit [data-i18n]').setAttribute('data-i18n', mode === 'signup' ? 'auth.createAccount' : 'auth.loginBtn');
-      document.querySelector('#authSubmit [data-i18n]').textContent = getI18n(mode === 'signup' ? 'auth.createAccount' : 'auth.loginBtn');
+      const key = mode === 'signup' ? 'auth.createAccount' : 'auth.loginBtn';
+      document.querySelector('#authSubmit [data-i18n]').setAttribute('data-i18n', key);
+      document.querySelector('#authSubmit [data-i18n]').textContent = getI18n(key);
     });
   });
   document.addEventListener('keydown', e => {
@@ -1704,7 +1975,7 @@ function setupEvents() {
   });
 }
 
-// ==================== AUTH (Supabase integration points) ====================
+// ==================== AUTH ====================
 function openAuthModal() {
   document.getElementById('authModal').classList.add('active');
   document.getElementById('authError').classList.remove('show');
@@ -1735,51 +2006,63 @@ async function submitAuth() {
   const email = document.getElementById('authEmail').value.trim().toLowerCase();
   const password = document.getElementById('authPassword').value;
 
-  // Validation
   if (mode === 'signup' && name.length < 2) return showAuthError('shortName');
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showAuthError('invalidEmail');
   if (password.length < 6) return showAuthError('shortPassword');
 
-  // ============================================
-  // SUPABASE INTEGRATION POINT
-  // Replace this block with actual Supabase calls:
-  //
-  // if (mode === 'signup') {
-  //   const { data, error } = await supabase.auth.signUp({
-  //     email, password, options: { data: { display_name: name } }
-  //   });
-  //   if (error) return showAuthError('emailTaken');
-  //   state.user = { id: data.user.id, email, displayName: name };
-  // } else {
-  //   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  //   if (error) return showAuthError('wrongCredentials');
-  //   state.user = { id: data.user.id, email, displayName: data.user.user_metadata.display_name };
-  // }
-  //
-  // Then sync local stats to Supabase:
-  // await supabase.from('user_stats').upsert({ user_id: state.user.id, ...state.stats });
-  // ============================================
+  const btn = document.getElementById('authSubmit');
+  btn.disabled = true;
 
-  // Mock implementation for now (replace with real Supabase)
-  if (mode === 'signup') {
-    state.user = { id: 'user_' + Date.now(), email, displayName: name };
-  } else {
-    // Mock login - in real app, verify against Supabase
-    const existing = localStorage.getItem('dhikr_mock_user_' + email);
-    if (!existing) return showAuthError('wrongCredentials');
-    state.user = JSON.parse(existing);
+  try {
+    if (!SUPABASE_CONFIGURED) {
+      // Local-only fallback (mock auth)
+      if (mode === 'signup') {
+        state.user = { id: 'local_' + Date.now(), email, displayName: name };
+        localStorage.setItem('mufarridun_mock_' + email, JSON.stringify(state.user));
+      } else {
+        const existing = localStorage.getItem('mufarridun_mock_' + email);
+        if (!existing) { btn.disabled = false; return showAuthError('wrongCredentials'); }
+        state.user = JSON.parse(existing);
+      }
+    } else {
+      // Real Supabase auth
+      if (mode === 'signup') {
+        const { data, error } = await supabase.auth.signUp({
+          email, password,
+          options: { data: { display_name: name } }
+        });
+        if (error) {
+          btn.disabled = false;
+          return showAuthError(error.message.includes('already') ? 'emailTaken' : 'generic');
+        }
+        state.user = { id: data.user.id, email, displayName: name };
+      } else {
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) {
+          btn.disabled = false;
+          return showAuthError('wrongCredentials');
+        }
+        state.user = {
+          id: data.user.id,
+          email,
+          displayName: data.user.user_metadata?.display_name || 'User'
+        };
+        await loadUserData();
+      }
+    }
+
+    state.isGuest = false;
+    state.stats.joinDate = state.stats.joinDate || new Date().toISOString().split('T')[0];
+    saveState();
+    closeAuthModal();
+    renderAll();
+    showToast(getI18n('toast.welcome')(state.user.displayName));
+  } catch (e) {
+    console.error(e);
+    showAuthError('generic');
+  } finally {
+    btn.disabled = false;
   }
-  state.isGuest = false;
-
-  if (mode === 'signup') {
-    localStorage.setItem('dhikr_mock_user_' + email, JSON.stringify(state.user));
-  }
-
-  state.stats.joinDate = state.stats.joinDate || new Date().toISOString().split('T')[0];
-  saveState();
-  closeAuthModal();
-  renderAll();
-  showToast(getI18n('toast.welcome')(state.user.displayName));
 }
 
 function continueAsGuest() {
@@ -1790,7 +2073,10 @@ function continueAsGuest() {
   renderAll();
 }
 
-function logout() {
+async function logout() {
+  if (SUPABASE_CONFIGURED) {
+    await supabase.auth.signOut();
+  }
   state.user = null;
   state.isGuest = false;
   saveState();
@@ -1868,6 +2154,7 @@ function renderThikrGrid() {
 function openCounter(key) {
   state.currentThikr = key;
   state.count = 0;
+  verify.currentSession = { startTime: Date.now(), taps: 0 };
   const t = I18N[state.lang].thikr[key];
   document.getElementById('counterThikr').textContent = THIKR[key].arabic;
   document.getElementById('counterMeta').textContent = `${t.latin} · ${t.meaning}`;
@@ -1877,7 +2164,22 @@ function openCounter(key) {
 }
 
 function incrementCounter() {
+  // Block if paused for verification
+  if (document.getElementById('verifyModal').classList.contains('active')) return;
+  if (document.getElementById('counterBtn').classList.contains('paused')) return;
+
   state.count++;
+  verify.currentSession.taps++;
+
+  // Track tap rate for suspicious detection
+  const now = Date.now();
+  verify.tapTimestamps.push(now);
+  verify.tapTimestamps = verify.tapTimestamps.filter(t => now - t < 1000);
+  const tapsPerSec = verify.tapTimestamps.length;
+  if (tapsPerSec > 12) {
+    verify.suspicious = true;
+  }
+
   const btn = document.getElementById('counterBtn');
   btn.classList.remove('tapped');
   void btn.offsetWidth;
@@ -1920,7 +2222,7 @@ function updateTargetDisplay() {
   document.getElementById('remainingDisplay').textContent = remaining.toLocaleString();
 }
 
-function saveSession() {
+async function saveSession() {
   if (state.count === 0) { showToast(getI18n('toast.tapFirst')); return; }
   if (!state.stats.thikrs[state.currentThikr]) state.stats.thikrs[state.currentThikr] = 0;
   state.stats.thikrs[state.currentThikr] += state.count;
@@ -1929,34 +2231,20 @@ function saveSession() {
   state.stats.lastActive = new Date().toISOString().split('T')[0];
   if (state.stats.streak === 0) state.stats.streak = 1;
 
-  // Add to leaderboard
-  const today = new Date().toISOString().split('T')[0];
-  const displayName = state.user?.displayName || (state.isGuest ? 'Guest_' + Math.floor(Math.random() * 1000) : 'Guest');
-  const userId = state.user?.id || 'guest_' + localStorage.getItem('dhikr_guest_id') || (() => {
-    const id = 'guest_' + Date.now();
-    localStorage.setItem('dhikr_guest_id', id);
-    return id;
-  })();
+  saveState();
 
-  const existing = state.leaderboard.findIndex(e =>
-    e.userId === userId && e.thikr === state.currentThikr && e.date === today
-  );
-  if (existing >= 0) {
-    state.leaderboard[existing].count += state.count;
+  // Sync to Supabase
+  await syncStatsToSupabase();
+  await syncLeaderboardEntry(state.currentThikr, state.count);
+
+  if (verify.suspicious) {
+    showToast(getI18n('toast.suspicious'));
   } else {
-    state.leaderboard.push({
-      userId, displayName,
-      thikr: state.currentThikr,
-      count: state.count,
-      date: today,
-      streak: state.stats.streak
-    });
+    showToast(getI18n('toast.saved')(state.count.toLocaleString(), THIKR[state.currentThikr].arabic));
   }
 
-  saveState();
-  const t = I18N[state.lang].thikr[state.currentThikr];
-  showToast(getI18n('toast.saved')(state.count.toLocaleString(), THIKR[state.currentThikr].arabic));
   state.count = 0;
+  verify.currentSession = { startTime: Date.now(), taps: 0 };
   updateCounterDisplay();
   renderThikrGrid();
   renderHome();
@@ -1977,33 +2265,127 @@ function renderHadiths(key) {
   });
 }
 
+// ==================== ANTI-AUTOCLICKER VERIFICATION ====================
+function startVerifyLoop() {
+  // Check every 10 seconds if we should show verification
+  setInterval(() => {
+    if (!document.getElementById('page-counter').classList.contains('active')) return;
+    if (document.getElementById('verifyModal').classList.contains('active')) return;
+    if (state.count === 0) return; // Only during active counting
+
+    const now = Date.now();
+    const interval = verify.suspicious ? 30000 : 60000; // 30s if suspicious, 60s otherwise
+
+    if (now - verify.lastShown >= interval) {
+      showVerifyModal();
+    }
+  }, 10000);
+}
+
+function showVerifyModal() {
+  verify.lastShown = Date.now();
+  verify.timeLeft = 20;
+
+  // Pause the counter
+  document.getElementById('counterBtn').classList.add('paused');
+
+  // Build grid with 9 emojis, one is 🌙
+  const distractors = ['⭐', '✨', '🌟', '💫', '☀️', '🌙', '⭐', '✨'];
+  const grid = [];
+  const moonIndex = Math.floor(Math.random() * 9);
+  for (let i = 0; i < 9; i++) {
+    if (i === moonIndex) grid.push('🌙');
+    else grid.push(distractors.filter(d => d !== '🌙')[Math.floor(Math.random() * 4)]);
+  }
+
+  const gridEl = document.getElementById('verifyGrid');
+  gridEl.innerHTML = '';
+  grid.forEach((emoji, i) => {
+    const cell = document.createElement('div');
+    cell.className = 'verify-cell';
+    cell.textContent = emoji;
+    cell.addEventListener('click', () => handleVerifyTap(cell, emoji === '🌙'));
+    gridEl.appendChild(cell);
+  });
+
+  document.getElementById('verifyModal').classList.add('active');
+
+  // Start countdown
+  clearInterval(verify.timerInterval);
+  verify.timerInterval = setInterval(() => {
+    verify.timeLeft--;
+    document.getElementById('verifyTimer').textContent = verify.timeLeft;
+    if (verify.timeLeft <= 0) {
+      clearInterval(verify.timerInterval);
+      failVerify();
+    }
+  }, 1000);
+}
+
+function handleVerifyTap(cell, isCorrect) {
+  if (isCorrect) {
+    cell.classList.add('correct');
+    clearInterval(verify.timerInterval);
+    setTimeout(() => {
+      document.getElementById('verifyModal').classList.remove('active');
+      document.getElementById('counterBtn').classList.remove('paused');
+      showToast(getI18n('verify.success'));
+    }, 500);
+  } else {
+    cell.classList.add('wrong');
+    setTimeout(() => cell.classList.remove('wrong'), 400);
+  }
+}
+
+function failVerify() {
+  document.getElementById('verifyModal').classList.remove('active');
+  showToast(getI18n('verify.paused'));
+  // Keep counter paused until user re-opens verification manually
+  // Or auto-resume after 5 seconds
+  setTimeout(() => {
+    document.getElementById('counterBtn').classList.remove('paused');
+  }, 5000);
+}
+
 // ==================== LEADERBOARD ====================
-function renderLeaderboard() {
+async function renderLeaderboard() {
+  const data = await fetchLeaderboard();
   const filter = document.querySelector('#timeFilter .seg-btn.active').dataset.filter;
   const thikrFilter = document.getElementById('thikrFilter').value;
   const today = new Date();
   const todayStr = today.toISOString().split('T')[0];
 
-  let data = [...state.leaderboard];
+  let filtered = [...data];
 
-  if (filter === 'daily') data = data.filter(e => e.date === todayStr);
-  else if (filter === 'weekly') {
-    const weekAgo = new Date(today); weekAgo.setDate(weekAgo.getDate() - 7);
-    data = data.filter(e => new Date(e.date) >= weekAgo);
-  } else if (filter === 'monthly') {
-    const monthAgo = new Date(today); monthAgo.setMonth(monthAgo.getMonth() - 1);
-    data = data.filter(e => new Date(e.date) >= monthAgo);
+  // For local-only mode, apply time filters client-side
+  if (!SUPABASE_CONFIGURED) {
+    if (filter === 'daily') filtered = filtered.filter(e => e.date === todayStr);
+    else if (filter === 'weekly') {
+      const weekAgo = new Date(today); weekAgo.setDate(weekAgo.getDate() - 7);
+      filtered = filtered.filter(e => new Date(e.date) >= weekAgo);
+    } else if (filter === 'monthly') {
+      const monthAgo = new Date(today); monthAgo.setMonth(monthAgo.getMonth() - 1);
+      filtered = filtered.filter(e => new Date(e.date) >= monthAgo);
+    }
+    if (thikrFilter !== 'all') filtered = filtered.filter(e => e.thikr === thikrFilter);
   }
-
-  if (thikrFilter !== 'all') data = data.filter(e => e.thikr === thikrFilter);
 
   // Group by user+thikr
   const grouped = {};
-  data.forEach(e => {
-    const key = e.userId + '|' + e.thikr;
-    if (!grouped[key]) grouped[key] = { userId: e.userId, displayName: e.displayName, thikr: e.thikr, count: 0, streak: 0 };
+  filtered.forEach(e => {
+    const userId = e.user_id || e.userId;
+    const key = userId + '|' + e.thikr_key || e.thikr;
+    if (!grouped[key]) {
+      grouped[key] = {
+        userId,
+        displayName: e.display_name || e.displayName,
+        thikr: e.thikr_key || e.thikr,
+        count: 0,
+        streak: 0
+      };
+    }
     grouped[key].count += e.count;
-    if (e.streak > grouped[key].streak) grouped[key].streak = e.streak;
+    if ((e.streak || 0) > grouped[key].streak) grouped[key].streak = e.streak;
   });
 
   const sorted = Object.values(grouped).sort((a, b) => b.count - a.count);
@@ -2080,7 +2462,6 @@ function renderLBTable(sorted) {
 }
 
 function scheduleLBRefresh() {
-  // Refresh every hour
   setInterval(() => {
     state.lastLBRefresh = Date.now();
     saveState();
@@ -2125,7 +2506,6 @@ function renderProfile() {
   }
   document.getElementById('pBest').textContent = best;
 
-  // Achievements
   const ach = document.getElementById('achievements');
   ach.innerHTML = '';
   const achData = I18N[state.lang].achievements;
@@ -2148,7 +2528,6 @@ function renderProfile() {
     ach.appendChild(el);
   });
 
-  // History
   const hist = document.getElementById('profileHistory');
   hist.innerHTML = '';
   const sorted = Object.entries(state.stats.thikrs)
@@ -2194,9 +2573,7 @@ function renderSaveCta() {
 
 // ==================== PRAYER REMINDER ====================
 function startPrayerReminderLoop() {
-  // Check every minute if we should show reminder
   setInterval(checkPrayerReminder, 60 * 1000);
-  // Initial check after 2 minutes (don't spam immediately)
   setTimeout(checkPrayerReminder, 2 * 60 * 1000);
 }
 
@@ -2205,10 +2582,6 @@ function checkPrayerReminder() {
   const thirtyMin = 30 * 60 * 1000;
   const lastShown = state.lastPrayerShown || 0;
 
-  // Only show if:
-  // - 30 minutes have passed since last shown
-  // - User is actively on the page
-  // - Not already visible
   if (now - lastShown >= thirtyMin && !document.getElementById('prayerReminder').classList.contains('show')) {
     showPrayerReminder();
   }
@@ -2218,12 +2591,9 @@ function showPrayerReminder() {
   state.lastPrayerShown = Date.now();
   saveState();
   document.getElementById('prayerReminder').classList.add('show');
-  // Auto-dismiss after 30 seconds if not interacted
   setTimeout(() => {
     const el = document.getElementById('prayerReminder');
-    if (el.classList.contains('show')) {
-      el.classList.remove('show');
-    }
+    if (el.classList.contains('show')) el.classList.remove('show');
   }, 30 * 1000);
 }
 
