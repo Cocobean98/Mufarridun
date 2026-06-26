@@ -60,7 +60,7 @@
   .lang-btn { padding: 0 14px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: var(--paper); color: var(--text-soft); cursor: pointer; font-weight: 600; font-size: 12px; letter-spacing: 0.5px; transition: all 0.2s var(--ease); font-family: inherit; }
   .lang-btn:hover { background: var(--bone); color: var(--forest); border-color: var(--forest); }
   .user-chip { display: flex; align-items: center; gap: 10px; padding: 6px 14px 6px 6px; border-radius: 50px; background: var(--bone); border: 1px solid var(--line); cursor: pointer; transition: all 0.2s var(--ease); }
-  .user-chip:hover { background: var(--line-soft); }
+  .user-chip:hover { background: var(--line-soft); border-color: var(--gold); }
   .user-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 100%); color: var(--forest-deep); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
   .user-name { font-size: 13px; font-weight: 600; color: var(--text); }
   .auth-btn { padding: 0 18px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, var(--forest) 0%, var(--forest-deep) 100%); color: var(--gold-pale); border: none; cursor: pointer; font-weight: 600; font-size: 13px; font-family: inherit; transition: all 0.2s var(--ease); box-shadow: var(--shadow-sm); }
@@ -223,9 +223,9 @@
   .modal-overlay { position: fixed; inset: 0; background: rgba(20,46,40,0.6); backdrop-filter: blur(12px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; animation: fadeIn 0.3s var(--ease); }
   .modal-overlay.active { display: flex; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  .modal { background: var(--paper); border-radius: var(--radius-xl); padding: 40px; max-width: 460px; width: 100%; box-shadow: var(--shadow-xl); text-align: center; animation: modalIn 0.4s var(--ease); border: 1px solid var(--line); position: relative; }
+  .modal { background: var(--paper); border-radius: var(--radius-xl); padding: 40px; max-width: 460px; width: 100%; box-shadow: var(--shadow-xl); text-align: center; animation: modalIn 0.4s var(--ease); border: 1px solid var(--line); position: relative; max-height: 90vh; overflow-y: auto; }
   @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-  .modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: var(--bone); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-soft); transition: all 0.2s var(--ease); }
+  .modal-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%; background: var(--bone); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-soft); transition: all 0.2s var(--ease); z-index: 2; }
   html[dir="rtl"] .modal-close { right: auto; left: 16px; }
   .modal-close:hover { background: var(--line); color: var(--text); }
   .modal-mark { width: 72px; height: 72px; border-radius: 20px; background: linear-gradient(135deg, var(--forest) 0%, var(--forest-deep) 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; box-shadow: var(--shadow-lg); position: relative; overflow: hidden; }
@@ -239,29 +239,60 @@
   .modal-tab.active { background: var(--paper); color: var(--forest); box-shadow: var(--shadow-xs); }
   .modal-input { width: 100%; padding: 16px 20px; border: 2px solid var(--line); border-radius: 14px; font-size: 16px; font-family: inherit; outline: none; transition: border-color 0.2s var(--ease); background: var(--paper); color: var(--text); margin-bottom: 12px; }
   .modal-input:focus { border-color: var(--forest); }
-  .modal-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--forest) 0%, var(--forest-deep) 100%); color: var(--gold-pale); border: none; border-radius: 14px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.2s var(--ease); box-shadow: var(--shadow-md); }
+  .modal-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, var(--forest) 0%, var(--forest-deep) 100%); color: var(--gold-pale); border: none; border-radius: 14px; font-size: 15px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.2s var(--ease); box-shadow: var(--shadow-md); margin-bottom: 8px; }
   .modal-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+  .modal-btn.danger { background: var(--paper); color: #b91c1c; border: 1px solid var(--line); box-shadow: none; }
+  .modal-btn.danger:hover { background: #fef2f2; border-color: #b91c1c; transform: none; }
   .modal-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; color: var(--muted); font-size: 12px; }
   .modal-divider::before, .modal-divider::after { content: ''; flex: 1; height: 1px; background: var(--line); }
   .modal-guest { width: 100%; padding: 12px; background: transparent; color: var(--text-soft); border: 1px solid var(--line); border-radius: 12px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 500; transition: all 0.2s var(--ease); }
   .modal-guest:hover { background: var(--bone); color: var(--forest); }
   .modal-error { background: #fef2f2; color: #b91c1c; padding: 10px 14px; border-radius: 10px; font-size: 13px; margin-bottom: 12px; border: 1px solid #fecaca; display: none; text-align: left; }
   .modal-error.show { display: block; }
-  .prayer-reminder { position: fixed; bottom: 24px; right: 24px; max-width: 360px; background: var(--paper); border: 1px solid var(--gold); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-xl); z-index: 900; transform: translateY(150%); transition: transform 0.5s var(--ease); border-inline-start: 4px solid var(--gold); }
-  html[dir="rtl"] .prayer-reminder { right: auto; left: 24px; }
-  .prayer-reminder.show { transform: translateY(0); }
-  .prayer-reminder-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-  .prayer-reminder-icon { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, var(--gold-pale) 0%, var(--gold) 100%); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
-  .prayer-reminder-title { font-family: 'Reem Kufi', serif; font-size: 15px; font-weight: 600; color: var(--forest-deep); }
+  .account-info { background: var(--bone); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; text-align: left; }
+  .account-info-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line-soft); }
+  .account-info-row:last-child { border-bottom: none; }
+  .account-info-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .account-info-value { font-size: 14px; font-weight: 600; color: var(--text); }
+
+  /* Prayer Reminder - CENTERED */
+  .prayer-reminder {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    max-width: 420px;
+    width: calc(100% - 40px);
+    background: var(--paper);
+    border: 1px solid var(--gold);
+    border-radius: var(--radius-xl);
+    padding: 32px;
+    box-shadow: var(--shadow-xl);
+    z-index: 1100;
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.4s var(--ease), opacity 0.4s var(--ease);
+    border-inline-start: 4px solid var(--gold);
+    text-align: center;
+  }
+  .prayer-reminder.show {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .prayer-reminder-head { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 16px; }
+  .prayer-reminder-icon { width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, var(--gold-pale) 0%, var(--gold) 100%); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+  .prayer-reminder-title { font-family: 'Reem Kufi', serif; font-size: 18px; font-weight: 600; color: var(--forest-deep); }
   [data-theme="dark"] .prayer-reminder-title { color: var(--gold); }
-  .prayer-reminder-text { font-size: 14px; color: var(--text-soft); line-height: 1.6; margin-bottom: 16px; }
-  .prayer-reminder-verse { font-family: 'Amiri', serif; font-size: 15px; color: var(--forest); line-height: 1.8; padding: 10px 12px; background: var(--bone); border-radius: 8px; margin-bottom: 16px; border-inline-start: 2px solid var(--gold); }
-  .prayer-reminder-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-  .prayer-reminder-btn { flex: 1; padding: 10px 14px; border-radius: 10px; border: none; cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 600; transition: all 0.2s var(--ease); min-width: 100px; }
+  .prayer-reminder-text { font-size: 15px; color: var(--text-soft); line-height: 1.7; margin-bottom: 16px; }
+  .prayer-reminder-verse { font-family: 'Amiri', serif; font-size: 16px; color: var(--forest); line-height: 1.9; padding: 14px 16px; background: var(--bone); border-radius: 10px; margin-bottom: 20px; border-inline-start: 3px solid var(--gold); }
+  .prayer-reminder-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .prayer-reminder-btn { flex: 1; padding: 12px 16px; border-radius: 12px; border: none; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600; transition: all 0.2s var(--ease); min-width: 120px; }
   .prayer-reminder-btn.primary { background: var(--forest); color: var(--gold-pale); }
   .prayer-reminder-btn.primary:hover { background: var(--forest-deep); }
-  .prayer-reminder-btn.secondary { background: var(--bone); color: var(--text-soft); }
+  .prayer-reminder-btn.secondary { background: var(--bone); color: var(--text-soft); border: 1px solid var(--line); }
   .prayer-reminder-btn.secondary:hover { background: var(--line-soft); }
+
   .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--forest-deep); color: var(--gold-pale); padding: 14px 24px; border-radius: 14px; font-size: 14px; font-weight: 500; z-index: 2000; transition: transform 0.4s var(--ease); box-shadow: var(--shadow-xl); display: flex; align-items: center; gap: 10px; border: 1px solid var(--gold); }
   .toast.show { transform: translateX(-50%) translateY(0); }
   .empty { text-align: center; padding: 60px 20px; color: var(--muted); grid-column: 1 / -1; }
@@ -291,8 +322,7 @@
     .profile-stats { grid-template-columns: repeat(2, 1fr); }
     .section-head { flex-direction: column; align-items: flex-start; }
     .nav-tab { padding: 12px 14px; font-size: 13px; }
-    .prayer-reminder { right: 16px; left: 16px; max-width: none; bottom: 16px; }
-    html[dir="rtl"] .prayer-reminder { right: 16px; left: 16px; }
+    .prayer-reminder { padding: 24px; }
   }
   @media (max-width: 480px) {
     .lb-row { grid-template-columns: 36px 1fr 60px; }
@@ -479,7 +509,7 @@
     </div>
     <div class="lb-update-info">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <span data-i18n="lb.updates">Leaderboard refreshes hourly</span>
+      <span data-i18n="lb.updates">Leaderboard refreshes every 5 minutes</span>
     </div>
   </div>
 
@@ -517,15 +547,6 @@
       </div>
       <div id="profileHistory"></div>
     </div>
-    <div style="margin-top:32px; text-align:center; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-      <button class="btn btn-secondary" onclick="openAuthModal()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        <span data-i18n="profile.account">Account</span>
-      </button>
-      <button class="btn btn-danger" onclick="logout()" id="logoutBtn" style="display:none;">
-        <span data-i18n="profile.logout">Sign out</span>
-      </button>
-    </div>
   </div>
 </main>
 
@@ -534,25 +555,7 @@
     <button class="modal-close" onclick="closeAuthModal()">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     </button>
-    <div class="modal-mark">
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
-        <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z" stroke="#c9a227" stroke-width="1.5" stroke-linejoin="round"/>
-        <circle cx="12" cy="12" r="3" fill="#c9a227"/>
-      </svg>
-    </div>
-    <h3 data-i18n="auth.welcome">Welcome to DHIKR</h3>
-    <p data-i18n="auth.desc">Create an account to save your progress across devices and appear on the leaderboard.</p>
-    <div class="modal-tabs">
-      <button class="modal-tab active" data-auth="signup" data-i18n="auth.signup">Sign up</button>
-      <button class="modal-tab" data-auth="login" data-i18n="auth.login">Log in</button>
-    </div>
-    <div class="modal-error" id="authError"></div>
-    <input type="text" class="modal-input" id="authDisplayName" placeholder="Display name" data-i18n-placeholder="auth.displayName">
-    <input type="email" class="modal-input" id="authEmail" placeholder="Email" data-i18n-placeholder="auth.email">
-    <input type="password" class="modal-input" id="authPassword" placeholder="Password (min 6 chars)" data-i18n-placeholder="auth.password">
-    <button class="modal-btn" id="authSubmit" onclick="submitAuth()"><span data-i18n="auth.createAccount">Create account</span></button>
-    <div class="modal-divider" data-i18n="auth.or">or</div>
-    <button class="modal-guest" onclick="continueAsGuest()"><span data-i18n="auth.continueGuest">Continue as guest (local only)</span></button>
+    <div id="authModalContent"></div>
   </div>
 </div>
 
@@ -589,9 +592,9 @@ const I18N = {
     },
     home: { choose: 'Choose your dhikr', chooseSub: 'Tap any dhikr to begin counting' },
     counter: { back: 'Back', tap: 'Tap to count', target: 'Target:', remaining: 'Remaining:', save: 'Save', undo: 'Undo', reset: 'Reset', virtues: 'Virtues of this dhikr', virtuesSub: 'Authentic narrations from the Sunnah' },
-    lb: { title: '🏆 Leaderboard', sub: 'Compete in goodness and race in remembrance', daily: 'Daily', weekly: 'Weekly', monthly: 'Monthly', all: 'All Time', allDhikr: 'All dhikr', user: 'User', count: 'Count', dhikr: 'Dhikr', streak: 'Streak', updates: 'Leaderboard refreshes hourly', empty: 'No entries yet', emptySub: 'Be the first to earn a spot on the leaderboard!', noMore: 'No more entries' },
+    lb: { title: '🏆 Leaderboard', sub: 'Compete in goodness and race in remembrance', daily: 'Daily', weekly: 'Weekly', monthly: 'Monthly', all: 'All Time', allDhikr: 'All dhikr', user: 'User', count: 'Count', dhikr: 'Dhikr', streak: 'Streak', updates: 'Leaderboard refreshes every 5 minutes', empty: 'No entries yet', emptySub: 'Be the first to earn a spot on the leaderboard!', noMore: 'No more entries' },
     profile: { guest: 'Guest', guestMsg: 'Your progress is saved locally on this device', total: 'Total', today: 'Today', days: 'Days', favorite: 'Favorite', achievements: 'Achievements', achievementsSub: 'Badges unlocked through remembrance', history: 'Dhikr History', historySub: 'Your detailed statistics', dhikr: 'Dhikr', totalCount: 'Total', lastUsed: 'Last used', account: 'Account', logout: 'Sign out', saveCtaTitle: 'Save your progress to the cloud', saveCtaDesc: 'Create a free account to keep your progress safe across devices and appear on the leaderboard.', saveCtaBtn: 'Create account', emptyHistory: "You haven't started yet. Begin now!" },
-    auth: { welcome: 'Welcome to DHIKR', desc: 'Create an account to save your progress across devices and appear on the leaderboard.', signup: 'Sign up', login: 'Log in', displayName: 'Display name', email: 'Email', password: 'Password (min 6 chars)', createAccount: 'Create account', loginBtn: 'Log in', or: 'or', continueGuest: 'Continue as guest (local only)', errors: { shortName: 'Name must be at least 2 characters', invalidEmail: 'Please enter a valid email', shortPassword: 'Password must be at least 6 characters', wrongCredentials: 'Invalid email or password', emailTaken: 'An account with this email already exists', generic: 'Something went wrong. Please try again.' } },
+    auth: { welcome: 'Welcome to DHIKR', desc: 'Create an account to save your progress across devices and appear on the leaderboard.', signup: 'Sign up', login: 'Log in', displayName: 'Display name', email: 'Email', password: 'Password (min 6 chars)', createAccount: 'Create account', loginBtn: 'Log in', or: 'or', continueGuest: 'Continue as guest (local only)', accountSettings: 'Account Settings', signedInAs: 'Signed in as', memberSince: 'Member since', signOut: 'Sign out', errors: { shortName: 'Name must be at least 2 characters', invalidEmail: 'Please enter a valid email', shortPassword: 'Password must be at least 6 characters', wrongCredentials: 'Invalid email or password', emailTaken: 'An account with this email already exists', generic: 'Something went wrong. Please try again.' } },
     prayer: { title: 'A gentle reminder', text: 'Have you performed your obligatory ṣalāh today? The prayer is the first deed a person will be accounted for on the Day of Judgment.', verse: '﴿ "Indeed, prayer has been decreed upon the believers at specified times." — An-Nisāʾ 4:103 ﴾', done: 'Yes, alḥamdulillāh', later: 'Remind me later' },
     toast: { saved: (n, d) => `Saved ${n} × ${d}`, milestone: (n) => `Mā shāʾ Allāh! You reached ${n} 🌟`, tapFirst: 'Tap the counter first', resetConfirm: 'Reset the counter to zero?', welcome: (n) => `Welcome, ${n}! 🌙`, loggedOut: 'Signed out', prayerAck: 'May Allāh accept it from you 🤲' },
     thikr: {
@@ -626,9 +629,9 @@ const I18N = {
     },
     home: { choose: 'اختر ذكرك', chooseSub: 'اضغط على أي ذكر لبدء التسبيح' },
     counter: { back: 'العودة', tap: 'اضغط للتسبيح', target: 'الهدف:', remaining: 'المتبقي:', save: 'حفظ', undo: 'تراجع', reset: 'إعادة', virtues: 'فضل هذا الذكر', virtuesSub: 'أحاديث صحيحة من السنة النبوية' },
-    lb: { title: '🏆 المتصدرون', sub: 'تنافسوا في الخير وتسابَقوا في الذكر', daily: 'يومي', weekly: 'أسبوعي', monthly: 'شهري', all: 'الكل', allDhikr: 'جميع الأذكار', user: 'المستخدم', count: 'العدد', dhikr: 'الذكر', streak: 'السلسلة', updates: 'تُحدَّث اللوحة كل ساعة', empty: 'لا توجد مشاركات بعد', emptySub: 'كن أول من يتصدر اللوحة!', noMore: 'لا توجد بيانات إضافية' },
+    lb: { title: '🏆 المتصدرون', sub: 'تنافسوا في الخير وتسابَقوا في الذكر', daily: 'يومي', weekly: 'أسبوعي', monthly: 'شهري', all: 'الكل', allDhikr: 'جميع الأذكار', user: 'المستخدم', count: 'العدد', dhikr: 'الذكر', streak: 'السلسلة', updates: 'تُحدَّث اللوحة كل ٥ دقائق', empty: 'لا توجد مشاركات بعد', emptySub: 'كن أول من يتصدر اللوحة!', noMore: 'لا توجد بيانات إضافية' },
     profile: { guest: 'ضيف', guestMsg: 'تُسجَّل تقدمك محلياً على هذا الجهاز', total: 'الإجمالي', today: 'اليوم', days: 'أيام', favorite: 'المفضل', achievements: 'الإنجازات', achievementsSub: 'شارات تفتحها بذكر الله', history: 'سجل الأذكار', historySub: 'إحصائياتك التفصيلية', dhikr: 'الذكر', totalCount: 'المجموع', lastUsed: 'آخر مرة', account: 'الحساب', logout: 'تسجيل الخروج', saveCtaTitle: 'احفظ تقدمك في السحابة', saveCtaDesc: 'أنشئ حساباً مجانياً للحفاظ على تقدمك عبر الأجهزة وظهورك في لوحة المتصدرين.', saveCtaBtn: 'إنشاء حساب', emptyHistory: 'لم تبدأ التسبيح بعد. ابدأ الآن!' },
-    auth: { welcome: 'مرحباً بك في ذِكْر', desc: 'أنشئ حساباً لحفظ تقدمك عبر الأجهزة وظهورك في لوحة المتصدرين.', signup: 'إنشاء حساب', login: 'تسجيل الدخول', displayName: 'اسم العرض', email: 'البريد الإلكتروني', password: 'كلمة المرور (٦ أحرف على الأقل)', createAccount: 'إنشاء الحساب', loginBtn: 'دخول', or: 'أو', continueGuest: 'المتابعة كضيف (محلي فقط)', errors: { shortName: 'يجب أن يكون الاسم حرفين على الأقل', invalidEmail: 'الرجاء إدخال بريد صحيح', shortPassword: 'كلمة المرور يجب أن تكون ٦ أحرف على الأقل', wrongCredentials: 'البريد أو كلمة المرور غير صحيحة', emailTaken: 'يوجد حساب بهذا البريد مسبقاً', generic: 'حدث خطأ. حاول مرة أخرى.' } },
+    auth: { welcome: 'مرحباً بك في ذِكْر', desc: 'أنشئ حساباً لحفظ تقدمك عبر الأجهزة وظهورك في لوحة المتصدرين.', signup: 'إنشاء حساب', login: 'تسجيل الدخول', displayName: 'اسم العرض', email: 'البريد الإلكتروني', password: 'كلمة المرور (٦ أحرف على الأقل)', createAccount: 'إنشاء الحساب', loginBtn: 'دخول', or: 'أو', continueGuest: 'المتابعة كضيف (محلي فقط)', accountSettings: 'إعدادات الحساب', signedInAs: 'مسجّل دخولك كـ', memberSince: 'عضو منذ', signOut: 'تسجيل الخروج', errors: { shortName: 'يجب أن يكون الاسم حرفين على الأقل', invalidEmail: 'الرجاء إدخال بريد صحيح', shortPassword: 'كلمة المرور يجب أن تكون ٦ أحرف على الأقل', wrongCredentials: 'البريد أو كلمة المرور غير صحيحة', emailTaken: 'يوجد حساب بهذا البريد مسبقاً', generic: 'حدث خطأ. حاول مرة أخرى.' } },
     prayer: { title: 'تذكير لطيف', text: 'هل أديتَ صَلاتَك المفروضة اليوم؟ الصلاة أول ما يُحاسب عليه العبد يوم القيامة.', verse: '﴿ إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا ﴾ — النساء ١٠٣', done: 'نعم، الحمد لله', later: 'ذكرني لاحقاً' },
     toast: { saved: (n, d) => `حُفظت ${n} من ${d}`, milestone: (n) => `ما شاء الله! أتممت ${n} 🌟`, tapFirst: 'اضغط على العداد أولاً', resetConfirm: 'هل تريد إعادة العداد إلى الصفر؟', welcome: (n) => `مرحباً بك يا ${n}! 🌙`, loggedOut: 'تم تسجيل الخروج', prayerAck: 'تقبّل الله منك 🤲' },
     thikr: {
@@ -732,7 +735,7 @@ function init() {
 }
 
 function loadState() {
-  const saved = localStorage.getItem('dhikr_state_v4');
+  const saved = localStorage.getItem('dhikr_state_v5');
   if (saved) {
     try { Object.assign(state, JSON.parse(saved)); } catch(e) {}
   }
@@ -740,7 +743,7 @@ function loadState() {
 }
 
 function saveState() {
-  localStorage.setItem('dhikr_state_v4', JSON.stringify(state));
+  localStorage.setItem('dhikr_state_v5', JSON.stringify(state));
 }
 
 function checkStreak() {
@@ -787,6 +790,10 @@ function applyLanguage() {
   });
   renderAll();
   if (state.currentThikr) renderHadiths(state.currentThikr);
+  // Re-render auth modal if open
+  if (document.getElementById('authModal').classList.contains('active')) {
+    renderAuthModalContent();
+  }
 }
 
 function getI18n(path) {
@@ -839,18 +846,6 @@ function setupEvents() {
     });
   });
   document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-  document.querySelectorAll('.modal-tab').forEach(t => {
-    t.addEventListener('click', () => {
-      document.querySelectorAll('.modal-tab').forEach(x => x.classList.remove('active'));
-      t.classList.add('active');
-      const mode = t.dataset.auth;
-      document.getElementById('authDisplayName').style.display = mode === 'signup' ? 'block' : 'none';
-      const key = mode === 'signup' ? 'auth.createAccount' : 'auth.loginBtn';
-      const span = document.querySelector('#authSubmit [data-i18n]');
-      span.setAttribute('data-i18n', key);
-      span.textContent = getI18n(key);
-    });
-  });
   document.addEventListener('keydown', e => {
     if (e.code === 'Space' && document.getElementById('page-counter').classList.contains('active')) {
       e.preventDefault();
@@ -859,20 +854,91 @@ function setupEvents() {
   });
 }
 
-// ==================== AUTH (Local mock - replace with Supabase later) ====================
+// ==================== AUTH ====================
 function openAuthModal() {
   document.getElementById('authModal').classList.add('active');
-  document.getElementById('authError').classList.remove('show');
-  document.getElementById('authDisplayName').value = state.user?.displayName || '';
-  document.getElementById('authEmail').value = '';
-  document.getElementById('authPassword').value = '';
-  document.getElementById('authDisplayName').style.display = 'block';
-  document.querySelectorAll('.modal-tab').forEach(x => x.classList.remove('active'));
-  document.querySelector('.modal-tab[data-auth="signup"]').classList.add('active');
-  const span = document.querySelector('#authSubmit [data-i18n]');
-  span.setAttribute('data-i18n', 'auth.createAccount');
-  span.textContent = getI18n('auth.createAccount');
-  setTimeout(() => document.getElementById('authEmail').focus(), 100);
+  renderAuthModalContent();
+}
+
+function renderAuthModalContent() {
+  const content = document.getElementById('authModalContent');
+
+  if (state.user) {
+    // Logged-in view: Account Settings
+    const joinDate = state.stats.joinDate || new Date().toISOString().split('T')[0];
+    content.innerHTML = `
+      <div class="modal-mark">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z" stroke="#c9a227" stroke-width="1.5" stroke-linejoin="round"/>
+          <circle cx="12" cy="12" r="3" fill="#c9a227"/>
+        </svg>
+      </div>
+      <h3>${getI18n('auth.accountSettings')}</h3>
+      <div class="account-info">
+        <div class="account-info-row">
+          <span class="account-info-label">${getI18n('auth.signedInAs')}</span>
+          <span class="account-info-value">${state.user.displayName}</span>
+        </div>
+        <div class="account-info-row">
+          <span class="account-info-label">Email</span>
+          <span class="account-info-value">${state.user.email}</span>
+        </div>
+        <div class="account-info-row">
+          <span class="account-info-label">${getI18n('auth.memberSince')}</span>
+          <span class="account-info-value">${joinDate}</span>
+        </div>
+      </div>
+      <button class="modal-btn danger" onclick="logout()">
+        <span>${getI18n('auth.signOut')}</span>
+      </button>
+    `;
+  } else {
+    // Not logged in: Sign up / Log in form
+    content.innerHTML = `
+      <div class="modal-mark">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z" stroke="#c9a227" stroke-width="1.5" stroke-linejoin="round"/>
+          <circle cx="12" cy="12" r="3" fill="#c9a227"/>
+        </svg>
+      </div>
+      <h3 data-i18n="auth.welcome">${getI18n('auth.welcome')}</h3>
+      <p data-i18n="auth.desc">${getI18n('auth.desc')}</p>
+      <div class="modal-tabs">
+        <button class="modal-tab active" data-auth="signup" data-i18n="auth.signup">${getI18n('auth.signup')}</button>
+        <button class="modal-tab" data-auth="login" data-i18n="auth.login">${getI18n('auth.login')}</button>
+      </div>
+      <div class="modal-error" id="authError"></div>
+      <input type="text" class="modal-input" id="authDisplayName" placeholder="${getI18n('auth.displayName')}" data-i18n-placeholder="auth.displayName">
+      <input type="email" class="modal-input" id="authEmail" placeholder="${getI18n('auth.email')}" data-i18n-placeholder="auth.email">
+      <input type="password" class="modal-input" id="authPassword" placeholder="${getI18n('auth.password')}" data-i18n-placeholder="auth.password">
+      <button class="modal-btn" id="authSubmit" onclick="submitAuth()">
+        <span data-i18n="auth.createAccount">${getI18n('auth.createAccount')}</span>
+      </button>
+      <div class="modal-divider" data-i18n="auth.or">${getI18n('auth.or')}</div>
+      <button class="modal-guest" onclick="continueAsGuest()">
+        <span data-i18n="auth.continueGuest">${getI18n('auth.continueGuest')}</span>
+      </button>
+    `;
+
+    // Re-attach tab listeners
+    content.querySelectorAll('.modal-tab').forEach(t => {
+      t.addEventListener('click', () => {
+        content.querySelectorAll('.modal-tab').forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        const mode = t.dataset.auth;
+        document.getElementById('authDisplayName').style.display = mode === 'signup' ? 'block' : 'none';
+        const key = mode === 'signup' ? 'auth.createAccount' : 'auth.loginBtn';
+        const span = document.querySelector('#authSubmit [data-i18n]');
+        span.setAttribute('data-i18n', key);
+        span.textContent = getI18n(key);
+      });
+    });
+
+    setTimeout(() => {
+      const emailInput = document.getElementById('authEmail');
+      if (emailInput) emailInput.focus();
+    }, 100);
+  }
 }
 
 function closeAuthModal() {
@@ -881,12 +947,15 @@ function closeAuthModal() {
 
 function showAuthError(key) {
   const el = document.getElementById('authError');
+  if (!el) return;
   el.textContent = getI18n('auth.errors.' + key);
   el.classList.add('show');
 }
 
 function submitAuth() {
-  const mode = document.querySelector('.modal-tab.active').dataset.auth;
+  const activeTab = document.querySelector('.modal-tab.active');
+  if (!activeTab) return;
+  const mode = activeTab.dataset.auth;
   const name = document.getElementById('authDisplayName').value.trim();
   const email = document.getElementById('authEmail').value.trim().toLowerCase();
   const password = document.getElementById('authPassword').value;
@@ -895,7 +964,6 @@ function submitAuth() {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showAuthError('invalidEmail');
   if (password.length < 6) return showAuthError('shortPassword');
 
-  // Mock auth (localStorage) - replace with Supabase later
   if (mode === 'signup') {
     const existing = localStorage.getItem('dhikr_user_' + email);
     if (existing) return showAuthError('emailTaken');
@@ -929,9 +997,9 @@ function logout() {
   state.user = null;
   state.isGuest = false;
   saveState();
+  closeAuthModal();
   renderAll();
   showToast(getI18n('toast.loggedOut'));
-  setTimeout(() => openAuthModal(), 500);
 }
 
 // ==================== RENDER ====================
@@ -946,9 +1014,10 @@ function renderAll() {
 function renderAuthArea() {
   const area = document.getElementById('authArea');
   if (state.user) {
-    area.innerHTML = '<div class="user-chip" onclick="navigateTo(\'profile\')"><div class="user-avatar">' + state.user.displayName.charAt(0).toUpperCase() + '</div><span class="user-name">' + state.user.displayName + '</span></div>';
+    // Clicking username now opens account settings modal
+    area.innerHTML = '<div class="user-chip" onclick="openAuthModal()"><div class="user-avatar">' + state.user.displayName.charAt(0).toUpperCase() + '</div><span class="user-name">' + state.user.displayName + '</span></div>';
   } else if (state.isGuest) {
-    area.innerHTML = '<div class="user-chip" onclick="navigateTo(\'profile\')"><div class="user-avatar" style="background:var(--bone); color:var(--muted);">?</div><span class="user-name">' + getI18n('profile.guest') + '</span></div>';
+    area.innerHTML = '<div class="user-chip" onclick="openAuthModal()"><div class="user-avatar" style="background:var(--bone); color:var(--muted);">?</div><span class="user-name">' + getI18n('profile.guest') + '</span></div>';
   } else {
     area.innerHTML = '<button class="auth-btn" onclick="openAuthModal()">' + getI18n('auth.signup') + '</button>';
   }
@@ -1039,7 +1108,6 @@ function saveSession() {
   state.stats.lastActive = new Date().toISOString().split('T')[0];
   if (state.stats.streak === 0) state.stats.streak = 1;
 
-  // Update leaderboard
   const today = new Date().toISOString().split('T')[0];
   const displayName = state.user?.displayName || (state.isGuest ? 'Guest_' + Math.floor(Math.random() * 1000) : 'Guest');
   const userId = state.user?.id || 'guest_' + (localStorage.getItem('dhikr_guest_id') || (() => { const id = 'guest_' + Date.now(); localStorage.setItem('dhikr_guest_id', id); return id; })());
@@ -1070,7 +1138,7 @@ function renderHadiths(key) {
   });
 }
 
-// ==================== LEADERBOARD (empty by default) ====================
+// ==================== LEADERBOARD ====================
 function renderLeaderboard() {
   const filter = document.querySelector('#timeFilter .seg-btn.active').dataset.filter;
   const thikrFilter = document.getElementById('thikrFilter').value;
@@ -1143,11 +1211,12 @@ function renderLBTable(sorted) {
 }
 
 function scheduleLBRefresh() {
+  // Refresh every 5 minutes
   setInterval(() => {
     if (document.getElementById('page-leaderboard').classList.contains('active')) {
       renderLeaderboard();
     }
-  }, 60 * 60 * 1000); // 1 hour
+  }, 5 * 60 * 1000);
 }
 
 // ==================== PROFILE ====================
@@ -1155,24 +1224,20 @@ function renderProfile() {
   const avatar = document.getElementById('profileAvatar');
   const name = document.getElementById('profileName');
   const joined = document.getElementById('profileJoined');
-  const logoutBtn = document.getElementById('logoutBtn');
 
   if (state.user) {
     avatar.textContent = state.user.displayName.charAt(0).toUpperCase();
     name.textContent = state.user.displayName;
     const join = state.stats.joinDate || new Date().toISOString().split('T')[0];
     joined.textContent = (state.lang === 'ar' ? 'عضو منذ ' : 'Member since ') + join;
-    logoutBtn.style.display = 'inline-flex';
   } else if (state.isGuest) {
     avatar.textContent = '?';
     name.textContent = getI18n('profile.guest');
     joined.textContent = getI18n('profile.guestMsg');
-    logoutBtn.style.display = 'none';
   } else {
     avatar.textContent = '?';
     name.textContent = getI18n('profile.guest');
     joined.textContent = getI18n('profile.guestMsg');
-    logoutBtn.style.display = 'none';
   }
 
   document.getElementById('pTotal').textContent = state.stats.total.toLocaleString();
