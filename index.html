@@ -3,7 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DHIKR — Tasbeeh Companion</title>
+<title>Mufarridun — Islamic Dhikr & Tasbeeh Counter</title>
+<meta name="description" content="Mufarridun - Free Islamic tasbeeh counter and dhikr tracker. Count your remembrance of Allah, earn hasanat, compete on leaderboards. Built with love for the Ummah.">
+<meta name="keywords" content="tasbeeh counter, dhikr tracker, Islamic app, Muslim prayer counter, subhanallah, alhamdulillah, allahu akbar, Islamic remembrance, free Islamic tools, Muslim productivity">
+<meta name="author" content="Mufarridun">
+<meta property="og:title" content="Mufarridun — Islamic Dhikr & Tasbeeh Counter">
+<meta property="og:description" content="Free Islamic tasbeeh counter and dhikr tracker. Count your remembrance of Allah, earn hasanat, compete on leaderboards.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mufarridun.vercel.app">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mufarridun — Islamic Dhikr & Tasbeeh Counter">
+<meta name="twitter:description" content="Free Islamic tasbeeh counter. Track your dhikr, earn hasanat, compete with fellow Muslims.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Reem+Kufi:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -254,8 +264,6 @@
   .account-info-row:last-child { border-bottom: none; }
   .account-info-label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
   .account-info-value { font-size: 14px; font-weight: 600; color: var(--text); }
-
-  /* Prayer Reminder - CENTERED */
   .prayer-reminder {
     position: fixed;
     top: 50%;
@@ -292,7 +300,6 @@
   .prayer-reminder-btn.primary:hover { background: var(--forest-deep); }
   .prayer-reminder-btn.secondary { background: var(--bone); color: var(--text-soft); border: 1px solid var(--line); }
   .prayer-reminder-btn.secondary:hover { background: var(--line-soft); }
-
   .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(120px); background: var(--forest-deep); color: var(--gold-pale); padding: 14px 24px; border-radius: 14px; font-size: 14px; font-weight: 500; z-index: 2000; transition: transform 0.4s var(--ease); box-shadow: var(--shadow-xl); display: flex; align-items: center; gap: 10px; border: 1px solid var(--gold); }
   .toast.show { transform: translateX(-50%) translateY(0); }
   .empty { text-align: center; padding: 60px 20px; color: var(--muted); grid-column: 1 / -1; }
@@ -300,6 +307,173 @@
   .empty-title { font-family: 'Reem Kufi', serif; font-size: 18px; color: var(--text); margin-bottom: 6px; }
   .empty-desc { font-size: 13px; }
   .lb-update-info { text-align: center; font-size: 12px; color: var(--muted); margin-top: 16px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  
+  /* Story Section */
+  .story-section {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    padding: 40px;
+    margin: 40px 0;
+    box-shadow: var(--shadow-md);
+  }
+  .story-section h2 {
+    font-family: 'Reem Kufi', serif;
+    font-size: 28px;
+    color: var(--forest-deep);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .story-content {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text-soft);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .story-content p { margin-bottom: 16px; }
+  .story-highlight {
+    background: linear-gradient(135deg, var(--gold-pale) 0%, var(--gold) 100%);
+    padding: 24px;
+    border-radius: var(--radius);
+    margin: 24px 0;
+    color: var(--forest-deep);
+    font-weight: 500;
+  }
+  .donation-section {
+    background: linear-gradient(135deg, var(--forest-deep) 0%, var(--forest) 100%);
+    border-radius: var(--radius-xl);
+    padding: 40px;
+    color: #fff;
+    text-align: center;
+    margin: 40px 0;
+    box-shadow: var(--shadow-lg);
+  }
+  .donation-section h2 {
+    font-family: 'Reem Kufi', serif;
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+  .donation-section p {
+    font-size: 15px;
+    opacity: 0.9;
+    margin-bottom: 24px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .donation-amount {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--gold-pale);
+    margin: 20px 0;
+  }
+  .other-projects {
+    background: var(--bone);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin: 24px 0;
+    text-align: center;
+  }
+  .other-projects a {
+    color: var(--forest);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .other-projects a:hover { text-decoration: underline; }
+  
+  /* Forums Section */
+  .forum-post {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 16px;
+    transition: all 0.2s var(--ease);
+  }
+  .forum-post:hover { box-shadow: var(--shadow-md); }
+  .forum-post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .forum-post-title {
+    font-family: 'Reem Kufi', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--forest-deep);
+  }
+  .forum-post-meta {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .forum-post-content {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-soft);
+    margin-bottom: 16px;
+  }
+  .forum-post-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .forum-comments {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .forum-comment {
+    background: var(--bone);
+    border-radius: var(--radius);
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  .forum-comment-author {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--forest);
+    margin-bottom: 4px;
+  }
+  .forum-comment-text {
+    font-size: 14px;
+    color: var(--text-soft);
+  }
+  .new-post-form {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+  .form-group { margin-bottom: 16px; }
+  .form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .form-input, .form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    background: var(--paper);
+    color: var(--text);
+    transition: border-color 0.2s var(--ease);
+  }
+  .form-input:focus, .form-textarea:focus {
+    outline: none;
+    border-color: var(--forest);
+  }
+  .form-textarea { min-height: 120px; resize: vertical; }
+  
   @media (max-width: 768px) {
     .header-inner, .nav-inner, .main { padding-left: 20px; padding-right: 20px; }
     .hero { padding: 32px 24px; }
@@ -323,6 +497,7 @@
     .section-head { flex-direction: column; align-items: flex-start; }
     .nav-tab { padding: 12px 14px; font-size: 13px; }
     .prayer-reminder { padding: 24px; }
+    .story-section, .donation-section { padding: 24px; }
   }
   @media (max-width: 480px) {
     .lb-row { grid-template-columns: 36px 1fr 60px; }
@@ -348,8 +523,8 @@
         </svg>
       </div>
       <div class="brand-text">
-        <div class="brand-name" data-i18n="brand.name">DHIKR</div>
-        <div class="brand-tagline" data-i18n="brand.tagline">Tasbeeh Companion</div>
+        <div class="brand-name">Mufarridun</div>
+        <div class="brand-tagline">Islamic Dhikr & Tasbeeh</div>
       </div>
     </div>
     <div class="header-actions">
@@ -369,19 +544,23 @@
   <div class="nav-inner">
     <div class="nav-tab active" data-page="home">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <span data-i18n="nav.home">Home</span>
+      <span>Home</span>
     </div>
     <div class="nav-tab" data-page="counter">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <span data-i18n="nav.counter">Tasbeeh</span>
+      <span>Tasbeeh</span>
     </div>
     <div class="nav-tab" data-page="leaderboard">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
-      <span data-i18n="nav.leaderboard">Leaders</span>
+      <span>Leaders</span>
+    </div>
+    <div class="nav-tab" data-page="forums">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span>Forums</span>
     </div>
     <div class="nav-tab" data-page="profile">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      <span data-i18n="nav.profile">Profile</span>
+      <span>Profile</span>
     </div>
   </div>
 </nav>
@@ -390,24 +569,54 @@
   <div class="page active" id="page-home">
     <div class="hero">
       <div class="hero-content">
-        <div class="hero-greeting" data-i18n="hero.greeting">Peace be upon you</div>
-        <h1 class="hero-title" data-i18n="hero.title">Verily, in the remembrance of Allah do hearts find rest</h1>
-        <div class="hero-verse" data-i18n="hero.verse">﴿ "And remember your Lord within yourself, humbly and in fear, without being loud in words, in the mornings and the evenings." — Al-Aʿrāf 7:205 ﴾</div>
-        <p class="hero-desc" data-i18n="hero.desc">Begin your journey of remembrance. Count your tasbeeh, earn hasanat, and compete with fellow Muslims in goodness.</p>
+        <div class="hero-greeting">Peace be upon you</div>
+        <h1 class="hero-title">Verily, in the remembrance of Allah do hearts find rest</h1>
+        <div class="hero-verse">﴿ وَٱذْكُر رَّبَّكَ فِى نَفْسِكَ تَضَرُّعًا وَخِيفَةً وَدُونَ ٱلْجَهْرِ مِنَ ٱلْقَوْلِ ﴾</div>
+        <p class="hero-desc">Begin your journey of remembrance. Count your tasbeeh, earn hasanat, and compete with fellow Muslims in goodness.</p>
         <div class="hero-stats">
-          <div class="hero-stat"><div class="hero-stat-value" id="heroToday">0</div><div class="hero-stat-label" data-i18n="hero.today">Today's Tasbeeh</div></div>
-          <div class="hero-stat"><div class="hero-stat-value" id="heroTotal">0</div><div class="hero-stat-label" data-i18n="hero.total">Total</div></div>
-          <div class="hero-stat"><div class="hero-stat-value" id="heroStreak">0</div><div class="hero-stat-label" data-i18n="hero.streak">Day Streak</div></div>
+          <div class="hero-stat"><div class="hero-stat-value" id="heroToday">0</div><div class="hero-stat-label">Today's Tasbeeh</div></div>
+          <div class="hero-stat"><div class="hero-stat-value" id="heroTotal">0</div><div class="hero-stat-label">Total</div></div>
+          <div class="hero-stat"><div class="hero-stat-value" id="heroStreak">0</div><div class="hero-stat-label">Day Streak</div></div>
         </div>
       </div>
     </div>
     <div class="section-head">
       <div>
-        <div class="section-title" data-i18n="home.choose">Choose your dhikr</div>
-        <div class="section-subtitle" data-i18n="home.chooseSub">Tap any dhikr to begin counting</div>
+        <div class="section-title">Choose your dhikr</div>
+        <div class="section-subtitle">Tap any dhikr to begin counting</div>
       </div>
     </div>
     <div class="thikr-grid" id="thikrGrid"></div>
+    
+    <!-- Story Section -->
+    <div class="story-section">
+      <h2>The Story Behind Mufarridun</h2>
+      <div class="story-content">
+        <p><strong>One project for my Dunya, one for my Akhira.</strong></p>
+        <p>Assalamu Alaikum. I'm a 28-year-old engineer, and I'm the sole provider for my family of six. Like many, I've been navigating the heavy realities of low wages and financial strain, constantly searching for a way to build a stable future. I've built two AI tools: one is a premium subscription service for my dunya (worldly life), and the other is <a href="https://reeldeen.vercel.app/" target="_blank" style="color: var(--forest); font-weight: 600;">ReelDeen</a> — a completely free project for my Akhira (hereafter).</p>
+        <p>My dream is simple but heavy on my heart: to one day buy a home, get married, and achieve the financial independence that has always felt just out of reach. I've knocked on many doors, but I am waiting to walk through the one where Allah has placed my rizq.</p>
+        <div class="story-highlight">
+          I made a vow to Allah: if He grants me financial stability through this project, I will take Kafalah (sponsor the education of an orphan), give generously to the poor, support my friends, and most importantly, continue to provide for my family with dignity.
+        </div>
+        <p>If you're reading this, thank you from the bottom of my heart. May Allah increase you in rizq and barakah.</p>
+      </div>
+    </div>
+    
+    <!-- Donation Section -->
+    <div class="donation-section">
+      <h2>Support the Mission</h2>
+      <p>Mufarridun will always be 100% free. But if this tool brings light to your day and you wish to help a brother realize his dreams, you can support me here.</p>
+      <a href="https://buymeacoffee.com/reeldeen" target="_blank" class="btn btn-primary" style="background: var(--gold); color: var(--forest-deep); font-size: 16px; padding: 16px 32px;">
+        Support Mufarridun
+      </a>
+      <p style="margin-top: 16px; font-size: 13px; opacity: 0.8;">As a promise to Allah, 5% of every donation goes directly to charity.</p>
+      <div class="donation-amount">$0 Raised for Charity</div>
+      
+      <div class="other-projects">
+        <p style="margin-bottom: 8px; font-weight: 600; color: var(--forest-deep);">Check out my other project:</p>
+        <a href="https://reeldeen.vercel.app/" target="_blank">ReelDeen — Automatic Quranic Reels Generator</a>
+      </div>
+    </div>
   </div>
 
   <div class="page" id="page-counter">
@@ -415,7 +624,7 @@
       <div class="counter-main">
         <button class="counter-back" onclick="navigateTo('home')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-          <span data-i18n="counter.back">Back</span>
+          <span>Back</span>
         </button>
         <div class="counter-thikr" id="counterThikr">سُبْحَانَ اللَّهِ</div>
         <div class="counter-meta" id="counterMeta">SubhanAllah · Glory be to Allah</div>
@@ -427,12 +636,12 @@
           </svg>
           <button class="counter-btn" id="counterBtn" onclick="incrementCounter()">
             <div class="counter-num" id="counterNum">0</div>
-            <div class="counter-label" data-i18n="counter.tap">Tap to count</div>
+            <div class="counter-label">Tap to count</div>
           </button>
         </div>
         <div class="counter-target">
-          <span data-i18n="counter.target">Target:</span> <strong id="targetDisplay">33</strong> ·
-          <span data-i18n="counter.remaining">Remaining:</span> <strong id="remainingDisplay">33</strong>
+          <span>Target:</span> <strong id="targetDisplay">33</strong> ·
+          <span>Remaining:</span> <strong id="remainingDisplay">33</strong>
         </div>
         <div class="target-selector">
           <button class="target-chip active" data-target="33">33</button>
@@ -443,15 +652,15 @@
         <div class="counter-actions">
           <button class="btn btn-primary" onclick="saveSession()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-            <span data-i18n="counter.save">Save</span>
+            <span>Save</span>
           </button>
           <button class="btn btn-secondary" onclick="undoCounter()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-            <span data-i18n="counter.undo">Undo</span>
+            <span>Undo</span>
           </button>
           <button class="btn btn-danger" onclick="resetCounter()">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-            <span data-i18n="counter.reset">Reset</span>
+            <span>Reset</span>
           </button>
         </div>
       </div>
@@ -461,8 +670,8 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           </div>
           <div>
-            <div class="hadith-panel-title" data-i18n="counter.virtues">Virtues of this dhikr</div>
-            <div class="hadith-panel-sub" data-i18n="counter.virtuesSub">Authentic narrations from the Sunnah</div>
+            <div class="hadith-panel-title">Virtues of this dhikr</div>
+            <div class="hadith-panel-sub">Authentic narrations from the Sunnah</div>
           </div>
         </div>
         <div id="hadithList"></div>
@@ -473,19 +682,19 @@
   <div class="page" id="page-leaderboard">
     <div class="lb-head">
       <div>
-        <div class="lb-title" data-i18n="lb.title">🏆 Leaderboard</div>
-        <div class="section-subtitle" data-i18n="lb.sub">Compete in goodness and race in remembrance</div>
+        <div class="lb-title">🏆 Leaderboard</div>
+        <div class="section-subtitle">Compete in goodness and race in remembrance</div>
       </div>
       <div class="lb-controls">
         <div class="segmented" id="timeFilter">
-          <button class="seg-btn active" data-filter="daily" data-i18n="lb.daily">Daily</button>
-          <button class="seg-btn" data-filter="weekly" data-i18n="lb.weekly">Weekly</button>
-          <button class="seg-btn" data-filter="monthly" data-i18n="lb.monthly">Monthly</button>
-          <button class="seg-btn" data-filter="all" data-i18n="lb.all">All Time</button>
+          <button class="seg-btn active" data-filter="daily">Daily</button>
+          <button class="seg-btn" data-filter="weekly">Weekly</button>
+          <button class="seg-btn" data-filter="monthly">Monthly</button>
+          <button class="seg-btn" data-filter="all">All Time</button>
         </div>
         <div class="select-wrap">
           <select class="select" id="thikrFilter">
-            <option value="all" data-i18n="lb.allDhikr">All dhikr</option>
+            <option value="all">All dhikr</option>
             <option value="subhanallah">SubhanAllah</option>
             <option value="alhamdulillah">Alhamdulillah</option>
             <option value="allahuakbar">Allahu Akbar</option>
@@ -500,50 +709,77 @@
     <div class="podium" id="podium"></div>
     <div class="lb-table">
       <div class="lb-row head">
-        <div>#</div><div data-i18n="lb.user">User</div>
-        <div style="text-align:center" data-i18n="lb.count">Count</div>
-        <div style="text-align:center" data-i18n="lb.dhikr">Dhikr</div>
-        <div class="lb-streak" style="text-align:center" data-i18n="lb.streak">Streak</div>
+        <div>#</div><div>User</div>
+        <div style="text-align:center">Count</div>
+        <div style="text-align:center">Dhikr</div>
+        <div class="lb-streak" style="text-align:center">Streak</div>
       </div>
       <div id="lbBody"></div>
     </div>
     <div class="lb-update-info">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      <span data-i18n="lb.updates">Leaderboard refreshes every 5 minutes</span>
+      <span>Leaderboard refreshes every 5 minutes</span>
     </div>
+  </div>
+
+  <div class="page" id="page-forums">
+    <div class="section-head">
+      <div>
+        <div class="section-title">Community Forums</div>
+        <div class="section-subtitle">Share your experiences and connect with fellow believers</div>
+      </div>
+    </div>
+    
+    <div class="new-post-form" id="newPostForm" style="display: none;">
+      <h3 style="margin-bottom: 16px; font-family: 'Reem Kufi', serif;">Create New Post</h3>
+      <div class="form-group">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-input" id="postTitle" placeholder="Enter post title">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Content</label>
+        <textarea class="form-textarea" id="postContent" placeholder="Share your thoughts..."></textarea>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-primary" onclick="submitPost()">Post</button>
+        <button class="btn btn-secondary" onclick="cancelPost()">Cancel</button>
+      </div>
+    </div>
+    
+    <div id="postsList"></div>
   </div>
 
   <div class="page" id="page-profile">
     <div class="profile-hero">
       <div class="profile-avatar-lg" id="profileAvatar">?</div>
-      <div class="profile-name" id="profileName" data-i18n="profile.guest">Guest</div>
-      <div class="profile-joined" id="profileJoined" data-i18n="profile.guestMsg">Your progress is saved locally on this device</div>
+      <div class="profile-name" id="profileName">Guest</div>
+      <div class="profile-joined" id="profileJoined">Your progress is saved locally on this device</div>
       <div class="profile-stats">
-        <div class="profile-stat"><div class="profile-stat-value" id="pTotal">0</div><div class="profile-stat-label" data-i18n="profile.total">Total</div></div>
-        <div class="profile-stat"><div class="profile-stat-value" id="pToday">0</div><div class="profile-stat-label" data-i18n="profile.today">Today</div></div>
-        <div class="profile-stat"><div class="profile-stat-value" id="pStreak">0</div><div class="profile-stat-label" data-i18n="profile.days">Days</div></div>
-        <div class="profile-stat"><div class="profile-stat-value" id="pBest">—</div><div class="profile-stat-label" data-i18n="profile.favorite">Favorite</div></div>
+        <div class="profile-stat"><div class="profile-stat-value" id="pTotal">0</div><div class="profile-stat-label">Total</div></div>
+        <div class="profile-stat"><div class="profile-stat-value" id="pToday">0</div><div class="profile-stat-label">Today</div></div>
+        <div class="profile-stat"><div class="profile-stat-value" id="pStreak">0</div><div class="profile-stat-label">Days</div></div>
+        <div class="profile-stat"><div class="profile-stat-value" id="pBest">—</div><div class="profile-stat-label">Favorite</div></div>
       </div>
     </div>
     <div id="saveCtaArea"></div>
     <div class="section-head">
       <div>
-        <div class="section-title" data-i18n="profile.achievements">Achievements</div>
-        <div class="section-subtitle" data-i18n="profile.achievementsSub">Badges unlocked through remembrance</div>
+        <div class="section-title">Achievements</div>
+        <div class="section-subtitle">Badges unlocked through remembrance</div>
       </div>
     </div>
     <div class="achievements" id="achievements"></div>
     <div class="section-head">
       <div>
-        <div class="section-title" data-i18n="profile.history">Dhikr History</div>
-        <div class="section-subtitle" data-i18n="profile.historySub">Your detailed statistics</div>
+        <div class="section-title">Dhikr History</div>
+        <div class="section-subtitle">Your detailed statistics</div>
       </div>
     </div>
     <div class="lb-table">
       <div class="lb-row head">
-        <div>#</div><div data-i18n="profile.dhikr">Dhikr</div>
-        <div style="text-align:center" data-i18n="profile.totalCount">Total</div>
-        <div style="text-align:center" data-i18n="profile.lastUsed">Last used</div>
+        <div>#</div><div>Dhikr</div>
+        <div style="text-align:center">Total</div>
+        <div style="text-align:center">Last used</div>
       </div>
       <div id="profileHistory"></div>
     </div>
@@ -562,13 +798,13 @@
 <div class="prayer-reminder" id="prayerReminder">
   <div class="prayer-reminder-head">
     <div class="prayer-reminder-icon">🕌</div>
-    <div class="prayer-reminder-title" data-i18n="prayer.title">A gentle reminder</div>
+    <div class="prayer-reminder-title">A gentle reminder</div>
   </div>
-  <div class="prayer-reminder-text" data-i18n="prayer.text">Have you performed your obligatory ṣalāh today? The prayer is the first deed a person will be accounted for on the Day of Judgment.</div>
-  <div class="prayer-reminder-verse" data-i18n="prayer.verse">﴿ "Indeed, prayer has been decreed upon the believers at specified times." — An-Nisāʾ 4:103 ﴾</div>
+  <div class="prayer-reminder-text">Have you performed your obligatory ṣalāh today? The prayer is the first deed a person will be accounted for on the Day of Judgment.</div>
+  <div class="prayer-reminder-verse">﴿ إِنَّ ٱلصَّلَوٰةَ كَانَتْ عَلَى ٱلْمُؤْمِنِينَ كِتَٰبًا مَّوْقُوتًا ﴾</div>
   <div class="prayer-reminder-actions">
-    <button class="prayer-reminder-btn primary" onclick="acknowledgePrayer()" data-i18n="prayer.done">Yes, alḥamdulillāh</button>
-    <button class="prayer-reminder-btn secondary" onclick="dismissPrayer()" data-i18n="prayer.later">Remind me later</button>
+    <button class="prayer-reminder-btn primary" onclick="acknowledgePrayer()">Yes, alḥamdulillāh</button>
+    <button class="prayer-reminder-btn secondary" onclick="dismissPrayer()">Remind me later</button>
   </div>
 </div>
 
@@ -581,12 +817,12 @@
 // ==================== I18N ====================
 const I18N = {
   en: {
-    brand: { name: 'DHIKR', tagline: 'Tasbeeh Companion' },
-    nav: { home: 'Home', counter: 'Tasbeeh', leaderboard: 'Leaders', profile: 'Profile' },
+    brand: { name: 'Mufarridun', tagline: 'Islamic Dhikr & Tasbeeh' },
+    nav: { home: 'Home', counter: 'Tasbeeh', leaderboard: 'Leaders', forums: 'Forums', profile: 'Profile' },
     hero: {
       greeting: 'Peace be upon you',
       title: 'Verily, in the remembrance of Allah do hearts find rest',
-      verse: '﴿ "And remember your Lord within yourself, humbly and in fear, without being loud in words, in the mornings and the evenings." — Al-Aʿrāf 7:205 ﴾',
+      verse: '﴿ وَٱذْكُر رَّبَّكَ فِى نَفْسِكَ تَضَرُّعًا وَخِيفَةً وَدُونَ ٱلْجَهْرِ مِنَ ٱلْقَوْلِ ﴾',
       desc: 'Begin your journey of remembrance. Count your tasbeeh, earn hasanat, and compete with fellow Muslims in goodness.',
       today: "Today's Tasbeeh", total: 'Total', streak: 'Day Streak'
     },
@@ -594,8 +830,8 @@ const I18N = {
     counter: { back: 'Back', tap: 'Tap to count', target: 'Target:', remaining: 'Remaining:', save: 'Save', undo: 'Undo', reset: 'Reset', virtues: 'Virtues of this dhikr', virtuesSub: 'Authentic narrations from the Sunnah' },
     lb: { title: '🏆 Leaderboard', sub: 'Compete in goodness and race in remembrance', daily: 'Daily', weekly: 'Weekly', monthly: 'Monthly', all: 'All Time', allDhikr: 'All dhikr', user: 'User', count: 'Count', dhikr: 'Dhikr', streak: 'Streak', updates: 'Leaderboard refreshes every 5 minutes', empty: 'No entries yet', emptySub: 'Be the first to earn a spot on the leaderboard!', noMore: 'No more entries' },
     profile: { guest: 'Guest', guestMsg: 'Your progress is saved locally on this device', total: 'Total', today: 'Today', days: 'Days', favorite: 'Favorite', achievements: 'Achievements', achievementsSub: 'Badges unlocked through remembrance', history: 'Dhikr History', historySub: 'Your detailed statistics', dhikr: 'Dhikr', totalCount: 'Total', lastUsed: 'Last used', account: 'Account', logout: 'Sign out', saveCtaTitle: 'Save your progress to the cloud', saveCtaDesc: 'Create a free account to keep your progress safe across devices and appear on the leaderboard.', saveCtaBtn: 'Create account', emptyHistory: "You haven't started yet. Begin now!" },
-    auth: { welcome: 'Welcome to DHIKR', desc: 'Create an account to save your progress across devices and appear on the leaderboard.', signup: 'Sign up', login: 'Log in', displayName: 'Display name', email: 'Email', password: 'Password (min 6 chars)', createAccount: 'Create account', loginBtn: 'Log in', or: 'or', continueGuest: 'Continue as guest (local only)', accountSettings: 'Account Settings', signedInAs: 'Signed in as', memberSince: 'Member since', signOut: 'Sign out', errors: { shortName: 'Name must be at least 2 characters', invalidEmail: 'Please enter a valid email', shortPassword: 'Password must be at least 6 characters', wrongCredentials: 'Invalid email or password', emailTaken: 'An account with this email already exists', generic: 'Something went wrong. Please try again.' } },
-    prayer: { title: 'A gentle reminder', text: 'Have you performed your obligatory ṣalāh today? The prayer is the first deed a person will be accounted for on the Day of Judgment.', verse: '﴿ "Indeed, prayer has been decreed upon the believers at specified times." — An-Nisāʾ 4:103 ﴾', done: 'Yes, alḥamdulillāh', later: 'Remind me later' },
+    auth: { welcome: 'Welcome to Mufarridun', desc: 'Create an account to save your progress across devices and appear on the leaderboard.', signup: 'Sign up', login: 'Log in', displayName: 'Display name', email: 'Email', password: 'Password (min 6 chars)', createAccount: 'Create account', loginBtn: 'Log in', or: 'or', continueGuest: 'Continue as guest (local only)', accountSettings: 'Account Settings', signedInAs: 'Signed in as', memberSince: 'Member since', signOut: 'Sign out', errors: { shortName: 'Name must be at least 2 characters', invalidEmail: 'Please enter a valid email', shortPassword: 'Password must be at least 6 characters', wrongCredentials: 'Invalid email or password', emailTaken: 'An account with this email already exists', generic: 'Something went wrong. Please try again.' } },
+    prayer: { title: 'A gentle reminder', text: 'Have you performed your obligatory ṣalāh today? The prayer is the first deed a person will be accounted for on the Day of Judgment.', verse: '﴿ إِنَّ ٱلصَّلَوٰةَ كَانَتْ عَلَى ٱلْمُؤْمِنِينَ كِتَٰبًا مَّوْقُوتًا ﴾', done: 'Yes, alḥamdulillāh', later: 'Remind me later' },
     toast: { saved: (n, d) => `Saved ${n} × ${d}`, milestone: (n) => `Mā shāʾ Allāh! You reached ${n} 🌟`, tapFirst: 'Tap the counter first', resetConfirm: 'Reset the counter to zero?', welcome: (n) => `Welcome, ${n}! 🌙`, loggedOut: 'Signed out', prayerAck: 'May Allāh accept it from you 🤲' },
     thikr: {
       subhanallah: { latin: 'SubhanAllah', meaning: 'Glory be to Allah', reward: 'Two words light on the tongue, heavy on the Scale' },
@@ -615,15 +851,32 @@ const I18N = {
       { id: 'streak7', icon: '🔥', title: 'Consistent', desc: '7 days in a row' },
       { id: 'streak30', icon: '👑', title: 'One Who Remembers', desc: '30 days in a row' },
       { id: 'variety', icon: '🎯', title: 'Comprehensive', desc: 'Recited all 7 dhikr' }
-    ]
+    ],
+    forums: {
+      title: 'Community Forums',
+      subtitle: 'Share your experiences and connect with fellow believers',
+      newPost: 'Create New Post',
+      postTitle: 'Title',
+      postContent: 'Content',
+      post: 'Post',
+      cancel: 'Cancel',
+      noPosts: 'No posts yet',
+      beFirst: 'Be the first to start a discussion!',
+      comments: 'Comments',
+      addComment: 'Add a comment...',
+      submit: 'Submit',
+      edit: 'Edit',
+      delete: 'Delete',
+      reply: 'Reply'
+    }
   },
   ar: {
-    brand: { name: 'ذِكْر', tagline: 'رفيق التسبيح' },
-    nav: { home: 'الرئيسية', counter: 'المسبحة', leaderboard: 'المتصدرون', profile: 'ملفي' },
+    brand: { name: 'المفردون', tagline: 'الذكر والتسبيح' },
+    nav: { home: 'الرئيسية', counter: 'المسبحة', leaderboard: 'المتصدرون', forums: 'المنتدى', profile: 'ملفي' },
     hero: {
       greeting: 'السلام عليكم ورحمة الله',
       title: 'ألا بذكر الله تطمئن القلوب',
-      verse: '﴿ وَاذْكُر رَّبَّكَ فِي نَفْسِكَ تَضَرُّعًا وَخِيفَةً وَدُونَ الْجَهْرِ مِنَ الْقَوْلِ ﴾ — الأعراف ٢٠٥',
+      verse: '﴿ وَٱذْكُر رَّبَّكَ فِى نَفْسِكَ تَضَرُّعًا وَخِيفَةً وَدُونَ ٱلْجَهْرِ مِنَ ٱلْقَوْلِ ﴾',
       desc: 'ابدأ رحلتك في ذكر الله، واحسب تسبيحاتك، وتنافس مع إخوانك المسلمين في كسب الحسنات.',
       today: 'تسبيحة اليوم', total: 'الإجمالي', streak: 'أيام متتالية'
     },
@@ -631,8 +884,8 @@ const I18N = {
     counter: { back: 'العودة', tap: 'اضغط للتسبيح', target: 'الهدف:', remaining: 'المتبقي:', save: 'حفظ', undo: 'تراجع', reset: 'إعادة', virtues: 'فضل هذا الذكر', virtuesSub: 'أحاديث صحيحة من السنة النبوية' },
     lb: { title: '🏆 المتصدرون', sub: 'تنافسوا في الخير وتسابَقوا في الذكر', daily: 'يومي', weekly: 'أسبوعي', monthly: 'شهري', all: 'الكل', allDhikr: 'جميع الأذكار', user: 'المستخدم', count: 'العدد', dhikr: 'الذكر', streak: 'السلسلة', updates: 'تُحدَّث اللوحة كل ٥ دقائق', empty: 'لا توجد مشاركات بعد', emptySub: 'كن أول من يتصدر اللوحة!', noMore: 'لا توجد بيانات إضافية' },
     profile: { guest: 'ضيف', guestMsg: 'تُسجَّل تقدمك محلياً على هذا الجهاز', total: 'الإجمالي', today: 'اليوم', days: 'أيام', favorite: 'المفضل', achievements: 'الإنجازات', achievementsSub: 'شارات تفتحها بذكر الله', history: 'سجل الأذكار', historySub: 'إحصائياتك التفصيلية', dhikr: 'الذكر', totalCount: 'المجموع', lastUsed: 'آخر مرة', account: 'الحساب', logout: 'تسجيل الخروج', saveCtaTitle: 'احفظ تقدمك في السحابة', saveCtaDesc: 'أنشئ حساباً مجانياً للحفاظ على تقدمك عبر الأجهزة وظهورك في لوحة المتصدرين.', saveCtaBtn: 'إنشاء حساب', emptyHistory: 'لم تبدأ التسبيح بعد. ابدأ الآن!' },
-    auth: { welcome: 'مرحباً بك في ذِكْر', desc: 'أنشئ حساباً لحفظ تقدمك عبر الأجهزة وظهورك في لوحة المتصدرين.', signup: 'إنشاء حساب', login: 'تسجيل الدخول', displayName: 'اسم العرض', email: 'البريد الإلكتروني', password: 'كلمة المرور (٦ أحرف على الأقل)', createAccount: 'إنشاء الحساب', loginBtn: 'دخول', or: 'أو', continueGuest: 'المتابعة كضيف (محلي فقط)', accountSettings: 'إعدادات الحساب', signedInAs: 'مسجّل دخولك كـ', memberSince: 'عضو منذ', signOut: 'تسجيل الخروج', errors: { shortName: 'يجب أن يكون الاسم حرفين على الأقل', invalidEmail: 'الرجاء إدخال بريد صحيح', shortPassword: 'كلمة المرور يجب أن تكون ٦ أحرف على الأقل', wrongCredentials: 'البريد أو كلمة المرور غير صحيحة', emailTaken: 'يوجد حساب بهذا البريد مسبقاً', generic: 'حدث خطأ. حاول مرة أخرى.' } },
-    prayer: { title: 'تذكير لطيف', text: 'هل أديتَ صَلاتَك المفروضة اليوم؟ الصلاة أول ما يُحاسب عليه العبد يوم القيامة.', verse: '﴿ إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا ﴾ — النساء ١٠٣', done: 'نعم، الحمد لله', later: 'ذكرني لاحقاً' },
+    auth: { welcome: 'مرحباً بك في المفردون', desc: 'أنشئ حساباً لحفظ تقدمك عبر الأجهزة وظهورك في لوحة المتصدرين.', signup: 'إنشاء حساب', login: 'تسجيل الدخول', displayName: 'اسم العرض', email: 'البريد الإلكتروني', password: 'كلمة المرور (٦ أحرف على الأقل)', createAccount: 'إنشاء الحساب', loginBtn: 'دخول', or: 'أو', continueGuest: 'المتابعة كضيف (محلي فقط)', accountSettings: 'إعدادات الحساب', signedInAs: 'مسجّل دخولك كـ', memberSince: 'عضو منذ', signOut: 'تسجيل الخروج', errors: { shortName: 'يجب أن يكون الاسم حرفين على الأقل', invalidEmail: 'الرجاء إدخال بريد صحيح', shortPassword: 'كلمة المرور يجب أن تكون ٦ أحرف على الأقل', wrongCredentials: 'البريد أو كلمة المرور غير صحيحة', emailTaken: 'يوجد حساب بهذا البريد مسبقاً', generic: 'حدث خطأ. حاول مرة أخرى.' } },
+    prayer: { title: 'تذكير لطيف', text: 'هل أديتَ صَلاتَك المفروضة اليوم؟ الصلاة أول ما يُحاسب عليه العبد يوم القيامة.', verse: '﴿ إِنَّ ٱلصَّلَوٰةَ كَانَتْ عَلَى ٱلْمُؤْمِنِينَ كِتَٰبًا مَّوْقُوتًا ﴾', done: 'نعم، الحمد لله', later: 'ذكرني لاحقاً' },
     toast: { saved: (n, d) => `حُفظت ${n} من ${d}`, milestone: (n) => `ما شاء الله! أتممت ${n} 🌟`, tapFirst: 'اضغط على العداد أولاً', resetConfirm: 'هل تريد إعادة العداد إلى الصفر؟', welcome: (n) => `مرحباً بك يا ${n}! 🌙`, loggedOut: 'تم تسجيل الخروج', prayerAck: 'تقبّل الله منك 🤲' },
     thikr: {
       subhanallah: { latin: 'SubhanAllah', meaning: 'سبحان الله', reward: 'كلمتان خفيفتان على اللسان، ثقيلتان في الميزان' },
@@ -652,7 +905,24 @@ const I18N = {
       { id: 'streak7', icon: '🔥', title: 'مواظب', desc: '7 أيام متتالية' },
       { id: 'streak30', icon: '👑', title: 'الذاكر', desc: '30 يوماً متتالياً' },
       { id: 'variety', icon: '🎯', title: 'جامع', desc: 'سبّحت بكل الأذكار' }
-    ]
+    ],
+    forums: {
+      title: 'المنتدى',
+      subtitle: 'شارك تجاربك وتواصل مع المؤمنين',
+      newPost: 'إنشاء مشاركة جديدة',
+      postTitle: 'العنوان',
+      postContent: 'المحتوى',
+      post: 'نشر',
+      cancel: 'إلغاء',
+      noPosts: 'لا توجد مشاركات بعد',
+      beFirst: 'كن أول من يبدأ نقاشاً!',
+      comments: 'التعليقات',
+      addComment: 'أضف تعليقاً...',
+      submit: 'إرسال',
+      edit: 'تعديل',
+      delete: 'حذف',
+      reply: 'رد'
+    }
   }
 };
 
@@ -719,7 +989,8 @@ let state = {
   count: 0,
   target: 33,
   leaderboard: [],
-  lastPrayerShown: 0
+  lastPrayerShown: 0,
+  forums: []
 };
 
 // ==================== INIT ====================
@@ -735,15 +1006,25 @@ function init() {
 }
 
 function loadState() {
-  const saved = localStorage.getItem('dhikr_state_v5');
+  const saved = localStorage.getItem('mufarridun_state_v6');
   if (saved) {
-    try { Object.assign(state, JSON.parse(saved)); } catch(e) {}
+    try { 
+      const parsed = JSON.parse(saved);
+      Object.assign(state, parsed);
+    } catch(e) {
+      console.error('Error loading state:', e);
+    }
   }
   if (!state.stats.thikrs) state.stats.thikrs = {};
+  if (!state.forums) state.forums = [];
 }
 
 function saveState() {
-  localStorage.setItem('dhikr_state_v5', JSON.stringify(state));
+  try {
+    localStorage.setItem('mufarridun_state_v6', JSON.stringify(state));
+  } catch(e) {
+    console.error('Error saving state:', e);
+  }
 }
 
 function checkStreak() {
@@ -790,7 +1071,6 @@ function applyLanguage() {
   });
   renderAll();
   if (state.currentThikr) renderHadiths(state.currentThikr);
-  // Re-render auth modal if open
   if (document.getElementById('authModal').classList.contains('active')) {
     renderAuthModalContent();
   }
@@ -821,6 +1101,7 @@ function navigateTo(page) {
   if (page === 'leaderboard') renderLeaderboard();
   if (page === 'profile') renderProfile();
   if (page === 'home') renderHome();
+  if (page === 'forums') renderForums();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -864,7 +1145,6 @@ function renderAuthModalContent() {
   const content = document.getElementById('authModalContent');
 
   if (state.user) {
-    // Logged-in view: Account Settings
     const joinDate = state.stats.joinDate || new Date().toISOString().split('T')[0];
     content.innerHTML = `
       <div class="modal-mark">
@@ -873,10 +1153,10 @@ function renderAuthModalContent() {
           <circle cx="12" cy="12" r="3" fill="#c9a227"/>
         </svg>
       </div>
-      <h3>${getI18n('auth.accountSettings')}</h3>
+      <h3>Account Settings</h3>
       <div class="account-info">
         <div class="account-info-row">
-          <span class="account-info-label">${getI18n('auth.signedInAs')}</span>
+          <span class="account-info-label">Signed in as</span>
           <span class="account-info-value">${state.user.displayName}</span>
         </div>
         <div class="account-info-row">
@@ -884,16 +1164,13 @@ function renderAuthModalContent() {
           <span class="account-info-value">${state.user.email}</span>
         </div>
         <div class="account-info-row">
-          <span class="account-info-label">${getI18n('auth.memberSince')}</span>
+          <span class="account-info-label">Member since</span>
           <span class="account-info-value">${joinDate}</span>
         </div>
       </div>
-      <button class="modal-btn danger" onclick="logout()">
-        <span>${getI18n('auth.signOut')}</span>
-      </button>
+      <button class="modal-btn danger" onclick="logout()">Sign out</button>
     `;
   } else {
-    // Not logged in: Sign up / Log in form
     content.innerHTML = `
       <div class="modal-mark">
         <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
@@ -901,26 +1178,23 @@ function renderAuthModalContent() {
           <circle cx="12" cy="12" r="3" fill="#c9a227"/>
         </svg>
       </div>
-      <h3 data-i18n="auth.welcome">${getI18n('auth.welcome')}</h3>
-      <p data-i18n="auth.desc">${getI18n('auth.desc')}</p>
+      <h3>Welcome to Mufarridun</h3>
+      <p>Create an account to save your progress across devices and appear on the leaderboard.</p>
       <div class="modal-tabs">
-        <button class="modal-tab active" data-auth="signup" data-i18n="auth.signup">${getI18n('auth.signup')}</button>
-        <button class="modal-tab" data-auth="login" data-i18n="auth.login">${getI18n('auth.login')}</button>
+        <button class="modal-tab active" data-auth="signup">Sign up</button>
+        <button class="modal-tab" data-auth="login">Log in</button>
       </div>
       <div class="modal-error" id="authError"></div>
-      <input type="text" class="modal-input" id="authDisplayName" placeholder="${getI18n('auth.displayName')}" data-i18n-placeholder="auth.displayName">
-      <input type="email" class="modal-input" id="authEmail" placeholder="${getI18n('auth.email')}" data-i18n-placeholder="auth.email">
-      <input type="password" class="modal-input" id="authPassword" placeholder="${getI18n('auth.password')}" data-i18n-placeholder="auth.password">
+      <input type="text" class="modal-input" id="authDisplayName" placeholder="Display name">
+      <input type="email" class="modal-input" id="authEmail" placeholder="Email">
+      <input type="password" class="modal-input" id="authPassword" placeholder="Password (min 6 chars)">
       <button class="modal-btn" id="authSubmit" onclick="submitAuth()">
-        <span data-i18n="auth.createAccount">${getI18n('auth.createAccount')}</span>
+        <span>Create account</span>
       </button>
-      <div class="modal-divider" data-i18n="auth.or">${getI18n('auth.or')}</div>
-      <button class="modal-guest" onclick="continueAsGuest()">
-        <span data-i18n="auth.continueGuest">${getI18n('auth.continueGuest')}</span>
-      </button>
+      <div class="modal-divider">or</div>
+      <button class="modal-guest" onclick="continueAsGuest()">Continue as guest (local only)</button>
     `;
 
-    // Re-attach tab listeners
     content.querySelectorAll('.modal-tab').forEach(t => {
       t.addEventListener('click', () => {
         content.querySelectorAll('.modal-tab').forEach(x => x.classList.remove('active'));
@@ -928,8 +1202,7 @@ function renderAuthModalContent() {
         const mode = t.dataset.auth;
         document.getElementById('authDisplayName').style.display = mode === 'signup' ? 'block' : 'none';
         const key = mode === 'signup' ? 'auth.createAccount' : 'auth.loginBtn';
-        const span = document.querySelector('#authSubmit [data-i18n]');
-        span.setAttribute('data-i18n', key);
+        const span = document.querySelector('#authSubmit span');
         span.textContent = getI18n(key);
       });
     });
@@ -965,12 +1238,16 @@ function submitAuth() {
   if (password.length < 6) return showAuthError('shortPassword');
 
   if (mode === 'signup') {
-    const existing = localStorage.getItem('dhikr_user_' + email);
+    const existing = localStorage.getItem('mufarridun_user_' + email);
     if (existing) return showAuthError('emailTaken');
     state.user = { id: 'user_' + Date.now(), email, displayName: name };
-    localStorage.setItem('dhikr_user_' + email, JSON.stringify({ ...state.user, password }));
+    localStorage.setItem('mufarridun_user_' + email, JSON.stringify({ ...state.user, password }));
+    
+    // Send thank you email (note: this requires backend integration)
+    // For now, we'll just show a toast
+    showToast(`Welcome, ${name}! 🌙 Check your email for a thank you message.`);
   } else {
-    const existing = localStorage.getItem('dhikr_user_' + email);
+    const existing = localStorage.getItem('mufarridun_user_' + email);
     if (!existing) return showAuthError('wrongCredentials');
     const parsed = JSON.parse(existing);
     if (parsed.password !== password) return showAuthError('wrongCredentials');
@@ -982,7 +1259,6 @@ function submitAuth() {
   saveState();
   closeAuthModal();
   renderAll();
-  showToast(getI18n('toast.welcome')(state.user.displayName));
 }
 
 function continueAsGuest() {
@@ -999,7 +1275,7 @@ function logout() {
   saveState();
   closeAuthModal();
   renderAll();
-  showToast(getI18n('toast.loggedOut'));
+  showToast('Signed out');
 }
 
 // ==================== RENDER ====================
@@ -1014,12 +1290,11 @@ function renderAll() {
 function renderAuthArea() {
   const area = document.getElementById('authArea');
   if (state.user) {
-    // Clicking username now opens account settings modal
     area.innerHTML = '<div class="user-chip" onclick="openAuthModal()"><div class="user-avatar">' + state.user.displayName.charAt(0).toUpperCase() + '</div><span class="user-name">' + state.user.displayName + '</span></div>';
   } else if (state.isGuest) {
-    area.innerHTML = '<div class="user-chip" onclick="openAuthModal()"><div class="user-avatar" style="background:var(--bone); color:var(--muted);">?</div><span class="user-name">' + getI18n('profile.guest') + '</span></div>';
+    area.innerHTML = '<div class="user-chip" onclick="openAuthModal()"><div class="user-avatar" style="background:var(--bone); color:var(--muted);">?</div><span class="user-name">Guest</span></div>';
   } else {
-    area.innerHTML = '<button class="auth-btn" onclick="openAuthModal()">' + getI18n('auth.signup') + '</button>';
+    area.innerHTML = '<button class="auth-btn" onclick="openAuthModal()">Sign up</button>';
   }
 }
 
@@ -1110,7 +1385,7 @@ function saveSession() {
 
   const today = new Date().toISOString().split('T')[0];
   const displayName = state.user?.displayName || (state.isGuest ? 'Guest_' + Math.floor(Math.random() * 1000) : 'Guest');
-  const userId = state.user?.id || 'guest_' + (localStorage.getItem('dhikr_guest_id') || (() => { const id = 'guest_' + Date.now(); localStorage.setItem('dhikr_guest_id', id); return id; })());
+  const userId = state.user?.id || 'guest_' + (localStorage.getItem('mufarridun_guest_id') || (() => { const id = 'guest_' + Date.now(); localStorage.setItem('mufarridun_guest_id', id); return id; })());
 
   const existing = state.leaderboard.findIndex(e => e.userId === userId && e.thikr === state.currentThikr && e.date === today);
   if (existing >= 0) {
@@ -1175,7 +1450,7 @@ function renderPodium(top3) {
   const podium = document.getElementById('podium');
   podium.innerHTML = '';
   if (top3.length === 0) {
-    podium.innerHTML = '<div class="empty"><div class="empty-icon">🏆</div><div class="empty-title">' + getI18n('lb.empty') + '</div><div class="empty-desc">' + getI18n('lb.emptySub') + '</div></div>';
+    podium.innerHTML = '<div class="empty"><div class="empty-icon">🏆</div><div class="empty-title">No entries yet</div><div class="empty-desc">Be the first to earn a spot on the leaderboard!</div></div>';
     return;
   }
   const order = [1, 0, 2];
@@ -1199,7 +1474,7 @@ function renderLBTable(sorted) {
   const body = document.getElementById('lbBody');
   body.innerHTML = '';
   if (sorted.length === 0) {
-    body.innerHTML = '<div class="empty"><div class="empty-desc">' + getI18n('lb.noMore') + '</div></div>';
+    body.innerHTML = '<div class="empty"><div class="empty-desc">No more entries</div></div>';
     return;
   }
   sorted.forEach((item, i) => {
@@ -1211,12 +1486,156 @@ function renderLBTable(sorted) {
 }
 
 function scheduleLBRefresh() {
-  // Refresh every 5 minutes
   setInterval(() => {
     if (document.getElementById('page-leaderboard').classList.contains('active')) {
       renderLeaderboard();
     }
   }, 5 * 60 * 1000);
+}
+
+// ==================== FORUMS ====================
+function renderForums() {
+  if (!state.user && !state.isGuest) {
+    document.getElementById('postsList').innerHTML = '<div class="empty"><div class="empty-title">Please sign in to view forums</div></div>';
+    return;
+  }
+  
+  const container = document.getElementById('postsList');
+  const newPostBtn = document.createElement('button');
+  newPostBtn.className = 'btn btn-primary';
+  newPostBtn.textContent = 'Create New Post';
+  newPostBtn.onclick = showNewPostForm;
+  newPostBtn.style.marginBottom = '24px';
+  
+  container.innerHTML = '';
+  container.appendChild(newPostBtn);
+  
+  if (state.forums.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'empty';
+    empty.innerHTML = '<div class="empty-icon">💬</div><div class="empty-title">No posts yet</div><div class="empty-desc">Be the first to start a discussion!</div>';
+    container.appendChild(empty);
+    return;
+  }
+  
+  state.forums.slice().reverse().forEach(post => {
+    const postEl = document.createElement('div');
+    postEl.className = 'forum-post';
+    const isOwner = state.user && state.user.id === post.authorId;
+    postEl.innerHTML = `
+      <div class="forum-post-header">
+        <div>
+          <div class="forum-post-title">${post.title}</div>
+          <div class="forum-post-meta">By ${post.author} · ${new Date(post.createdAt).toLocaleDateString()}</div>
+        </div>
+        ${isOwner ? `
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-secondary" onclick="editPost('${post.id}')" style="padding:6px 12px; font-size:12px;">Edit</button>
+            <button class="btn btn-danger" onclick="deletePost('${post.id}')" style="padding:6px 12px; font-size:12px;">Delete</button>
+          </div>
+        ` : ''}
+      </div>
+      <div class="forum-post-content">${post.content}</div>
+      <div class="forum-comments">
+        <div style="font-size:13px; font-weight:600; margin-bottom:12px; color:var(--forest);">Comments (${post.comments ? post.comments.length : 0})</div>
+        ${post.comments ? post.comments.map(c => `
+          <div class="forum-comment">
+            <div class="forum-comment-author">${c.author}</div>
+            <div class="forum-comment-text">${c.content}</div>
+          </div>
+        `).join('') : ''}
+        <div style="margin-top:12px; display:flex; gap:8px;">
+          <input type="text" class="form-input" id="comment-${post.id}" placeholder="Add a comment..." style="flex:1;">
+          <button class="btn btn-primary" onclick="addComment('${post.id}')" style="padding:8px 16px;">Submit</button>
+        </div>
+      </div>
+    `;
+    container.appendChild(postEl);
+  });
+}
+
+function showNewPostForm() {
+  document.getElementById('newPostForm').style.display = 'block';
+  document.getElementById('newPostForm').scrollIntoView({ behavior: 'smooth' });
+}
+
+function cancelPost() {
+  document.getElementById('newPostForm').style.display = 'none';
+  document.getElementById('postTitle').value = '';
+  document.getElementById('postContent').value = '';
+}
+
+function submitPost() {
+  const title = document.getElementById('postTitle').value.trim();
+  const content = document.getElementById('postContent').value.trim();
+  
+  if (!title || !content) {
+    alert('Please fill in both title and content');
+    return;
+  }
+  
+  const author = state.user ? state.user.displayName : 'Guest';
+  const authorId = state.user ? state.user.id : 'guest';
+  
+  const newPost = {
+    id: 'post_' + Date.now(),
+    title,
+    content,
+    author,
+    authorId,
+    createdAt: new Date().toISOString(),
+    comments: []
+  };
+  
+  state.forums.push(newPost);
+  saveState();
+  cancelPost();
+  renderForums();
+  showToast('Post created successfully!');
+}
+
+function deletePost(postId) {
+  if (!confirm('Are you sure you want to delete this post?')) return;
+  state.forums = state.forums.filter(p => p.id !== postId);
+  saveState();
+  renderForums();
+}
+
+function editPost(postId) {
+  const post = state.forums.find(p => p.id === postId);
+  if (!post) return;
+  
+  const newTitle = prompt('Edit title:', post.title);
+  const newContent = prompt('Edit content:', post.content);
+  
+  if (newTitle && newContent) {
+    post.title = newTitle;
+    post.content = newContent;
+    saveState();
+    renderForums();
+  }
+}
+
+function addComment(postId) {
+  const input = document.getElementById('comment-' + postId);
+  const content = input.value.trim();
+  
+  if (!content) return;
+  
+  const post = state.forums.find(p => p.id === postId);
+  if (!post) return;
+  
+  if (!post.comments) post.comments = [];
+  
+  const author = state.user ? state.user.displayName : 'Guest';
+  post.comments.push({
+    author,
+    content,
+    createdAt: new Date().toISOString()
+  });
+  
+  saveState();
+  renderForums();
 }
 
 // ==================== PROFILE ====================
@@ -1229,15 +1648,15 @@ function renderProfile() {
     avatar.textContent = state.user.displayName.charAt(0).toUpperCase();
     name.textContent = state.user.displayName;
     const join = state.stats.joinDate || new Date().toISOString().split('T')[0];
-    joined.textContent = (state.lang === 'ar' ? 'عضو منذ ' : 'Member since ') + join;
+    joined.textContent = 'Member since ' + join;
   } else if (state.isGuest) {
     avatar.textContent = '?';
-    name.textContent = getI18n('profile.guest');
-    joined.textContent = getI18n('profile.guestMsg');
+    name.textContent = 'Guest';
+    joined.textContent = 'Your progress is saved locally on this device';
   } else {
     avatar.textContent = '?';
-    name.textContent = getI18n('profile.guest');
-    joined.textContent = getI18n('profile.guestMsg');
+    name.textContent = 'Guest';
+    joined.textContent = 'Your progress is saved locally on this device';
   }
 
   document.getElementById('pTotal').textContent = state.stats.total.toLocaleString();
@@ -1270,7 +1689,7 @@ function renderProfile() {
   hist.innerHTML = '';
   const sorted = Object.entries(state.stats.thikrs).filter(([k, v]) => v > 0).sort((a, b) => b[1] - a[1]);
   if (sorted.length === 0) {
-    hist.innerHTML = '<div class="empty"><div class="empty-desc">' + getI18n('profile.emptyHistory') + '</div></div>';
+    hist.innerHTML = '<div class="empty"><div class="empty-desc">You haven\'t started yet. Begin now!</div></div>';
     return;
   }
   sorted.forEach(([key, count], i) => {
@@ -1284,7 +1703,7 @@ function renderProfile() {
 function renderSaveCta() {
   const area = document.getElementById('saveCtaArea');
   if (!state.user) {
-    area.innerHTML = '<div class="save-cta"><div class="save-cta-text"><h4>' + getI18n('profile.saveCtaTitle') + '</h4><p>' + getI18n('profile.saveCtaDesc') + '</p></div><button class="btn btn-primary" onclick="openAuthModal()">' + getI18n('profile.saveCtaBtn') + '</button></div>';
+    area.innerHTML = '<div class="save-cta"><div class="save-cta-text"><h4>Save your progress to the cloud</h4><p>Create a free account to keep your progress safe across devices and appear on the leaderboard.</p></div><button class="btn btn-primary" onclick="openAuthModal()">Create account</button></div>';
   } else {
     area.innerHTML = '';
   }
@@ -1317,7 +1736,7 @@ function showPrayerReminder() {
 
 function acknowledgePrayer() {
   document.getElementById('prayerReminder').classList.remove('show');
-  showToast(getI18n('toast.prayerAck'));
+  showToast('May Allāh accept it from you 🤲');
 }
 
 function dismissPrayer() {
